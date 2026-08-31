@@ -1,0 +1,1 @@
+# cab-view-thumbnail-generator
