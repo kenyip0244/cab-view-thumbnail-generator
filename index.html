@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>前面展望 / 交通影片封面生成器 (Cab View Thumbnail Generator)</title>
-  <!-- Google Fonts 經典日系與繁體黑體、重磅字體 -->
+  <!-- Google Fonts: 引入各級字重 (400, 700, 800, 900) 支援自由切換粗體與斜體 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1p:wght@800;900&family=M+PLUS+Rounded+1c:wght@800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=RocknRoll+One&family=Zen+Kaku+Gothic+New:wght@700;900&family=Zen+Maru+Gothic:wght@900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1p:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=M+PLUS+Rounded+1c:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Noto+Sans+JP:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Noto+Sans+TC:ital,wght@0,400;0,700;0,900;1,700;1,900&family=RocknRoll+One&family=Zen+Kaku+Gothic+New:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
   
   <style>
     :root {
@@ -75,10 +75,10 @@
     }
 
     .main-layout {
-      max-width: 1560px;
+      max-width: 1580px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 530px;
+      grid-template-columns: 1fr 540px;
       gap: 24px;
       align-items: start;
     }
@@ -365,6 +365,42 @@
       outline: none;
     }
 
+    /* 字體樣式按鈕組 (Bold / Italic Toggle Bar) */
+    .style-toggles {
+      display: inline-flex;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      gap: 2px;
+      padding: 2px;
+    }
+
+    .style-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .style-btn:hover {
+      color: var(--text-main);
+      background: #22293a;
+    }
+
+    .style-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
     .pos-btn-group {
       display: flex;
       gap: 6px;
@@ -501,7 +537,7 @@
       <span>前面展望 / 交通影片封面生成器</span>
       <span class="badge">1920 × 1080 FHD</span>
     </h1>
-    <p>💡 支援九巴、龍運、城巴、嶼巴及日本鐵道 • 快速選擇車種標籤 • 全自動文字尺寸適應</p>
+    <p>💡 支援<b>「字重粗細 (900/800/700/400)」</b>與<b>「斜體/傾斜度」</b>自由調節 • 點選即時切換</p>
   </header>
 
   <div class="main-layout">
@@ -652,7 +688,7 @@
       <div class="section-card">
         <div class="section-header">
           <span>🏷️ 2. 頂部標題條 (Top Header Bar)</span>
-          <span class="sub-tag">自動適應框格大小</span>
+          <span class="sub-tag">字形與樣式</span>
         </div>
         
         <div class="form-row">
@@ -669,6 +705,27 @@
         <div class="form-group">
           <label>頂部功能說明文字 (Features Text)</label>
           <input type="text" id="topText" value="前面展望 停留所名・速度計付き">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>字體粗細 (Weight)</label>
+            <select id="topTextWeight">
+              <option value="900" selected>900 (極粗 Extra Black)</option>
+              <option value="800">800 (特粗 Heavy)</option>
+              <option value="700">700 (粗體 Bold)</option>
+              <option value="400">400 (正常 Regular)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>文字樣式 (Style)</label>
+            <div class="style-toggles">
+              <button type="button" class="style-btn" id="btnTopItalic" onclick="toggleStyle('topTextItalic', 'btnTopItalic')">
+                <i>I</i> 斜體
+              </button>
+              <input type="hidden" id="topTextItalic" value="0">
+            </div>
+          </div>
         </div>
 
         <div class="form-row">
@@ -702,7 +759,7 @@
       <div class="section-card">
         <div class="section-header">
           <span>🚆 3. 路線主標題 (Top Right Title)</span>
-          <span class="sub-tag">超長文字自動縮放</span>
+          <span class="sub-tag">字體、粗體與斜度</span>
         </div>
         
         <div class="form-group">
@@ -717,7 +774,7 @@
 
         <div class="form-row-3">
           <div class="form-group">
-            <label>文字字體</label>
+            <label>字型選擇</label>
             <select id="routeFont">
               <option value="'Dela Gothic One', sans-serif" selected>Dela Gothic (重磅日系/巴士)</option>
               <option value="'Noto Sans TC', sans-serif">Noto Sans TC (繁體黑體)</option>
@@ -738,12 +795,32 @@
 
         <div class="form-row">
           <div class="form-group">
-            <label>基準字體大小 <span class="val-hint" id="valRouteFontSize">92px</span></label>
-            <input type="range" id="routeFontSize" min="40" max="150" value="92">
+            <label>字體粗細 (Weight)</label>
+            <select id="routeWeight">
+              <option value="900" selected>900 (極粗 Extra Black)</option>
+              <option value="800">800 (特粗 Heavy)</option>
+              <option value="700">700 (粗體 Bold)</option>
+              <option value="400">400 (正常 Regular)</option>
+            </select>
           </div>
           <div class="form-group">
-            <label>斜體傾斜度 <span class="val-hint" id="valRouteSlant">-6°</span></label>
-            <input type="range" id="routeSlant" min="-20" max="0" value="-6">
+            <label>字體大小 <span class="val-hint" id="valRouteFontSize">92px</span></label>
+            <input type="range" id="routeFontSize" min="40" max="150" value="92">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>斜體傾斜度 (Slant) <span class="val-hint" id="valRouteSlant">-6°</span></label>
+            <input type="range" id="routeSlant" min="-25" max="15" step="1" value="-6">
+          </div>
+          <div class="form-group">
+            <label>快速樣式</label>
+            <div class="style-toggles">
+              <button type="button" class="style-btn active" id="btnRouteBold" onclick="toggleWeightBtn('routeWeight', 'btnRouteBold')"><b>B</b> 粗體</button>
+              <button type="button" class="style-btn" id="btnRouteStraight" onclick="setSlant('routeSlant', 0)">正體 0°</button>
+              <button type="button" class="style-btn" id="btnRouteSlant" onclick="setSlant('routeSlant', -8)">斜體 -8°</button>
+            </div>
           </div>
         </div>
 
@@ -770,7 +847,7 @@
       <div class="section-card">
         <div class="section-header">
           <span>📍 4. 車種別與起訖站 (Main Route)</span>
-          <span class="sub-tag">點擊標籤快速套用</span>
+          <span class="sub-tag">粗體、斜體與字重控制</span>
         </div>
         
         <div class="form-row">
@@ -885,8 +962,24 @@
             </select>
           </div>
           <div class="form-group">
+            <label>站名字重 (Weight)</label>
+            <select id="stationWeight">
+              <option value="900" selected>900 (極粗 Extra Black)</option>
+              <option value="800">800 (特粗 Heavy)</option>
+              <option value="700">700 (粗體 Bold)</option>
+              <option value="400">400 (正常 Regular)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
             <label>站名字體大小 <span class="val-hint" id="valStationFontSize">110px</span></label>
             <input type="range" id="stationFontSize" min="50" max="160" value="110">
+          </div>
+          <div class="form-group">
+            <label>站名傾斜度 (Slant) <span class="val-hint" id="valStationSlant">-6°</span></label>
+            <input type="range" id="stationSlant" min="-25" max="15" step="1" value="-6">
           </div>
         </div>
 
@@ -912,12 +1005,28 @@
       <div class="section-card">
         <div class="section-header">
           <span>ℹ️ 5. 底部數據條 (Bottom Stats Bar)</span>
-          <span class="sub-tag">超長數據全自動縮放</span>
+          <span class="sub-tag">字體與斜體樣式</span>
         </div>
         
         <div class="form-group">
           <label>車型 / 途經站數 / 總里程 (Stats Info)</label>
           <input type="text" id="bottomText" value="Volvo B9TL 12M | 途經西區海底隧道">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>字體粗細 (Weight)</label>
+            <select id="bottomWeight">
+              <option value="900" selected>900 (極粗 Extra Black)</option>
+              <option value="800">800 (特粗 Heavy)</option>
+              <option value="700">700 (粗體 Bold)</option>
+              <option value="400">400 (正常 Regular)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>底部文字傾斜度 <span class="val-hint" id="valBottomSlant">-8°</span></label>
+            <input type="range" id="bottomSlant" min="-25" max="15" step="1" value="-8">
+          </div>
         </div>
 
         <div class="form-row">
@@ -952,7 +1061,7 @@
 
   <div id="toast" class="toast"></div>
 
-  <!-- JavaScript 核心繪圖與自動縮放引擎 -->
+  <!-- JavaScript 核心繪圖與樣式引擎 -->
   <script>
     const canvas = document.getElementById('thumbCanvas');
     const ctx = canvas.getContext('2d');
@@ -975,12 +1084,15 @@
         topBadge: "1080P 60fps",
         topBadgeColor: "#ffd700",
         topText: "全程前面展望 • 附報站及行車數據",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#c8102e",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "九巴 KMB 960",
         routeSubTitle: "",
         routeFont: "'Dela Gothic One', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffffff",
         routeStrokeColor: "#c8102e",
         routeFontSize: 92,
@@ -993,10 +1105,14 @@
         routeArrow: "➔",
         stationDest: "灣仔北",
         stationFont: "'Noto Sans TC', sans-serif",
+        stationWeight: "900",
         stationFontSize: 110,
+        stationSlant: -6,
         mainRouteOffsetX: 20,
         mainRouteOffsetY: 0,
         bottomText: "Volvo B9TL 12M | 途經西區海底隧道",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#c8102e",
         bottomFontSize: 42,
         bottomOffsetX: 0,
@@ -1006,12 +1122,15 @@
         topBadge: "4K 60fps",
         topBadgeColor: "#ffcc00",
         topText: "前面展望 停留所名・速度計付き",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#ea5b0c",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "龍運巴士 A31✈",
         routeSubTitle: "",
         routeFont: "'Dela Gothic One', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffffff",
         routeStrokeColor: "#e65100",
         routeFontSize: 92,
@@ -1024,10 +1143,14 @@
         routeArrow: "➔",
         stationDest: "機場",
         stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationWeight: "900",
         stationFontSize: 120,
+        stationSlant: -6,
         mainRouteOffsetX: 0,
         mainRouteOffsetY: 0,
         bottomText: "Enviro500 MMC 12.8M | 21停留所 34.5km",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#ea5b0c",
         bottomFontSize: 42,
         bottomOffsetX: 0,
@@ -1037,12 +1160,15 @@
         topBadge: "1080P 60fps",
         topBadgeColor: "#ffd100",
         topText: "城巴普通路線前面展望 • 附報站系統",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#0055a5",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "城巴 Citybus 102",
         routeSubTitle: "紅磡海底隧道特快線",
         routeFont: "'Dela Gothic One', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffd100",
         routeStrokeColor: "#0055a5",
         routeFontSize: 90,
@@ -1055,10 +1181,14 @@
         routeArrow: "➔",
         stationDest: "筲箕灣",
         stationFont: "'Noto Sans TC', sans-serif",
+        stationWeight: "900",
         stationFontSize: 115,
+        stationSlant: -6,
         mainRouteOffsetX: 10,
         mainRouteOffsetY: 0,
         bottomText: "Alexander Dennis Enviro500 MMC 12.8M (64XX)",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#0055a5",
         bottomFontSize: 40,
         bottomOffsetX: 0,
@@ -1068,12 +1198,15 @@
         topBadge: "4K 60fps",
         topBadgeColor: "#ffd100",
         topText: "Cityflyer 前面展望 • 報站系統",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#d91a2a",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "城巴 Cityflyer A21",
         routeSubTitle: "",
         routeFont: "'Dela Gothic One', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffd100",
         routeStrokeColor: "#b30006",
         routeFontSize: 90,
@@ -1086,10 +1219,14 @@
         routeArrow: "➔",
         stationDest: "機場",
         stationFont: "'Noto Sans TC', sans-serif",
+        stationWeight: "900",
         stationFontSize: 110,
+        stationSlant: -6,
         mainRouteOffsetX: 0,
         mainRouteOffsetY: 0,
         bottomText: "Alexander Dennis Enviro500 12.8M 豪華版",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#d91a2a",
         bottomFontSize: 40,
         bottomOffsetX: 0,
@@ -1099,12 +1236,15 @@
         topBadge: "1080P 60fps",
         topBadgeColor: "#52b788",
         topText: "嶼巴前面展望 • 經伯公坳・長沙",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#008037",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "嶼巴 NLB 3M",
         routeSubTitle: "南大嶼山貫通線",
         routeFont: "'Dela Gothic One', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffffff",
         routeStrokeColor: "#008037",
         routeFontSize: 92,
@@ -1117,10 +1257,14 @@
         routeArrow: "➔",
         stationDest: "東涌市中心",
         stationFont: "'Noto Sans TC', sans-serif",
+        stationWeight: "900",
         stationFontSize: 110,
+        stationSlant: -6,
         mainRouteOffsetX: 10,
         mainRouteOffsetY: 0,
         bottomText: "MAN A95 12M (MDR) | 猛獅雙層巴士",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#008037",
         bottomFontSize: 42,
         bottomOffsetX: 0,
@@ -1130,12 +1274,15 @@
         topBadge: "1080P 60fps",
         topBadgeColor: "#74c69d",
         topText: "大嶼山郊區前面展望 • 水鄉觀光線",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#007a3d",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "嶼巴 NLB 11",
         routeSubTitle: "經：塘福・石壁水塘",
         routeFont: "'Dela Gothic One', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffffff",
         routeStrokeColor: "#007a3d",
         routeFontSize: 92,
@@ -1148,10 +1295,14 @@
         routeArrow: "➔",
         stationDest: "大澳",
         stationFont: "'Noto Sans TC', sans-serif",
+        stationWeight: "900",
         stationFontSize: 115,
+        stationSlant: -6,
         mainRouteOffsetX: 10,
         mainRouteOffsetY: 0,
         bottomText: "MAN RR8 雙門單層巴士 (MN)",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#007a3d",
         bottomFontSize: 42,
         bottomOffsetX: 0,
@@ -1161,12 +1312,15 @@
         topBadge: "4K 60fps",
         topBadgeColor: "#00b4d8",
         topText: "港鐵前面展望 • 全綫車站及速度計",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#0055a5",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "港鐵 東鐵綫 (過海段)",
         routeSubTitle: "",
         routeFont: "'Noto Sans TC', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffffff",
         routeStrokeColor: "#003b75",
         routeFontSize: 88,
@@ -1179,10 +1333,14 @@
         routeArrow: "➔",
         stationDest: "羅湖",
         stationFont: "'Noto Sans TC', sans-serif",
+        stationWeight: "900",
         stationFontSize: 118,
+        stationSlant: -5,
         mainRouteOffsetX: 0,
         mainRouteOffsetY: 0,
         bottomText: "東鐵綫現代列車 (R-Train 9卡編組) 16站 46km",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#0055a5",
         bottomFontSize: 40,
         bottomOffsetX: 0,
@@ -1192,12 +1350,15 @@
         topBadge: "4K 60fps",
         topBadgeColor: "#ffcc00",
         topText: "前面展望 駅名標・速度計・マップ付き",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#d84800",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "湘南新宿ライン",
         routeSubTitle: "",
         routeFont: "'Noto Sans JP', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffffff",
         routeStrokeColor: "#e65c00",
         routeFontSize: 95,
@@ -1210,10 +1371,14 @@
         routeArrow: "➔",
         stationDest: "高崎",
         stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationWeight: "900",
         stationFontSize: 115,
+        stationSlant: -6,
         mainRouteOffsetX: 0,
         mainRouteOffsetY: 0,
         bottomText: "E233系3000番台&E231系 64駅192.7km",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#d84800",
         bottomFontSize: 44,
         bottomOffsetX: 0,
@@ -1223,12 +1388,15 @@
         topBadge: "1080P 60fps",
         topBadgeColor: "#ffd700",
         topText: "前面展望・駅名標・速度計・マップ付き",
+        topTextWeight: "900",
+        topTextItalic: "0",
         topBarColor: "#d63384",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
         routeTitle: "さくらライナー",
         routeSubTitle: "近鉄南大阪線・吉野線",
         routeFont: "'Noto Sans JP', sans-serif",
+        routeWeight: "900",
         routeTextColor: "#ffffff",
         routeStrokeColor: "#e04b7b",
         routeFontSize: 86,
@@ -1241,10 +1409,14 @@
         routeArrow: "➔",
         stationDest: "大阪阿部野橋",
         stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationWeight: "900",
         stationFontSize: 108,
+        stationSlant: -6,
         mainRouteOffsetX: 0,
         mainRouteOffsetY: 0,
         bottomText: "近鉄26000系 09:33➔10:51 43駅 64.9km",
+        bottomWeight: "900",
+        bottomSlant: -8,
         bottomBarColor: "#d63384",
         bottomFontSize: 42,
         bottomOffsetX: 0,
@@ -1260,12 +1432,18 @@
         const el = document.getElementById(key);
         if (el) el.value = p[key];
       }
+      
+      // 更新按鈕 active 樣式
+      const topItalicBtn = document.getElementById('btnTopItalic');
+      if (topItalicBtn) {
+        topItalicBtn.classList.toggle('active', p.topTextItalic === "1");
+      }
+
       updateHints();
       renderCanvas();
       showToast(`已套用範本：「${p.routeTitle}」`);
     }
 
-    // 點選車種標籤快速套用
     function setServiceTag(tagText, colorHex) {
       document.getElementById('serviceType').value = tagText;
       if (colorHex) {
@@ -1273,6 +1451,33 @@
       }
       renderCanvas();
       showToast(`已選擇車種標籤：「${tagText}」`);
+    }
+
+    function toggleStyle(inputId, btnId) {
+      const input = document.getElementById(inputId);
+      const btn = document.getElementById(btnId);
+      const isCurrentlyActive = input.value === "1";
+      input.value = isCurrentlyActive ? "0" : "1";
+      btn.classList.toggle('active', !isCurrentlyActive);
+      renderCanvas();
+    }
+
+    function setSlant(sliderId, deg) {
+      document.getElementById(sliderId).value = deg;
+      renderCanvas();
+    }
+
+    function toggleWeightBtn(selectId, btnId) {
+      const select = document.getElementById(selectId);
+      const btn = document.getElementById(btnId);
+      if (select.value === "900" || select.value === "800") {
+        select.value = "400";
+        btn.classList.remove('active');
+      } else {
+        select.value = "900";
+        btn.classList.add('active');
+      }
+      renderCanvas();
     }
 
     function showToast(msg) {
@@ -1322,10 +1527,12 @@
       document.getElementById('valRouteOffsetY').innerText = document.getElementById('routeOffsetY').value + 'px';
 
       document.getElementById('valStationFontSize').innerText = document.getElementById('stationFontSize').value + 'px';
+      document.getElementById('valStationSlant').innerText = document.getElementById('stationSlant').value + '°';
       document.getElementById('valMainRouteOffsetX').innerText = document.getElementById('mainRouteOffsetX').value + 'px';
       document.getElementById('valMainRouteOffsetY').innerText = document.getElementById('mainRouteOffsetY').value + 'px';
 
       document.getElementById('valBottomFontSize').innerText = document.getElementById('bottomFontSize').value + 'px';
+      document.getElementById('valBottomSlant').innerText = document.getElementById('bottomSlant').value + '°';
       document.getElementById('valBottomOffsetX').innerText = document.getElementById('bottomOffsetX').value + 'px';
       document.getElementById('valBottomOffsetY').innerText = document.getElementById('bottomOffsetY').value + 'px';
     }
@@ -1385,7 +1592,7 @@
       ctx.restore();
     }
 
-    // 核心繪製邏輯（具備全自動文字尺寸與寬度自適應）
+    // 核心繪製邏輯（具備完整字重、斜體與長度自適應）
     function renderCanvas() {
       updateHints();
 
@@ -1393,6 +1600,8 @@
       const topBadge = document.getElementById('topBadge').value.trim();
       const topBadgeColor = document.getElementById('topBadgeColor').value;
       const topText = document.getElementById('topText').value;
+      const topTextWeight = document.getElementById('topTextWeight').value;
+      const topTextItalic = document.getElementById('topTextItalic').value === "1";
       const topBarColor = document.getElementById('topBarColor').value;
       const topBarOpacity = parseFloat(document.getElementById('topBarOpacity').value);
       const topTextOffsetX = parseFloat(document.getElementById('topTextOffsetX').value);
@@ -1401,6 +1610,7 @@
       const routeTitle = document.getElementById('routeTitle').value;
       const routeSubTitle = document.getElementById('routeSubTitle').value;
       const routeFont = document.getElementById('routeFont').value;
+      const routeWeight = document.getElementById('routeWeight').value;
       const routeTextColor = document.getElementById('routeTextColor').value;
       const routeStrokeColor = document.getElementById('routeStrokeColor').value;
       const routeFontSize = parseInt(document.getElementById('routeFontSize').value);
@@ -1414,11 +1624,15 @@
       const routeArrow = document.getElementById('routeArrow').value;
       const stationDest = document.getElementById('stationDest').value;
       const stationFont = document.getElementById('stationFont').value;
+      const stationWeight = document.getElementById('stationWeight').value;
       const stationFontSize = parseInt(document.getElementById('stationFontSize').value);
+      const stationSlant = parseInt(document.getElementById('stationSlant').value);
       const mainRouteOffsetX = parseFloat(document.getElementById('mainRouteOffsetX').value);
       const mainRouteOffsetY = parseFloat(document.getElementById('mainRouteOffsetY').value);
 
       const bottomText = document.getElementById('bottomText').value;
+      const bottomWeight = document.getElementById('bottomWeight').value;
+      const bottomSlant = parseInt(document.getElementById('bottomSlant').value);
       const bottomBarColor = document.getElementById('bottomBarColor').value;
       const bottomFontSize = parseInt(document.getElementById('bottomFontSize').value);
       const bottomOffsetX = parseFloat(document.getElementById('bottomOffsetX').value);
@@ -1472,7 +1686,7 @@
       ctx.fillRect(0, topBarHeight - 3, canvas.width, 3);
       ctx.restore();
 
-      // 2.1 畫質標籤 (全自動寬度計算與字體縮放，支援 4K, 1080P, FHD 等任意輸入)
+      // 2.1 畫質標籤 (動態寬度與自適應)
       let badgeEndX = 25;
       if (topBadge) {
         ctx.save();
@@ -1480,7 +1694,6 @@
         const badgeY = 18;
         const badgeH = 80;
 
-        // 解析單行或雙行標籤 (依空白或逗號分割)
         const parts = topBadge.split(/[\\s,]+/).filter(Boolean);
         let line1 = "";
         let line2 = "";
@@ -1492,18 +1705,15 @@
           line1 = parts[0] || "";
         }
 
-        // 動態計算兩行文字在標準尺寸下的寬度
         ctx.font = '900 36px "Noto Sans JP", sans-serif';
         const m1 = ctx.measureText(line1).width;
         ctx.font = 'bold 22px sans-serif';
         const m2 = line2 ? ctx.measureText(line2).width : 0;
         const maxTextW = Math.max(m1, m2);
 
-        // 徽章寬度自動適應文字長度 (並設置左右各 16px 內襯)
         const badgeW = Math.max(105, maxTextW + 30);
         badgeEndX = badgeX + badgeW;
 
-        // 繪製徽章黑色背景與金黃外框
         ctx.fillStyle = '#080808';
         ctx.fillRect(badgeX, badgeY, badgeW, badgeH);
         
@@ -1511,7 +1721,6 @@
         ctx.lineWidth = 4;
         ctx.strokeRect(badgeX, badgeY, badgeW, badgeH);
 
-        // 標籤文字繪製（若超出則自動縮小比例）
         ctx.textAlign = 'center';
         ctx.fillStyle = topBadgeColor;
 
@@ -1532,15 +1741,15 @@
         ctx.restore();
       }
 
-      // 2.2 頂部特徵文字 (起始 X 動態從徽章右側展開，且自動適應最大可用寬度)
+      // 2.2 頂部特徵文字
       if (topText.trim()) {
         const topStartX = topBadge ? (badgeEndX + 22) : 35;
         const topX = topStartX + topTextOffsetX;
         const topY = 80 + topTextOffsetY;
 
-        // 計算頂部文字可用寬度，超出則自動縮小字級
         const availTopWidth = canvas.width - topX - 40;
-        ctx.font = '900 52px "Noto Sans JP", "Noto Sans TC", sans-serif';
+        const fontPrefix = topTextItalic ? "italic " : "";
+        ctx.font = `${fontPrefix}${topTextWeight} 52px "Noto Sans JP", "Noto Sans TC", sans-serif`;
         const topMetrics = ctx.measureText(topText);
         let effTopFontSize = 52;
         if (topMetrics.width > availTopWidth && availTopWidth > 100) {
@@ -1551,13 +1760,13 @@
           fill: '#ffffff',
           outerStroke: '#000000',
           outerStrokeWidth: Math.round(effTopFontSize * 0.26),
-          font: `900 ${effTopFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+          font: `${fontPrefix}${topTextWeight} ${effTopFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
           align: 'left',
+          slant: topTextItalic ? -8 : 0,
           shadow: true
         });
 
-        // 記錄拖曳邊界
-        ctx.font = `900 ${effTopFontSize}px "Noto Sans JP", sans-serif`;
+        ctx.font = `${fontPrefix}${topTextWeight} ${effTopFontSize}px "Noto Sans JP", sans-serif`;
         const renderedTopMetrics = ctx.measureText(topText);
         hitBoxes.topText = {
           x: topX - 10,
@@ -1567,13 +1776,12 @@
         };
       }
 
-      // 3. 右上角：路線名稱 (超長自動縮放適應)
+      // 3. 右上角：路線名稱 (字重與自訂斜度)
       if (routeTitle.trim()) {
         const titleX = canvas.width - 50 + routeOffsetX;
         const titleY = (routeSubTitle.trim() ? 210 : 240) + routeOffsetY;
 
-        // 檢查路線標題寬度
-        ctx.font = `900 ${routeFontSize}px ${routeFont}`;
+        ctx.font = `${routeWeight} ${routeFontSize}px ${routeFont}`;
         const routeMetrics = ctx.measureText(routeTitle);
         let effRouteFontSize = routeFontSize;
         const maxRouteWidth = 1000;
@@ -1587,13 +1795,13 @@
           innerStrokeWidth: Math.round(effRouteFontSize * 0.17),
           outerStroke: '#ffffff',
           outerStrokeWidth: Math.round(effRouteFontSize * 0.28),
-          font: `900 ${effRouteFontSize}px ${routeFont}`,
+          font: `${routeWeight} ${effRouteFontSize}px ${routeFont}`,
           align: 'right',
           slant: routeSlant,
           shadow: true
         });
 
-        // 若有副標題
+        // 副標題
         if (routeSubTitle.trim()) {
           const subFontSize = Math.round(effRouteFontSize * 0.58);
           drawDualStrokedText(routeSubTitle, titleX, titleY + Math.round(effRouteFontSize * 0.72), {
@@ -1602,14 +1810,14 @@
             innerStrokeWidth: 10,
             outerStroke: '#000000',
             outerStrokeWidth: 18,
-            font: `900 ${subFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+            font: `${routeWeight} ${subFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
             align: 'right',
             slant: routeSlant,
             shadow: true
           });
         }
 
-        ctx.font = `900 ${effRouteFontSize}px ${routeFont}`;
+        ctx.font = `${routeWeight} ${effRouteFontSize}px ${routeFont}`;
         const effMetrics = ctx.measureText(routeTitle);
         hitBoxes.routeTitle = {
           x: titleX - effMetrics.width - 30,
@@ -1619,14 +1827,13 @@
         };
       }
 
-      // 4. 底部區域：車種 + 起訖站 (全自動等比縮放，確保永不超出螢幕)
+      // 4. 底部區域：車種 + 起訖站 (字重、斜體與全自動等比縮放)
       const bottomMainY = canvas.height - 145 + mainRouteOffsetY;
       let currentX = 50 + mainRouteOffsetX;
       const startMainX = currentX;
 
-      // 測量總需求寬度
       const testServiceFont = `italic 900 ${stationFontSize + 6}px "Noto Sans JP", "Noto Sans TC", sans-serif`;
-      const testStationFont = `900 ${stationFontSize}px ${stationFont}`;
+      const testStationFont = `${stationWeight} ${stationFontSize}px ${stationFont}`;
       
       ctx.font = testServiceFont;
       const testServiceWidth = serviceType.trim() ? ctx.measureText(serviceType).width + 40 : 0;
@@ -1638,7 +1845,6 @@
       const totalRequiredWidth = testServiceWidth + testStationWidth;
       const maxAllowedWidth = canvas.width - currentX - 45;
 
-      // 判斷是否需要自動等比縮小
       let scaleRatio = 1.0;
       if (totalRequiredWidth > maxAllowedWidth && maxAllowedWidth > 200) {
         scaleRatio = maxAllowedWidth / totalRequiredWidth;
@@ -1647,7 +1853,7 @@
       const effStationFontSize = Math.floor(stationFontSize * scaleRatio);
       const effServiceFontSize = Math.floor((stationFontSize + 6) * scaleRatio);
 
-      // 4.1 繪製車種別 (特別快速 / 過海特快)
+      // 4.1 車種別 (特別快速 / 過海特快)
       if (serviceType.trim()) {
         drawDualStrokedText(serviceType, currentX, bottomMainY, {
           fill: serviceColor,
@@ -1666,18 +1872,18 @@
         currentX += renderedServiceW + Math.round(35 * scaleRatio);
       }
 
-      // 4.2 繪製起點 ➔ 訖點
+      // 4.2 起點 ➔ 訖點
       drawDualStrokedText(fullRouteText, currentX, bottomMainY, {
         fill: '#ffffff',
         outerStroke: '#000000',
         outerStrokeWidth: Math.round(effStationFontSize * 0.26),
-        font: `900 ${effStationFontSize}px ${stationFont}`,
+        font: `${stationWeight} ${effStationFontSize}px ${stationFont}`,
         align: 'left',
-        slant: -6,
+        slant: stationSlant,
         shadow: true
       });
 
-      ctx.font = `900 ${effStationFontSize}px ${stationFont}`;
+      ctx.font = `${stationWeight} ${effStationFontSize}px ${stationFont}`;
       const renderedRouteW = ctx.measureText(fullRouteText).width;
       hitBoxes.mainRoute = {
         x: startMainX - 20,
@@ -1699,13 +1905,13 @@
       ctx.fillRect(0, bottomBarY, canvas.width, 3);
       ctx.restore();
 
-      // 5.1 底部數據文字 (超長自動縮放)
+      // 5.1 底部數據文字 (字重與斜度)
       if (bottomText.trim()) {
         const bX = 50 + bottomOffsetX;
         const bY = canvas.height - 30 + bottomOffsetY;
         const maxBottomW = canvas.width - bX - 50;
 
-        ctx.font = `italic 900 ${bottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`;
+        ctx.font = `${bottomWeight} ${bottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`;
         const testBMetrics = ctx.measureText(bottomText);
         let effBottomFontSize = bottomFontSize;
         if (testBMetrics.width > maxBottomW && maxBottomW > 100) {
@@ -1716,13 +1922,13 @@
           fill: '#ffffff',
           outerStroke: '#000000',
           outerStrokeWidth: Math.round(effBottomFontSize * 0.26),
-          font: `italic 900 ${effBottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+          font: `${bottomWeight} ${effBottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
           align: 'left',
-          slant: -8,
+          slant: bottomSlant,
           shadow: true
         });
 
-        ctx.font = `italic 900 ${effBottomFontSize}px "Noto Sans JP", sans-serif`;
+        ctx.font = `${bottomWeight} ${effBottomFontSize}px "Noto Sans JP", sans-serif`;
         const bMetrics = ctx.measureText(bottomText);
         hitBoxes.bottomText = {
           x: bX - 10,
