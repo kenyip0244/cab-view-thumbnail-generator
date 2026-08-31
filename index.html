@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前面展望 / 交通影片封面生成器 (Cab View Thumbnail Generator)</title>
+  <!-- Google Fonts 經典日系與繁體黑體、重磅字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@800;900&family=Noto+Sans+JP:wght@700;900&family=Noto+Sans+TC:wght@700;900&family=RocknRoll+One&family=Zen+Kaku+Gothic+New:wght@700;900&family=Zen+Maru+Gothic:wght@900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-base: #0f1117;
+      --bg-panel: #181b24;
+      --bg-card: #222736;
+      --bg-input: #12151e;
+      --accent: #ff5500;
+      --accent-gradient: linear-gradient(135deg, #ff5500, #ff8c00);
+      --text-main: #f3f6fc;
+      --text-muted: #9aa5b8;
+      --border: #32384a;
+      --radius-sm: 6px;
+      --radius: 12px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "Noto Sans JP", sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.5;
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    header h1 .badge {
+      background: var(--accent-gradient);
+      color: #fff;
+      font-size: 13px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 6px;
+    }
+
+    .main-layout {
+      max-width: 1560px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 520px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    @media (max-width: 1180px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 左側預覽與操作 */
+    .preview-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: sticky;
+      top: 20px;
+    }
+
+    .canvas-container {
+      background: #000;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 20px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: var(--accent-gradient);
+      color: white;
+      flex: 1.5;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 85, 0, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border);
+      flex: 1;
+    }
+
+    .btn-secondary:hover {
+      background: #2d3448;
+      border-color: var(--accent);
+    }
+
+    /* 快速範本卡片 */
+    .presets-container {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .presets-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ff9944;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .preset-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+
+    .preset-chip:hover {
+      border-color: var(--accent);
+      background: #2b3144;
+      transform: translateY(-1px);
+    }
+
+    .preset-chip-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .preset-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(0,0,0,0.5);
+    }
+
+    .preset-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* 右側控制面板 */
+    .controls-col {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .section-header {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ffaa55;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .form-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    label span.val-hint {
+      color: #ff9944;
+      font-weight: normal;
+    }
+
+    input[type="text"], select {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      outline: none;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    input[type="text"]:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.2);
+    }
+
+    input[type="color"] {
+      -webkit-appearance: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      width: 100%;
+      height: 38px;
+      cursor: pointer;
+      background: var(--bg-input);
+      padding: 2px 4px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      accent-color: var(--accent);
+      background: var(--bg-input);
+      border-radius: 3px;
+      outline: none;
+    }
+
+    /* 上傳區域 */
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--bg-input);
+    }
+
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--accent);
+      background: rgba(255, 85, 0, 0.06);
+    }
+
+    .upload-zone svg {
+      margin-bottom: 6px;
+    }
+
+    .upload-zone .up-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    .upload-zone .up-subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      color: #fff;
+      border: 1px solid #38bdf8;
+      border-radius: 8px;
+      padding: 12px 20px;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>
+      <span>前面展望 / 交通影片封面生成器</span>
+      <span class="badge">1920 × 1080 FHD</span>
+    </h1>
+    <p>自訂背景圖、頂部條、路線名、車種與起訖站，快速產生 YouTube 鐵道 / 巴士前面展望封面圖</p>
+  </header>
+
+  <div class="main-layout">
+    
+    <!-- 左側：畫布即時預覽與匯出 -->
+    <div class="preview-col">
+      <div class="canvas-container">
+        <canvas id="thumbCanvas" width="1920" height="1080"></canvas>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-primary" id="downloadPngBtn">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          下載 1080P PNG 封面圖
+        </button>
+        <button class="btn btn-secondary" id="copyClipboardBtn">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
+          複製圖片到剪貼簿
+        </button>
+        <button class="btn btn-secondary" id="resetBtn">重設</button>
+      </div>
+
+      <!-- 快速範本選擇 -->
+      <div class="presets-container">
+        <div class="presets-title">⚡ 快速套用範本風格 (Presets)</div>
+        <div class="preset-grid">
+          <button class="preset-chip" onclick="applyPreset('shonan')">
+            <div class="preset-chip-header">
+              <span class="preset-dot" style="background:#d84800;"></span>
+              <span>JR 湘南新宿ライン</span>
+            </div>
+            <div class="preset-desc">特別快速 小田原➔高崎 (經典橘)</div>
+          </button>
+          
+          <button class="preset-chip" onclick="applyPreset('lwb')">
+            <div class="preset-chip-header">
+              <span class="preset-dot" style="background:#ea5b0c;"></span>
+              <span>龍運巴士 A31✈</span>
+            </div>
+            <div class="preset-desc">特快 荃灣➔機場 (龍運橙紅)</div>
+          </button>
+          
+          <button class="preset-chip" onclick="applyPreset('sakura')">
+            <div class="preset-chip-header">
+              <span class="preset-dot" style="background:#d63384;"></span>
+              <span>近鐵 さくらライナー</span>
+            </div>
+            <div class="preset-desc">特急 吉野➔大阪阿部野橋 (櫻花粉)</div>
+          </button>
+          
+          <button class="preset-chip" onclick="applyPreset('kmb')">
+            <div class="preset-chip-header">
+              <span class="preset-dot" style="background:#c8102e;"></span>
+              <span>九巴 KMB 960</span>
+            </div>
+            <div class="preset-desc">過海特快 屯門➔灣仔 (九巴紅)</div>
+          </button>
+          
+          <button class="preset-chip" onclick="applyPreset('mtr')">
+            <div class="preset-chip-header">
+              <span class="preset-dot" style="background:#0055a5;"></span>
+              <span>港鐵 東鐵綫</span>
+            </div>
+            <div class="preset-desc">普通 金鐘➔羅湖 (港鐵藍)</div>
+          </button>
+          
+          <button class="preset-chip" onclick="applyPreset('citybus')">
+            <div class="preset-chip-header">
+              <span class="preset-dot" style="background:#ffc72c;"></span>
+              <span>城巴 Cityflyer A21</span>
+            </div>
+            <div class="preset-desc">機場快線 紅磡站➔機場 (城巴黃)</div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右側：自訂控制面板 -->
+    <div class="controls-col">
+      
+      <!-- 1. 背景圖片設置 -->
+      <div class="section-card">
+        <div class="section-header">📷 1. 背景圖片 (Upload & Adjust)</div>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="imageInput" accept="image/*" style="display:none;">
+          <svg width="28" height="28" fill="none" stroke="#ff8c00" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <div class="up-title">點擊上傳 / 拖曳圖片 / 直接 Ctrl+V 貼上</div>
+          <div class="up-subtitle">支援 JPG, PNG, WEBP 高清截圖</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>圖片縮放 <span class="val-hint" id="valScale">1.0x</span></label>
+            <input type="range" id="imgScale" min="0.4" max="2.5" step="0.01" value="1">
+          </div>
+          <div class="form-group">
+            <label>垂直位移 (Y) <span class="val-hint" id="valOffsetY">0px</span></label>
+            <input type="range" id="imgOffsetY" min="-500" max="500" step="2" value="0">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>水平位移 (X) <span class="val-hint" id="valOffsetX">0px</span></label>
+            <input type="range" id="imgOffsetX" min="-500" max="500" step="2" value="0">
+          </div>
+          <div class="form-group">
+            <label>遮罩 / 暗角濃度 <span class="val-hint" id="valVignette">15%</span></label>
+            <input type="range" id="vignetteOpacity" min="0" max="0.7" step="0.05" value="0.15">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 頂部資訊條設置 -->
+      <div class="section-card">
+        <div class="section-header">🏷️ 2. 頂部標題條 (Top Header Bar)</div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>畫質標籤 (Badge)</label>
+            <input type="text" id="topBadge" value="4K 60fps" placeholder="例如: 4K 60fps">
+          </div>
+          <div class="form-group">
+            <label>標籤字色 / 邊框</label>
+            <input type="color" id="topBadgeColor" value="#ffcc00">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>頂部功能說明文字 (Features Text)</label>
+          <input type="text" id="topText" value="前面展望 駅名標・速度計・マップ付き" placeholder="例如: 前面展望 停留所名・速度計付き">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>頂部條底色</label>
+            <input type="color" id="topBarColor" value="#d84800">
+          </div>
+          <div class="form-group">
+            <label>頂部條透明度</label>
+            <input type="range" id="topBarOpacity" min="0.5" max="1" step="0.05" value="0.95">
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 右上角 / 路線名稱 -->
+      <div class="section-card">
+        <div class="section-header">🚆 3. 路線主標題 (Top Right Title)</div>
+        
+        <div class="form-group">
+          <label>路線名稱 / 標題文字</label>
+          <input type="text" id="routeTitle" value="湘南新宿ライン" placeholder="例如: 湘南新宿ライン 或 龍運巴士 A31✈">
+        </div>
+
+        <div class="form-group">
+          <label>副標題 / 經由 (可選)</label>
+          <input type="text" id="routeSubTitle" value="" placeholder="例如: 近鉄南大阪線・吉野線 或 經：屯門市中心">
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>文字字體</label>
+            <select id="routeFont">
+              <option value="'Dela Gothic One', sans-serif">Dela Gothic (重磅日系)</option>
+              <option value="'Noto Sans JP', sans-serif" selected>Noto Sans JP (無襯線黑體)</option>
+              <option value="'Noto Sans TC', sans-serif">Noto Sans TC (繁體黑體)</option>
+              <option value="'M PLUS Rounded 1c', sans-serif">M PLUS 圓黑體</option>
+              <option value="'RocknRoll One', sans-serif">RocknRoll (活潑手寫)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>主字色</label>
+            <input type="color" id="routeTextColor" value="#ffffff">
+          </div>
+          <div class="form-group">
+            <label>外框描邊色</label>
+            <input type="color" id="routeStrokeColor" value="#e65c00">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>字體大小 <span class="val-hint" id="valRouteFontSize">95px</span></label>
+            <input type="range" id="routeFontSize" min="40" max="140" value="95">
+          </div>
+          <div class="form-group">
+            <label>斜體傾斜度 <span class="val-hint" id="valRouteSlant">-8°</span></label>
+            <input type="range" id="routeSlant" min="-20" max="0" value="-8">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 底部核心起訖站 & 車種 -->
+      <div class="section-card">
+        <div class="section-header">📍 4. 車種別與起訖站 (Main Route)</div>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label>車種別 / 特快標籤</label>
+            <input type="text" id="serviceType" value="特別快速" placeholder="例如: 特別快速 / 特快 / 特急">
+          </div>
+          <div class="form-group">
+            <label>車種填色</label>
+            <input type="color" id="serviceColor" value="#ff2200">
+          </div>
+        </div>
+
+        <div class="form-row-3">
+          <div class="form-group">
+            <label>起點站 (Origin)</label>
+            <input type="text" id="stationOrigin" value="小田原">
+          </div>
+          <div class="form-group">
+            <label>箭頭符號</label>
+            <select id="routeArrow">
+              <option value="➔" selected>➔ (粗黑箭頭)</option>
+              <option value="→">→ (細箭頭)</option>
+              <option value="➡">➡ (實心箭頭)</option>
+              <option value="＝">＝ (雙向/區間)</option>
+              <option value="⇄">⇄ (往返)</option>
+              <option value=" ">無箭頭</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>訖點站 (Dest)</label>
+            <input type="text" id="stationDest" value="高崎">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>站名字體</label>
+            <select id="stationFont">
+              <option value="'Dela Gothic One', sans-serif">Dela Gothic (重磅日系)</option>
+              <option value="'Zen Kaku Gothic New', sans-serif" selected>Zen Kaku Gothic (極黑體)</option>
+              <option value="'Noto Sans TC', sans-serif">Noto Sans TC (繁體黑體)</option>
+              <option value="'M PLUS Rounded 1c', sans-serif">M PLUS 圓黑體</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>站名字體大小 <span class="val-hint" id="valStationFontSize">115px</span></label>
+            <input type="range" id="stationFontSize" min="60" max="160" value="115">
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 底部資訊條 -->
+      <div class="section-card">
+        <div class="section-header">ℹ️ 5. 底部數據條 (Bottom Stats Bar)</div>
+        
+        <div class="form-group">
+          <label>車型 / 途經站數 / 總里程 (Stats Info)</label>
+          <input type="text" id="bottomText" value="E233系3000番台&E231系 64駅192.7km" placeholder="例如: Enviro500 MMC 12.8M | 21停留所 34.5km">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>底部條底色</label>
+            <input type="color" id="bottomBarColor" value="#d84800">
+          </div>
+          <div class="form-group">
+            <label>字體大小 <span class="val-hint" id="valBottomFontSize">44px</span></label>
+            <input type="range" id="bottomFontSize" min="24" max="60" value="44">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <!-- JavaScript 核心繪圖邏輯 -->
+  <script>
+    const canvas = document.getElementById('thumbCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let bgImage = null;
+
+    // 預設範本
+    const presets = {
+      shonan: {
+        topBadge: "4K 60fps",
+        topBadgeColor: "#ffcc00",
+        topText: "前面展望 駅名標・速度計・マップ付き",
+        topBarColor: "#d84800",
+        routeTitle: "湘南新宿ライン",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans JP', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#e65c00",
+        routeFontSize: 95,
+        routeSlant: -8,
+        serviceType: "特別快速",
+        serviceColor: "#ff2200",
+        stationOrigin: "小田原",
+        routeArrow: "➔",
+        stationDest: "高崎",
+        stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationFontSize: 115,
+        bottomText: "E233系3000番台&E231系 64駅192.7km",
+        bottomBarColor: "#d84800",
+        bottomFontSize: 44
+      },
+      lwb: {
+        topBadge: "4K 60fps",
+        topBadgeColor: "#ffcc00",
+        topText: "前面展望 停留所名・速度計付き",
+        topBarColor: "#ea5b0c",
+        routeTitle: "龍運巴士 A31✈",
+        routeSubTitle: "",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#e65100",
+        routeFontSize: 92,
+        routeSlant: -6,
+        serviceType: "特快",
+        serviceColor: "#e50012",
+        stationOrigin: "荃灣",
+        routeArrow: "➔",
+        stationDest: "機場",
+        stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationFontSize: 120,
+        bottomText: "Enviro500 MMC 12.8M | 21停留所 34.5km",
+        bottomBarColor: "#ea5b0c",
+        bottomFontSize: 42
+      },
+      sakura: {
+        topBadge: "4K 60fps",
+        topBadgeColor: "#ffd700",
+        topText: "前面展望・駅名標・速度計・マップ付き",
+        topBarColor: "#d63384",
+        routeTitle: "さくらライナー",
+        routeSubTitle: "近鉄南大阪線・吉野線",
+        routeFont: "'Noto Sans JP', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#e04b7b",
+        routeFontSize: 86,
+        routeSlant: -6,
+        serviceType: "特急",
+        serviceColor: "#ff4081",
+        stationOrigin: "吉野",
+        routeArrow: "➔",
+        stationDest: "大阪阿部野橋",
+        stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationFontSize: 108,
+        bottomText: "近鉄26000系 09:33➔10:51 43駅 64.9km",
+        bottomBarColor: "#d63384",
+        bottomFontSize: 42
+      },
+      kmb: {
+        topBadge: "4K 60fps",
+        topBadgeColor: "#ffd700",
+        topText: "全程前面展望 • 附報站及行車數據",
+        topBarColor: "#c8102e",
+        routeTitle: "九巴 KMB 960",
+        routeSubTitle: "",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#c8102e",
+        routeFontSize: 92,
+        routeSlant: -6,
+        serviceType: "過海特快",
+        serviceColor: "#e50012",
+        stationOrigin: "屯門(建生)",
+        routeArrow: "➔",
+        stationDest: "灣仔北",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 110,
+        bottomText: "Volvo B9TL 12M | 途經西區海底隧道",
+        bottomBarColor: "#c8102e",
+        bottomFontSize: 42
+      },
+      mtr: {
+        topBadge: "4K 60fps",
+        topBadgeColor: "#00b4d8",
+        topText: "港鐵前面展望 • 全綫車站及速度計",
+        topBarColor: "#0055a5",
+        routeTitle: "港鐵 東鐵綫 (過海段)",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#003b75",
+        routeFontSize: 88,
+        routeSlant: -5,
+        serviceType: "普通",
+        serviceColor: "#0077b6",
+        stationOrigin: "金鐘",
+        routeArrow: "➔",
+        stationDest: "羅湖",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 118,
+        bottomText: "東鐵綫現代列車 (R-Train 9卡編組) 16站 46km",
+        bottomBarColor: "#0055a5",
+        bottomFontSize: 40
+      },
+      citybus: {
+        topBadge: "4K 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "Cityflyer 前面展望 • 報站系統",
+        topBarColor: "#d91a2a",
+        routeTitle: "城巴 Cityflyer A21",
+        routeSubTitle: "",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#b30006",
+        routeFontSize: 90,
+        routeSlant: -6,
+        serviceType: "機場快線",
+        serviceColor: "#ffcc00",
+        stationOrigin: "紅磡站",
+        routeArrow: "➔",
+        stationDest: "機場",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 110,
+        bottomText: "Alexander Dennis Enviro500 12.8M 豪華版",
+        bottomBarColor: "#d91a2a",
+        bottomFontSize: 40
+      }
+    };
+
+    function applyPreset(name) {
+      const p = presets[name];
+      if (!p) return;
+      
+      for (const key in p) {
+        const el = document.getElementById(key);
+        if (el) el.value = p[key];
+      }
+      updateHints();
+      renderCanvas();
+      showToast(`已套用範本：「${p.routeTitle}」`);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.style.display = 'block';
+      setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+
+    function updateHints() {
+      document.getElementById('valScale').innerText = document.getElementById('imgScale').value + 'x';
+      document.getElementById('valOffsetY').innerText = document.getElementById('imgOffsetY').value + 'px';
+      document.getElementById('valOffsetX').innerText = document.getElementById('imgOffsetX').value + 'px';
+      document.getElementById('valVignette').innerText = Math.round(document.getElementById('vignetteOpacity').value * 100) + '%';
+      document.getElementById('valRouteFontSize').innerText = document.getElementById('routeFontSize').value + 'px';
+      document.getElementById('valRouteSlant').innerText = document.getElementById('routeSlant').value + '°';
+      document.getElementById('valStationFontSize').innerText = document.getElementById('stationFontSize').value + 'px';
+      document.getElementById('valBottomFontSize').innerText = document.getElementById('bottomFontSize').value + 'px';
+    }
+
+    // 輔助繪圖：多重立體描邊文字
+    function drawDualStrokedText(text, x, y, options = {}) {
+      const {
+        fill = '#ffffff',
+        innerStroke = '#ffffff',
+        innerStrokeWidth = 0,
+        outerStroke = '#000000',
+        outerStrokeWidth = 16,
+        slant = 0,
+        font = 'bold 90px sans-serif',
+        align = 'left',
+        shadow = true
+      } = options;
+
+      ctx.save();
+      ctx.font = font;
+      ctx.textAlign = align;
+      ctx.textBaseline = 'alphabetic';
+
+      if (slant !== 0) {
+        ctx.transform(1, 0, Math.tan((slant * Math.PI) / 180), 1, 0, 0);
+      }
+
+      ctx.lineJoin = 'round';
+      ctx.miterLimit = 2;
+
+      // 外層最厚黑色描邊 (立體深邃陰影)
+      if (outerStrokeWidth > 0) {
+        if (shadow) {
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+          ctx.shadowBlur = 12;
+          ctx.shadowOffsetX = 5;
+          ctx.shadowOffsetY = 5;
+        }
+        ctx.strokeStyle = outerStroke;
+        ctx.lineWidth = outerStrokeWidth;
+        ctx.strokeText(text, x, y);
+      }
+
+      ctx.shadowColor = 'transparent';
+
+      // 中層描邊 (例如雙色外邊或白色光暈)
+      if (innerStrokeWidth > 0) {
+        ctx.strokeStyle = innerStroke;
+        ctx.lineWidth = innerStrokeWidth;
+        ctx.strokeText(text, x, y);
+      }
+
+      // 頂層填色
+      ctx.fillStyle = fill;
+      ctx.fillText(text, x, y);
+
+      ctx.restore();
+    }
+
+    // 核心繪製邏輯
+    function renderCanvas() {
+      updateHints();
+
+      // 取得控制項參數
+      const topBadge = document.getElementById('topBadge').value;
+      const topBadgeColor = document.getElementById('topBadgeColor').value;
+      const topText = document.getElementById('topText').value;
+      const topBarColor = document.getElementById('topBarColor').value;
+      const topBarOpacity = parseFloat(document.getElementById('topBarOpacity').value);
+
+      const routeTitle = document.getElementById('routeTitle').value;
+      const routeSubTitle = document.getElementById('routeSubTitle').value;
+      const routeFont = document.getElementById('routeFont').value;
+      const routeTextColor = document.getElementById('routeTextColor').value;
+      const routeStrokeColor = document.getElementById('routeStrokeColor').value;
+      const routeFontSize = parseInt(document.getElementById('routeFontSize').value);
+      const routeSlant = parseInt(document.getElementById('routeSlant').value);
+
+      const serviceType = document.getElementById('serviceType').value;
+      const serviceColor = document.getElementById('serviceColor').value;
+      const stationOrigin = document.getElementById('stationOrigin').value;
+      const routeArrow = document.getElementById('routeArrow').value;
+      const stationDest = document.getElementById('stationDest').value;
+      const stationFont = document.getElementById('stationFont').value;
+      const stationFontSize = parseInt(document.getElementById('stationFontSize').value);
+
+      const bottomText = document.getElementById('bottomText').value;
+      const bottomBarColor = document.getElementById('bottomBarColor').value;
+      const bottomFontSize = parseInt(document.getElementById('bottomFontSize').value);
+
+      const imgScale = parseFloat(document.getElementById('imgScale').value);
+      const imgOffsetX = parseFloat(document.getElementById('imgOffsetX').value);
+      const imgOffsetY = parseFloat(document.getElementById('imgOffsetY').value);
+      const vignetteOpacity = parseFloat(document.getElementById('vignetteOpacity').value);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 1. 繪製背景底圖
+      if (bgImage) {
+        ctx.save();
+        const w = bgImage.width * imgScale;
+        const h = bgImage.height * imgScale;
+        const x = (canvas.width - w) / 2 + imgOffsetX;
+        const y = (canvas.height - h) / 2 + imgOffsetY;
+        ctx.drawImage(bgImage, x, y, w, h);
+        ctx.restore();
+      } else {
+        const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        grad.addColorStop(0, '#1c2233');
+        grad.addColorStop(1, '#0e121c');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+        ctx.font = '900 42px "Noto Sans TC", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('📷 請於右側上傳或貼上背景車輛圖片 (支援 Ctrl+V)', canvas.width / 2, canvas.height / 2);
+      }
+
+      // 暗角/遮罩
+      if (vignetteOpacity > 0) {
+        ctx.fillStyle = `rgba(0, 0, 0, ${vignetteOpacity})`;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      // 2. 頂部資訊條 (Top Bar)
+      const topBarHeight = 118;
+      ctx.save();
+      ctx.fillStyle = topBarColor;
+      ctx.globalAlpha = topBarOpacity;
+      ctx.fillRect(0, 0, canvas.width, topBarHeight);
+      
+      // 底部高光線
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = 0.5;
+      ctx.fillRect(0, topBarHeight - 3, canvas.width, 3);
+      ctx.restore();
+
+      // 2.1 畫質標籤 (4K 60fps)
+      if (topBadge.trim()) {
+        ctx.save();
+        const badgeX = 25;
+        const badgeY = 18;
+        const badgeW = 105;
+        const badgeH = 80;
+        
+        ctx.fillStyle = '#080808';
+        ctx.fillRect(badgeX, badgeY, badgeW, badgeH);
+        
+        ctx.strokeStyle = topBadgeColor;
+        ctx.lineWidth = 4;
+        ctx.strokeRect(badgeX, badgeY, badgeW, badgeH);
+
+        const parts = topBadge.split(' ');
+        ctx.textAlign = 'center';
+        ctx.fillStyle = topBadgeColor;
+        if (parts.length >= 2) {
+          ctx.font = '900 38px "Noto Sans JP", sans-serif';
+          ctx.fillText(parts[0], badgeX + badgeW / 2, badgeY + 40);
+          ctx.font = 'bold 22px sans-serif';
+          ctx.fillText(parts, badgeX + badgeW / 2, badgeY + 70);
+        } else {
+          ctx.font = '900 32px "Noto Sans JP", sans-serif';
+          ctx.fillText(topBadge, badgeX + badgeW / 2, badgeY + 52);
+        }
+        ctx.restore();
+      }
+
+      // 2.2 頂部特徵文字 (前面展望 駅名標・速度計・マップ付き)
+      if (topText.trim()) {
+        drawDualStrokedText(topText, 150, 80, {
+          fill: '#ffffff',
+          outerStroke: '#000000',
+          outerStrokeWidth: 14,
+          font: '900 52px "Noto Sans JP", "Noto Sans TC", sans-serif',
+          align: 'left',
+          shadow: true
+        });
+      }
+
+      // 3. 右上角：路線名稱 (湘南新宿ライン / 龍運巴士 A31)
+      if (routeTitle.trim()) {
+        const titleY = routeSubTitle.trim() ? 210 : 240;
+        drawDualStrokedText(routeTitle, canvas.width - 50, titleY, {
+          fill: routeTextColor,
+          innerStroke: routeStrokeColor,
+          innerStrokeWidth: 16,
+          outerStroke: '#ffffff',
+          outerStrokeWidth: 26,
+          font: `900 ${routeFontSize}px${routeFont}`,
+          align: 'right',
+          slant: routeSlant,
+          shadow: true
+        });
+
+        // 若有副標題
+        if (routeSubTitle.trim()) {
+          drawDualStrokedText(routeSubTitle, canvas.width - 50, titleY + 70, {
+            fill: '#ffffff',
+            innerStroke: '#20c997',
+            innerStrokeWidth: 10,
+            outerStroke: '#000000',
+            outerStrokeWidth: 18,
+            font: `900 ${Math.round(routeFontSize * 0.6)}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+            align: 'right',
+            slant: routeSlant,
+            shadow: true
+          });
+        }
+      }
+
+      // 4. 底部區域：車種 + 起訖站
+      const bottomMainY = canvas.height - 145;
+
+      // 4.1 車種別 (特別快速 / 特快)
+      let currentX = 50;
+      if (serviceType.trim()) {
+        drawDualStrokedText(serviceType, currentX, bottomMainY, {
+          fill: serviceColor,
+          innerStroke: '#ffffff',
+          innerStrokeWidth: 16,
+          outerStroke: '#000000',
+          outerStrokeWidth: 28,
+          font: `italic 900 ${stationFontSize + 6}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+          align: 'left',
+          slant: -10,
+          shadow: true
+        });
+
+        ctx.font = `italic 900 ${stationFontSize + 6}px "Noto Sans JP", sans-serif`;
+        const metrics = ctx.measureText(serviceType);
+        currentX += metrics.width + 40;
+      }
+
+      // 4.2 起點 ➔ 訖點
+      const fullRouteText = `${stationOrigin} ${routeArrow}${stationDest}`;
+      drawDualStrokedText(fullRouteText, currentX, bottomMainY, {
+        fill: '#ffffff',
+        outerStroke: '#000000',
+        outerStrokeWidth: 28,
+        font: `900 ${stationFontSize}px${stationFont}`,
+        align: 'left',
+        slant: -6,
+        shadow: true
+      });
+
+      // 5. 底部數據條 (Bottom Stats Bar)
+      const bottomBarHeight = 92;
+      const bottomBarY = canvas.height - bottomBarHeight;
+
+      ctx.save();
+      ctx.fillStyle = bottomBarColor;
+      ctx.fillRect(0, bottomBarY, canvas.width, bottomBarHeight);
+      
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = 0.5;
+      ctx.fillRect(0, bottomBarY, canvas.width, 3);
+      ctx.restore();
+
+      // 5.1 底部數據文字 (斜體白字黑邊)
+      if (bottomText.trim()) {
+        drawDualStrokedText(bottomText, 50, canvas.height - 30, {
+          fill: '#ffffff',
+          outerStroke: '#000000',
+          outerStrokeWidth: 12,
+          font: `italic 900 ${bottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+          align: 'left',
+          slant: -8,
+          shadow: true
+        });
+      }
+    }
+
+    // 事件綁定
+    const inputs = document.querySelectorAll('input, select');
+    inputs.forEach(i => i.addEventListener('input', renderCanvas));
+
+    function handleFile(file) {
+      if (!file || !file.type.startsWith('image/')) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          bgImage = img;
+          const scale = Math.max(canvas.width / img.width, canvas.height / img.height);
+          document.getElementById('imgScale').value = scale.toFixed(2);
+          document.getElementById('imgOffsetX').value = 0;
+          document.getElementById('imgOffsetY').value = 0;
+          renderCanvas();
+          showToast('📷 背景圖片已載入成功！');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    const uploadZone = document.getElementById('uploadZone');
+    const imageInput = document.getElementById('imageInput');
+
+    uploadZone.addEventListener('click', () => imageInput.click());
+    imageInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+
+    window.addEventListener('paste', (e) => {
+      const items = (e.clipboardData || e.originalEvent.clipboardData).items;
+      for (const item of items) {
+        if (item.type.indexOf('image') !== -1) {
+          handleFile(item.getAsFile());
+          break;
+        }
+      }
+    });
+
+    document.getElementById('downloadPngBtn').addEventListener('click', () => {
+      const stationOrigin = document.getElementById('stationOrigin').value;
+      const stationDest = document.getElementById('stationDest').value;
+      const routeTitle = document.getElementById('routeTitle').value;
+      const filename = `thumbnail_${routeTitle}_${stationOrigin}_${stationDest}.png`.replace(/[\\/:*?"<>| ]/g, '_');
+      
+      const link = document.createElement('a');
+      link.download = filename;
+      link.href = canvas.toDataURL('image/png', 1.0);
+      link.click();
+      showToast('📥 正在下載 1080P PNG 封面圖...');
+    });
+
+    document.getElementById('copyClipboardBtn').addEventListener('click', async () => {
+      try {
+        canvas.toBlob(async (blob) => {
+          await navigator.clipboard.write([
+            new ClipboardItem({ 'image/png': blob })
+          ]);
+          showToast('📋 已複製封面圖到剪貼簿！');
+        }, 'image/png');
+      } catch (err) {
+        alert('請直接點擊「下載 1080P PNG 封面圖」儲存圖片。');
+      }
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      applyPreset('shonan');
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      document.fonts.ready.then(() => {
+        renderCanvas();
+      });
+    });
+  </script>
+</body>
+</html>
