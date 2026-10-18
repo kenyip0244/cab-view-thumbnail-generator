@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>城巴各款塗裝風格 • 前面展望影片封面生成器</title>
-  <!-- Google Fonts: 引入各級字重 (400, 700, 800, 900) 支援自由切換粗體與斜體 -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1p:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=M+PLUS+Rounded+1c:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Noto+Sans+JP:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Noto+Sans+TC:ital,wght@0,400;0,700;0,900;1,700;1,900&family=RocknRoll+One&family=Zen+Kaku+Gothic+New:ital,wght@0,400;0,700;0,900;1,700;1,900&family=VT323&display=swap" rel="stylesheet">
@@ -719,6 +719,112 @@
           </button>
         </div>
 
+                <div class="presets-title" style="margin-top:8px;">
+          <span>⭐ 城巴官方「主幹線」快速範本 (Trunk Lines)</span>
+          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">港島 • 九龍 • 新界</span>
+        </div>
+
+        <div class="preset-grid">
+          <!-- 港島主幹線 -->
+          <button class="preset-chip" onclick="applyPreset('trunk_2a')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>2A 英皇道線</span>
+            </div>
+            <div class="preset-desc">耀東邨 ➔ 會展站 (King's Road Line)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_4')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>4 薄扶林線</span>
+            </div>
+            <div class="preset-desc">黃竹坑 ➔ 中環交易廣場 (Pok Fu Lam Line)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_38')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>38 南區線</span>
+            </div>
+            <div class="preset-desc">置富花園 ➔ 北角碼頭 (Southern Line)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_82')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>82 東區線</span>
+            </div>
+            <div class="preset-desc">小西灣藍灣半島 ➔ 北角碼頭 (Eastern Line)</div>
+          </button>
+
+          <!-- 九龍市區主幹線 -->
+          <button class="preset-chip" onclick="applyPreset('trunk_20')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>20 窩打老道線</span>
+            </div>
+            <div class="preset-desc">啟德沐安街 ➔ 長沙灣海達 (Waterloo Rd)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_20a')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>20A 彌敦道線</span>
+            </div>
+            <div class="preset-desc">高鐵西九龍站 ➔ 啟德郵輪碼頭 (Nathan Rd)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_701')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>701 西九龍線</span>
+            </div>
+            <div class="preset-desc">海麗邨 ↺ 旺角循環線 (West Kowloon)</div>
+          </button>
+
+          <!-- 新界主幹線 -->
+          <button class="preset-chip" onclick="applyPreset('trunk_50')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>50 屯門線</span>
+            </div>
+            <div class="preset-desc">屯門菁田和田 ➔ 尖沙咀九龍站 (Tuen Mun)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_56')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>56 新界北環線</span>
+            </div>
+            <div class="preset-desc">屯門和田菁田 ➔ 上水天平邨 (Northern Link)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_79x')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>79X 皇后山線</span>
+            </div>
+            <div class="preset-desc">粉嶺皇后山 ➔ 長沙灣甘泉街 (Queen's Hill)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_793')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>793 九龍東西線</span>
+            </div>
+            <div class="preset-desc">將軍澳工業邨 ➔ 蘇屋 (Kowloon East West)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('trunk_798')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background:#003876;"></span>
+              <span>798 將沙線</span>
+            </div>
+            <div class="preset-desc">調景嶺站 ➔ 火炭駿洋邨 (Tseung Sha Line)</div>
+          </button>
+        </div>
+
         <div class="presets-title" style="margin-top:6px;">📐 選擇封面排版風格 (Layout Styles)</div>
         <div class="layout-switcher">
           <button class="layout-btn active" id="btnLayoutClassic" onclick="setLayoutMode('classic')">
@@ -991,27 +1097,43 @@
         </div>
 
         <div class="type-tags-container">
+          <div class="type-category-label" style="font-size:11px; color:#ffd100; font-weight:800;">🏷️ 城巴官方路線編號顏色標準（點擊套用配色）：</div>
           <div class="type-tag-list">
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('城巴機場快線', '#ffd100')">
-              <span class="tag-color-dot" style="background:#ffd100;"></span>城巴機場快線
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('紅隧/東隧過海', '#d91a2a', '#ffffff')">
+              <span class="tag-color-dot" style="background:#d91a2a; border:1px solid #fff;"></span>紅底白字 (紅/東隧過海)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('過海特快', '#e50012')">
-              <span class="tag-color-dot" style="background:#e50012;"></span>過海特快
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('西隧過海線', '#008037', '#ffffff')">
+              <span class="tag-color-dot" style="background:#008037; border:1px solid #fff;"></span>綠底白字 (西隧/B13/E11)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('市區特快', '#ea5b0c')">
-              <span class="tag-color-dot" style="background:#ea5b0c;"></span>市區特快
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('日間市區/特快', '#003876', '#ffffff')">
+              <span class="tag-color-dot" style="background:#003876; border:1px solid #fff;"></span>深藍底白字 (普通/特快線)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('過海路線', '#0055a5')">
-              <span class="tag-color-dot" style="background:#0055a5;"></span>過海路線
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('城巴普通線', '#ffd100', '#000000')">
+              <span class="tag-color-dot" style="background:#ffd100; border:1px solid #000;"></span>黃底黑字 (經典普通線)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('港島常規', '#0072ce')">
-              <span class="tag-color-dot" style="background:#0072ce;"></span>港島常規
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('城巴機場快線', '#9e0b0f', '#ffd100')">
+              <span class="tag-color-dot" style="background:#9e0b0f; border:1px solid #ffd100;"></span>深紅底字 (Cityflyer)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('南區特快', '#d91a2a')">
-              <span class="tag-color-dot" style="background:#d91a2a;"></span>南區特快
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('口岸專線', '#d91a2a', '#ffcc00')">
+              <span class="tag-color-dot" style="background:#d91a2a; border:1px solid #ffcc00;"></span>紅底黃字 (口岸線 B3/B7)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('深宵路線', '#6f42c1')">
-              <span class="tag-color-dot" style="background:#6f42c1;"></span>深宵路線
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('山頂探索號', '#00a3e0', '#ffffff')">
+              <span class="tag-color-dot" style="background:#00a3e0; border:1px solid #fff;"></span>淺藍底白字 (山頂探索號)
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('迪士尼樂園線', '#72c7e7', '#002d62')">
+              <span class="tag-color-dot" style="background:#72c7e7; border:1px solid #002d62;"></span>淺藍深藍字 (迪士尼線 R8)
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('通宵巴士線', '#111111', '#ffcc00')">
+              <span class="tag-color-dot" style="background:#111111; border:1px solid #ffcc00;"></span>黑底黃字 (通宵 N線)
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('觀光城巴 H1', '#00a651', '#ffffff')">
+              <span class="tag-color-dot" style="background:#00a651;"></span>H1 翠綠 (觀光城巴)
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('觀光城巴 H2', '#e6007e', '#ffffff')">
+              <span class="tag-color-dot" style="background:#e6007e;"></span>H2 桃紅 (夜景之旅)
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('觀光城巴 H2K', '#662d91', '#ffffff')">
+              <span class="tag-color-dot" style="background:#662d91;"></span>H2K 紫色 (香港懷舊)
             </button>
           </div>
         </div>
@@ -1052,7 +1174,6 @@
             <input type="range" id="stationFontSize" min="50" max="160" value="110">
           </div>
         </div>
-
         <div class="form-row">
           <div class="form-group">
             <label>站名傾斜度 <span class="val-hint" id="valStationSlant">-6°</span></label>
@@ -1139,6 +1260,438 @@
 
     // 8 大城巴塗裝風格專屬設定 (均遵循文字標準: XXX上/下層展望•經XXX•XXX)
     const presets = {
+      // === 城巴官方主幹線 (Trunk Lines) ===
+      trunk_2a: {
+        logo: 'citybus_rebrand',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴2A英皇道線上層展望 • 經西灣河 • 鰂魚涌 • 炮台山 • 灣仔",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 2A (英皇道線)",
+        routeSubTitle: "King's Road Line • 港島主幹線",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#003876",
+        routeFontSize: 88,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間主幹線",
+        serviceColor: "#003876",
+        stationOrigin: "耀東邨",
+        routeArrow: "➔",
+        stationDest: "會展站",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 110,
+        stationSlant: -6,
+        mainRouteOffsetX: 15,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 12M • 港島東區主幹線",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_4: {
+        logo: 'citybus_classic',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴4號薄扶林線下層展望 • 經華富邨 • 瑪麗醫院 • 香港大學 • 中環",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 4 (薄扶林線)",
+        routeSubTitle: "Pok Fu Lam Line • 港島南區幹道",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#003876",
+        routeFontSize: 90,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間主幹線",
+        serviceColor: "#003876",
+        stationOrigin: "黃竹坑",
+        routeArrow: "➔",
+        stationDest: "中環 (交易廣場)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 105,
+        stationSlant: -6,
+        mainRouteOffsetX: 15,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC 12M • 途經薄扶林道",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_38: {
+        logo: 'citybus_rebrand',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴38號南區線上層展望 • 經香港仔 • 黃竹坑 • 香港仔隧道 • 北角",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 38 (南區線)",
+        routeSubTitle: "Southern Line • 港島南區幹道特快",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#003876",
+        routeFontSize: 92,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間特快",
+        serviceColor: "#003876",
+        stationOrigin: "置富花園",
+        routeArrow: "➔",
+        stationDest: "北角碼頭",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 110,
+        stationSlant: -6,
+        mainRouteOffsetX: 15,
+        mainRouteOffsetY: 0,
+        bottomText: "Volvo B9TL 12M / ADL E500 12.8M • 途經香港仔隧道",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_82: {
+        logo: 'citybus_classic',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴82東區線上層展望 • 經柴灣道 • 筲箕灣 • 太古城 • 鰂魚涌",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 82 (東區線)",
+        routeSubTitle: "Eastern Line • 港島東區傳統幹線",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#003876",
+        routeFontSize: 92,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間主幹線",
+        serviceColor: "#003876",
+        stationOrigin: "小西灣 (藍灣半島)",
+        routeArrow: "➔",
+        stationDest: "北角碼頭",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 105,
+        stationSlant: -6,
+        mainRouteOffsetX: 15,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC 12M • 港島東流水長者特惠線",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_20: {
+        logo: 'citybus_rebrand',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴20窩打老道線上層展望 • 經啟德 • 九龍城 • 窩打老道 • 大角咀",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 20 (窩打老道線)",
+        routeSubTitle: "Waterloo Road Line • 九龍市區主幹線",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#003876",
+        routeFontSize: 86,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間主幹線",
+        serviceColor: "#003876",
+        stationOrigin: "啟德 (沐安街)",
+        routeArrow: "➔",
+        stationDest: "長沙灣 (海達)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -6,
+        mainRouteOffsetX: 15,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC 12.8M (64XX) • 九龍核心大動脈",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_20a: {
+        logo: 'citybus_rebrand',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴20A彌敦道線上層展望 • 經尖沙咀 • 油麻地 • 旺角 • 啟晴邨",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 20A (彌敦道線)",
+        routeSubTitle: "Nathan Road Line • 貫通九龍黃金商圈",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#003876",
+        routeFontSize: 86,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間主幹線",
+        serviceColor: "#003876",
+        stationOrigin: "高鐵西九龍站",
+        routeArrow: "➔",
+        stationDest: "啟德郵輪碼頭",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 105,
+        stationSlant: -6,
+        mainRouteOffsetX: 15,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M • 彌敦道主幹線直達郵輪碼頭",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_701: {
+        logo: 'citybus_rebrand',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴701西九龍線下層展望 • 經南昌站 • 深水埗 • 旺角東 • 海麗邨",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 701 (西九龍線)",
+        routeSubTitle: "West Kowloon Line • 西九龍商圈循環線",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#003876",
+        routeFontSize: 88,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間主幹線",
+        serviceColor: "#003876",
+        stationOrigin: "海麗邨",
+        routeArrow: "＝",
+        stationDest: "旺角 (循環線)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 110,
+        stationSlant: -6,
+        mainRouteOffsetX: 15,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC 12.8M • 西九龍走廊直達",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_50: {
+        logo: 'citybus_rebrand',
+        topBadge: "4K 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴50屯門線上層展望 • 經菁田 • 和田 • 屯門公路 • 西九龍走廊 • 尖沙咀",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 50 (屯門線)",
+        routeSubTitle: "Tuen Mun Line • 新界大西北特快直達九龍",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#003876",
+        routeFontSize: 90,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間特快",
+        serviceColor: "#003876",
+        stationOrigin: "屯門 (菁田及和田)",
+        routeArrow: "➔",
+        stationDest: "尖沙咀 (九龍站)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 100,
+        stationSlant: -6,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M • 屯門公路及西九龍走廊直達尖沙咀",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_56: {
+        logo: 'citybus_rebrand',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴56新界北環線上層展望 • 經和田 • 菁田 • 元朗公路 • 新田公路 • 上水",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 56 (新界北環線)",
+        routeSubTitle: "Northern Link • 屯門至北區快速幹線",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#003876",
+        routeFontSize: 86,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間特快",
+        serviceColor: "#003876",
+        stationOrigin: "屯門 (和田及菁田)",
+        routeArrow: "➔",
+        stationDest: "上水 (天平邨)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 102,
+        stationSlant: -6,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC 12.8M • 經元朗及新田公路",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_79x: {
+        logo: 'citybus_rebrand',
+        topBadge: "4K 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴79X皇后山線上層展望 • 經皇后山 • 吐露港公路 • 青沙公路 • 長沙灣",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 79X (皇后山線)",
+        routeSubTitle: "Queen's Hill Line • 北區青沙公路直達市區",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#003876",
+        routeFontSize: 88,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間特快",
+        serviceColor: "#003876",
+        stationOrigin: "粉嶺皇后山",
+        routeArrow: "➔",
+        stationDest: "長沙灣 (甘泉街)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 106,
+        stationSlant: -6,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M • 途經粉嶺公路、吐露港公路、青沙公路",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_793: {
+        logo: 'citybus_rebrand',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴793九龍東西線上層展望 • 經將軍澳市中心 • 觀塘繞道 • 九龍灣 • 旺角 • 蘇屋",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 793 (九龍東西線)",
+        routeSubTitle: "Kowloon East West Line • 貫通東九龍與西九龍",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#003876",
+        routeFontSize: 84,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間主幹線",
+        serviceColor: "#003876",
+        stationOrigin: "將軍澳工業邨",
+        routeArrow: "➔",
+        stationDest: "蘇屋",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 105,
+        stationSlant: -6,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC 12.8M • 經觀塘繞道特快",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      trunk_798: {
+        logo: 'citybus_rebrand',
+        topBadge: "4K 60fps",
+        topBadgeColor: "#003876",
+        topText: "城巴798將沙線上層展望 • 經將軍澳隧道 • 大老山隧道 • 沙田市中心 • 火炭",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 798 (將沙線)",
+        routeSubTitle: "Tseung Sha Line • 將軍澳至沙田雙隧道特快",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#003876",
+        routeFontSize: 88,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "日間特快",
+        serviceColor: "#003876",
+        stationOrigin: "調景嶺站",
+        routeArrow: "➔",
+        stationDest: "火炭 (駿洋邨)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -6,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC 12.8M • 大老山隧道轉乘主力",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
       // 1. Cityflyer 機場快線經典紅黃 (A29)
       cityflyer: {
         logo: 'cityflyer',
@@ -1520,13 +2073,18 @@
       showToast(`已套用塗裝風格：「${p.routeTitle}」`);
     }
 
-    function setServiceTag(tagText, colorHex) {
+    function setServiceTag(tagText, bgColorHex, textColorHex) {
       document.getElementById('serviceType').value = tagText;
-      if (colorHex) {
-        document.getElementById('serviceColor').value = colorHex;
+      if (bgColorHex) {
+        document.getElementById('serviceColor').value = bgColorHex;
+        document.getElementById('topBarColor').value = bgColorHex;
+        document.getElementById('bottomBarColor').value = bgColorHex;
+      }
+      if (textColorHex) {
+        document.getElementById('topBadgeColor').value = textColorHex;
       }
       renderCanvas();
-      showToast(`已選擇車種標籤：「${tagText}」`);
+      showToast(`已套用官方路線標準配色：「${tagText}」`);
     }
 
     function toggleStyle(inputId, btnId) {
