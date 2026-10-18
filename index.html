@@ -3,27 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>前面展望 / 交通影片封面生成器 (Cab View Thumbnail Generator)</title>
+  <title>城巴各款塗裝風格 • 前面展望影片封面生成器</title>
   <!-- Google Fonts: 引入各級字重 (400, 700, 800, 900) 支援自由切換粗體與斜體 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1p:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=M+PLUS+Rounded+1c:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Noto+Sans+JP:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Noto+Sans+TC:ital,wght@0,400;0,700;0,900;1,700;1,900&family=RocknRoll+One&family=Zen+Kaku+Gothic+New:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Zen+Maru+Gothic:wght@700;900&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1p:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=M+PLUS+Rounded+1c:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Noto+Sans+JP:ital,wght@0,400;0,700;0,900;1,700;1,900&family=Noto+Sans+TC:ital,wght@0,400;0,700;0,900;1,700;1,900&family=RocknRoll+One&family=Zen+Kaku+Gothic+New:ital,wght@0,400;0,700;0,900;1,700;1,900&family=VT323&display=swap" rel="stylesheet">
   
   <style>
     :root {
-      --bg-base: #0f1117;
-      --bg-panel: #181b24;
-      --bg-card: #222736;
-      --bg-input: #12151e;
-      --accent: #ff5500;
-      --accent-hover: #ff7733;
-      --accent-gradient: linear-gradient(135deg, #ff5500, #ff8c00);
+      --bg-base: #0c0e14;
+      --bg-panel: #161922;
+      --bg-card: #202432;
+      --bg-input: #11131b;
+      --accent: #ffd100;
+      --accent-red: #d91a2a;
+      --accent-blue: #0055a5;
       --text-main: #f3f6fc;
       --text-muted: #9aa5b8;
-      --border: #32384a;
+      --border: #2e3547;
       --radius-sm: 6px;
       --radius: 12px;
-      --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
     
     * {
@@ -49,7 +49,6 @@
     header h1 {
       font-size: 26px;
       font-weight: 900;
-      letter-spacing: 0.5px;
       color: #fff;
       display: inline-flex;
       align-items: center;
@@ -58,13 +57,13 @@
       justify-content: center;
     }
 
-    header h1 .badge {
-      background: var(--accent-gradient);
-      color: #fff;
+    header h1 .badge-citybus {
+      background: linear-gradient(135deg, #ffd100, #ffaa00);
+      color: #004080;
       font-size: 13px;
       padding: 3px 10px;
       border-radius: 6px;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: 1px;
     }
 
@@ -75,10 +74,10 @@
     }
 
     .main-layout {
-      max-width: 1600px;
+      max-width: 1620px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 550px;
+      grid-template-columns: 1fr 560px;
       gap: 24px;
       align-items: start;
     }
@@ -89,7 +88,6 @@
       }
     }
 
-    /* 左側預覽與操作 */
     .preview-col {
       display: flex;
       flex-direction: column;
@@ -126,18 +124,15 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(6px);
       color: #ffd700;
-      border: 1px solid rgba(255, 215, 0, 0.3);
+      border: 1px solid rgba(255, 215, 0, 0.4);
       padding: 5px 12px;
       border-radius: 20px;
       font-size: 11.5px;
       font-weight: 700;
       pointer-events: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
       z-index: 10;
     }
 
@@ -163,15 +158,16 @@
     }
 
     .btn-primary {
-      background: var(--accent-gradient);
-      color: white;
+      background: linear-gradient(135deg, #ffd100, #ff9900);
+      color: #0d233a;
+      font-weight: 900;
       flex: 1.4;
     }
 
     .btn-primary:hover {
       filter: brightness(1.1);
       transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(255, 85, 0, 0.4);
+      box-shadow: 0 4px 15px rgba(255, 209, 0, 0.4);
     }
 
     .btn-secondary {
@@ -182,11 +178,11 @@
     }
 
     .btn-secondary:hover {
-      background: #2d3448;
-      border-color: var(--accent);
+      background: #2b3144;
+      border-color: #ffd100;
     }
 
-    /* 版型與範本選擇容器 */
+    /* 塗裝範本選擇庫 */
     .presets-container {
       background: var(--bg-panel);
       border: 1px solid var(--border);
@@ -200,15 +196,14 @@
     .presets-title {
       font-size: 13px;
       font-weight: 800;
-      color: #ff9944;
+      color: #ffd100;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
     }
 
-    /* 多樣化版型切換按鈕 */
     .layout-switcher {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -233,28 +228,28 @@
     }
 
     .layout-btn:hover {
-      border-color: var(--accent);
+      border-color: #ffd100;
       background: #2b3144;
     }
 
     .layout-btn.active {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-      box-shadow: 0 0 10px rgba(255, 85, 0, 0.35);
+      background: #ffd100;
+      color: #0c1c2e;
+      border-color: #ffd100;
+      box-shadow: 0 0 10px rgba(255, 209, 0, 0.4);
     }
 
     .preset-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 9px;
     }
 
     .preset-chip {
       background: var(--bg-card);
       border: 1px solid var(--border);
       color: var(--text-main);
-      padding: 9px 12px;
+      padding: 10px 12px;
       border-radius: var(--radius-sm);
       font-size: 12px;
       font-weight: 700;
@@ -267,23 +262,23 @@
     }
 
     .preset-chip:hover {
-      border-color: var(--accent);
-      background: #2b3144;
-      transform: translateY(-1px);
+      border-color: #ffd100;
+      background: #272d3f;
+      transform: translateY(-2px);
     }
 
     .preset-chip-header {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
 
-    .preset-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
+    .preset-bar {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
       flex-shrink: 0;
-      box-shadow: 0 0 6px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.3);
     }
 
     .preset-desc {
@@ -316,7 +311,7 @@
     .section-header {
       font-size: 13.5px;
       font-weight: 800;
-      color: #ffaa55;
+      color: #ffd100;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -361,7 +356,7 @@
     }
 
     label span.val-hint {
-      color: #ff9944;
+      color: #ffd100;
       font-weight: normal;
       font-size: 11px;
     }
@@ -379,8 +374,8 @@
     }
 
     input[type="text"]:focus, select:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.2);
+      border-color: #ffd100;
+      box-shadow: 0 0 0 2px rgba(255, 209, 0, 0.2);
     }
 
     input[type="color"] {
@@ -397,13 +392,12 @@
     input[type="range"] {
       width: 100%;
       height: 6px;
-      accent-color: var(--accent);
+      accent-color: #ffd100;
       background: var(--bg-input);
       border-radius: 3px;
       outline: none;
     }
 
-    /* 字體樣式按鈕組 */
     .style-toggles {
       display: inline-flex;
       background: var(--bg-input);
@@ -435,8 +429,8 @@
     }
 
     .style-btn.active {
-      background: var(--accent);
-      color: #fff;
+      background: #ffd100;
+      color: #0c1c2e;
     }
 
     .pos-btn-group {
@@ -450,7 +444,7 @@
       background: var(--bg-input);
       border: 1px solid var(--border);
       color: var(--text-muted);
-      padding: 3px 8px;
+      padding: 4px 9px;
       border-radius: 4px;
       font-size: 11px;
       cursor: pointer;
@@ -459,11 +453,10 @@
 
     .btn-xs:hover {
       color: var(--text-main);
-      border-color: var(--accent);
+      border-color: #ffd100;
       background: #202636;
     }
 
-    /* Logo 標籤清單 */
     .logo-chips {
       display: flex;
       flex-wrap: wrap;
@@ -485,25 +478,17 @@
       transition: all 0.15s ease;
     }
 
-    .logo-chip-btn:hover, .logo-chip-btn.active {
-      border-color: var(--accent);
+    .logo-chip-btn:hover {
+      border-color: #ffd100;
       background: #232a3b;
-      color: #ffaa55;
+      color: #ffd100;
     }
 
-    /* 車種推薦標籤區 */
     .type-tags-container {
       display: flex;
       flex-direction: column;
       gap: 6px;
       margin-top: 4px;
-    }
-
-    .type-category-label {
-      font-size: 10.5px;
-      color: #9aa5b8;
-      font-weight: 700;
-      margin-top: 2px;
     }
 
     .type-tag-list {
@@ -531,7 +516,7 @@
     .type-tag-btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      border-color: var(--accent);
+      border-color: #ffd100;
     }
 
     .tag-color-dot {
@@ -541,7 +526,6 @@
       display: inline-block;
     }
 
-    /* 上傳區域 */
     .upload-zone {
       border: 2px dashed var(--border);
       border-radius: var(--radius-sm);
@@ -553,8 +537,8 @@
     }
 
     .upload-zone:hover, .upload-zone.dragover {
-      border-color: var(--accent);
-      background: rgba(255, 85, 0, 0.06);
+      border-color: #ffd100;
+      background: rgba(255, 209, 0, 0.06);
     }
 
     .upload-zone svg {
@@ -573,13 +557,40 @@
       margin-top: 2px;
     }
 
+    /* 快捷上/下層展望點選工具列 */
+    .deck-quickbar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .deck-btn {
+      flex: 1;
+      padding: 5px 8px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: #cbd5e1;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .deck-btn:hover {
+      border-color: #ffd100;
+      color: #ffd100;
+      background: #1e2434;
+    }
+
     .toast {
       position: fixed;
       bottom: 24px;
       right: 24px;
       background: #1e293b;
       color: #fff;
-      border: 1px solid #38bdf8;
+      border: 1px solid #ffd100;
       border-radius: 8px;
       padding: 10px 18px;
       font-size: 13px;
@@ -600,10 +611,10 @@
 
   <header>
     <h1>
-      <span>前面展望 / 交通影片封面生成器</span>
-      <span class="badge">1920 × 1080 FHD</span>
+      <span>城巴各種塗裝風格 • 影片封面生成器</span>
+      <span class="badge-citybus">1920 × 1080 FHD</span>
     </h1>
-    <p>💡 支援<b>「多種版型風格切換」</b>、<b>「自訂公司 Logo」</b>、<b>「字重粗細與斜體」</b>自由調節</p>
+    <p>💡 支援標準格式：<b>「XXX上/下層展望 • 經XXX • XXX」</b> | 包含大食鬼、黃帶紅白藍、Cityflyer、新巴波浪等 8 款經典塗裝配色</p>
   </header>
 
   <div class="main-layout">
@@ -627,9 +638,88 @@
         <button class="btn btn-secondary" id="resetBtn">重設</button>
       </div>
 
-      <!-- 版型風格切換與範本 -->
+      <!-- 排版與城巴塗裝風格選擇 -->
       <div class="presets-container">
-        <div class="presets-title">📐 選擇封面排版風格 (Layout Styles)</div>
+        <div class="presets-title">
+          <span>🎨 城巴歷代各款塗裝顏色風格 (點擊一鍵套用)</span>
+          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">8 大主題色系</span>
+        </div>
+
+        <div class="preset-grid">
+          <!-- 1. Cityflyer 經典紅黃 -->
+          <button class="preset-chip" onclick="applyPreset('cityflyer')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd100 50%, #d91a2a 50%);"></span>
+              <span>1. Cityflyer 機場快線</span>
+            </div>
+            <div class="preset-desc">A29 / S52 經典紅黃流線色 (上/下層展望)</div>
+          </button>
+
+          <!-- 2. 經典大食鬼 -->
+          <button class="preset-chip" onclick="applyPreset('pacman')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd100 50%, #e21b23 50%);"></span>
+              <span>2. 經典「大食鬼」塗裝</span>
+            </div>
+            <div class="preset-desc">43R / 9150 復刻大食鬼紅黃條紋</div>
+          </button>
+
+          <!-- 3. 黃帶紅白藍（捷達色） -->
+          <button class="preset-chip" onclick="applyPreset('classic_stripes')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 40%, #e31b23 40%, #e31b23 60%, #004b97 60%);"></span>
+              <span>3. 經典黃帶紅白藍</span>
+            </div>
+            <div class="preset-desc">73 / 9149 / 6448 捷達標準紅帶藍裙邊</div>
+          </button>
+
+          <!-- 4. 40 週年 1979 復刻藍橙線 -->
+          <button class="preset-chip" onclick="applyPreset('anniversary_40')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 45%, #ff6600 45%, #ff6600 65%, #00338d 65%);"></span>
+              <span>4. 40載你同行 1979復刻</span>
+            </div>
+            <div class="preset-desc">307 / 6495 經典黃身橙藍雙橫條</div>
+          </button>
+
+          <!-- 5. 1979 創辦元祖米黃棗紅 -->
+          <button class="preset-chip" onclick="applyPreset('founder_1979')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #f3e5ab 60%, #5c1d24 60%);"></span>
+              <span>5. 1979 創辦米黃棗紅</span>
+            </div>
+            <div class="preset-desc">20 / 6493 元祖英式米黃咖啡紅帶</div>
+          </button>
+
+          <!-- 6. 當代簡約黃藍色 -->
+          <button class="preset-chip" onclick="applyPreset('modern_yellow_blue')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 65%, #0072ce 65%);"></span>
+              <span>6. 當代簡約黃藍</span>
+            </div>
+            <div class="preset-desc">606 / 8538 無紅條純黃亮藍底</div>
+          </button>
+
+          <!-- 7. 新城合併 動感黃藍斜紋 -->
+          <button class="preset-chip" onclick="applyPreset('new_rebrand')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 45%, #e50012 45%, #e50012 55%, #0055a5 55%);"></span>
+              <span>7. 新品牌動感黃藍斜紋</span>
+            </div>
+            <div class="preset-desc">788 / 8570 新城合併全新小寫 c 品牌色</div>
+          </button>
+
+          <!-- 8. 新巴經典波浪白綠橙 -->
+          <button class="preset-chip" onclick="applyPreset('nwfb_wave')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffffff 40%, #009b3a 40%, #009b3a 55%, #ff7300 55%);"></span>
+              <span>8. 新巴經典波浪白綠橙</span>
+            </div>
+            <div class="preset-desc">8 / 6100 新巴遺產波浪經典色</div>
+          </button>
+        </div>
+
+        <div class="presets-title" style="margin-top:6px;">📐 選擇封面排版風格 (Layout Styles)</div>
         <div class="layout-switcher">
           <button class="layout-btn active" id="btnLayoutClassic" onclick="setLayoutMode('classic')">
             <span>🔲 經典雙橫條</span>
@@ -648,94 +738,91 @@
             <span style="font-size:10px; color:var(--text-muted);">垂直導覽風格</span>
           </button>
         </div>
-
-        <div class="presets-title" style="margin-top:6px;">⚡ 快速套用路線範本 (Presets)</div>
-        <div class="preset-grid">
-          <!-- 香港巴士系列 -->
-          <button class="preset-chip" onclick="applyPreset('kmb')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#c8102e;"></span>
-              <span>九巴 KMB 960</span>
-            </div>
-            <div class="preset-desc">過海特快 屯門(建生)➔灣仔 (九巴紅)</div>
-          </button>
-          
-          <button class="preset-chip" onclick="applyPreset('lwb')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#ea5b0c;"></span>
-              <span>龍運巴士 A31✈</span>
-            </div>
-            <div class="preset-desc">特快 荃灣➔機場 (龍運橙紅)</div>
-          </button>
-
-          <button class="preset-chip" onclick="applyPreset('citybus_reg')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#0055a5;"></span>
-              <span>城巴 普通 102</span>
-            </div>
-            <div class="preset-desc">過海路線 美孚➔筲箕灣 (城巴藍/黃)</div>
-          </button>
-
-          <button class="preset-chip" onclick="applyPreset('citybus_flyer')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#d91a2a;"></span>
-              <span>城巴 Cityflyer A21</span>
-            </div>
-            <div class="preset-desc">機場快線 紅磡站➔機場 (經典黃/紅)</div>
-          </button>
-
-          <button class="preset-chip" onclick="applyPreset('nlb_3m')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#008037;"></span>
-              <span>嶼巴 NLB 3M</span>
-            </div>
-            <div class="preset-desc">大嶼山常規 梅窩➔東涌市中心 (嶼巴綠)</div>
-          </button>
-
-          <button class="preset-chip" onclick="applyPreset('nlb_11')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#007a3d;"></span>
-              <span>嶼巴 NLB 11 (大澳)</span>
-            </div>
-            <div class="preset-desc">觀光郊區 東涌市中心➔大澳 (嶼巴綠)</div>
-          </button>
-
-          <!-- 鐵道系列 -->
-          <button class="preset-chip" onclick="applyPreset('mtr')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#0055a5;"></span>
-              <span>港鐵 東鐵綫</span>
-            </div>
-            <div class="preset-desc">普通 金鐘➔羅湖 (港鐵藍)</div>
-          </button>
-
-          <button class="preset-chip" onclick="applyPreset('shonan')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#d84800;"></span>
-              <span>JR 湘南新宿ライン</span>
-            </div>
-            <div class="preset-desc">特別快速 小田原➔高崎 (經典橘)</div>
-          </button>
-          
-          <button class="preset-chip" onclick="applyPreset('sakura')">
-            <div class="preset-chip-header">
-              <span class="preset-dot" style="background:#d63384;"></span>
-              <span>近鐵 さくらライナー</span>
-            </div>
-            <div class="preset-desc">特急 吉野➔大阪阿部野橋 (櫻花粉)</div>
-          </button>
-        </div>
       </div>
     </div>
 
     <!-- 右側：自訂控制面板 -->
     <div class="controls-col">
       
-      <!-- 0. 公司 Logo 設置 (新功能) -->
+      <!-- 1. 頂部資訊條設置（標準格式：XXX上/下層展望•經XXX•XXX） -->
       <div class="section-card">
         <div class="section-header">
-          <span>🏢 公司 Logo 標誌 (Company Logo)</span>
-          <span class="sub-tag">可拖曳移動</span>
+          <span>🏷️ 1. 頂部特徵條（文字標準格式）</span>
+          <span class="sub-tag">標準格式</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>畫質標籤 (Badge)</label>
+            <input type="text" id="topBadge" value="1080P 60fps" placeholder="例如: 1080P 60fps / 4K 60fps">
+          </div>
+          <div class="form-group">
+            <label>標籤字色 / 框色</label>
+            <input type="color" id="topBadgeColor" value="#ffd100">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>頂部文字標準（格式：XXX上/下層展望•經XXX•XXX）</label>
+          <input type="text" id="topText" value="Cityflyer 上層展望 • 經黃大仙 • 鑽石山 • 九龍灣 • 觀塘 • 坑口">
+          
+          <div class="deck-quickbar">
+            <span style="font-size:11px; color:#9aa5b8; font-weight:700;">快速插入：</span>
+            <button type="button" class="deck-btn" onclick="injectDeck('上層展望')">🏙️ 上層展望</button>
+            <button type="button" class="deck-btn" onclick="injectDeck('下層展望')">🚍 下層展望</button>
+            <button type="button" class="deck-btn" onclick="injectDeck('前面展望')">🎥 前面展望</button>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>字體粗細 (Weight)</label>
+            <select id="topTextWeight">
+              <option value="900" selected>900 (極粗 Extra Black)</option>
+              <option value="800">800 (特粗 Heavy)</option>
+              <option value="700">700 (粗體 Bold)</option>
+              <option value="400">400 (正常 Regular)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>文字樣式 (Style)</label>
+            <div class="style-toggles">
+              <button type="button" class="style-btn" id="btnTopItalic" onclick="toggleStyle('topTextItalic', 'btnTopItalic')">
+                <i>I</i> 斜體
+              </button>
+              <input type="hidden" id="topTextItalic" value="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>頂部色條底色</label>
+            <input type="color" id="topBarColor" value="#d91a2a">
+          </div>
+          <div class="form-group">
+            <label>頂部條透明度</label>
+            <input type="range" id="topBarOpacity" min="0.4" max="1" step="0.05" value="0.95">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>文字水平位移 (X) <span class="val-hint" id="valTopOffsetX">0px</span></label>
+            <input type="range" id="topTextOffsetX" min="-500" max="500" step="2" value="0">
+          </div>
+          <div class="form-group">
+            <label>文字垂直位移 (Y) <span class="val-hint" id="valTopOffsetY">0px</span></label>
+            <input type="range" id="topTextOffsetY" min="-60" max="60" step="1" value="0">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 公司 Logo 設置 -->
+      <div class="section-card">
+        <div class="section-header">
+          <span>🏢 2. 公司 Logo 標誌 (Citybus / NWFB)</span>
+          <span class="sub-tag">可拖曳</span>
         </div>
         
         <div class="form-row">
@@ -747,21 +834,20 @@
             </select>
           </div>
           <div class="form-group">
-            <label>Logo 尺寸 (大小) <span class="val-hint" id="valLogoSize">160px</span></label>
-            <input type="range" id="logoSize" min="40" max="350" value="160">
+            <label>Logo 尺寸 <span class="val-hint" id="valLogoSize">170px</span></label>
+            <input type="range" id="logoSize" min="40" max="350" value="170">
           </div>
         </div>
 
         <div class="form-group">
-          <label>內建知名交通公司 Logo (點擊直接套用)</label>
+          <label>城巴 / 新巴各款經典 Logo (點擊快速套用)</label>
           <div class="logo-chips">
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('kmb')">🔴 九巴 KMB</button>
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('lwb')">🟠 龍運 LWB</button>
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus')">🟡 城巴 Citybus</button>
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('nlb')">🟢 嶼巴 NLB</button>
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('mtr')">🔵 港鐵 MTR</button>
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('jr')">🟢 JR 東日本</button>
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('kintetsu')">🟣 近鐵 Kintetsu</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('cityflyer')">✈️ Cityflyer 機場快線</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus_pacman')">🟡 城巴大食鬼</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus_classic')">🔵 城巴經典黃藍紅白</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus_40th')">🔶 城巴 1979 復刻</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus_rebrand')">🔴 全新城巴小寫 c</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('nwfb')">🟠 新巴波浪 Logo</button>
           </div>
         </div>
 
@@ -789,15 +875,15 @@
         </div>
       </div>
 
-      <!-- 1. 背景圖片設置 -->
+      <!-- 3. 背景圖片設置 -->
       <div class="section-card">
         <div class="section-header">
-          <span>📷 1. 背景圖片 (Background Image)</span>
-          <span class="sub-tag">可拖曳畫布空白處移動</span>
+          <span>📷 3. 背景巴士圖片 (Background Image)</span>
+          <span class="sub-tag">可拖曳</span>
         </div>
         <div class="upload-zone" id="uploadZone">
           <input type="file" id="imageInput" accept="image/*" style="display:none;">
-          <svg width="26" height="26" fill="none" stroke="#ff8c00" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <svg width="26" height="26" fill="none" stroke="#ffd100" stroke-width="2" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
           <div class="up-title">點擊上傳 / 拖曳圖片 / 直接 Ctrl+V 貼上</div>
           <div class="up-subtitle">支援 JPG, PNG, WEBP 高清截圖</div>
         </div>
@@ -823,97 +909,23 @@
             <input type="range" id="imgOffsetY" min="-1000" max="1000" step="2" value="0">
           </div>
         </div>
-        <div class="pos-btn-group">
-          <button class="btn-xs" onclick="resetBgPos()">置中背景</button>
-        </div>
       </div>
 
-      <!-- 2. 頂部資訊條設置 -->
+      <!-- 4. 路線名稱 (右上角) -->
       <div class="section-card">
         <div class="section-header">
-          <span>🏷️ 2. 頂部標題條 (Top Header Bar)</span>
-          <span class="sub-tag">字形與樣式</span>
-        </div>
-        
-        <div class="form-row">
-          <div class="form-group">
-            <label>畫質標籤 (Badge)</label>
-            <input type="text" id="topBadge" value="1080P 60fps" placeholder="例如: 1080P 60fps / 4K 60fps">
-          </div>
-          <div class="form-group">
-            <label>標籤字色 / 邊框</label>
-            <input type="color" id="topBadgeColor" value="#ffcc00">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>頂部功能說明文字 (Features Text)</label>
-          <input type="text" id="topText" value="前面展望 停留所名・速度計付き">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>字體粗細 (Weight)</label>
-            <select id="topTextWeight">
-              <option value="900" selected>900 (極粗 Extra Black)</option>
-              <option value="800">800 (特粗 Heavy)</option>
-              <option value="700">700 (粗體 Bold)</option>
-              <option value="400">400 (正常 Regular)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>文字樣式 (Style)</label>
-            <div class="style-toggles">
-              <button type="button" class="style-btn" id="btnTopItalic" onclick="toggleStyle('topTextItalic', 'btnTopItalic')">
-                <i>I</i> 斜體
-              </button>
-              <input type="hidden" id="topTextItalic" value="0">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>頂部條底色</label>
-            <input type="color" id="topBarColor" value="#c8102e">
-          </div>
-          <div class="form-group">
-            <label>頂部條透明度</label>
-            <input type="range" id="topBarOpacity" min="0.5" max="1" step="0.05" value="0.95">
-          </div>
-        </div>
-
-        <!-- 手動位置調整 -->
-        <div class="form-row">
-          <div class="form-group">
-            <label>文字水平位移 (X) <span class="val-hint" id="valTopOffsetX">0px</span></label>
-            <input type="range" id="topTextOffsetX" min="-500" max="500" step="2" value="0">
-          </div>
-          <div class="form-group">
-            <label>文字垂直位移 (Y) <span class="val-hint" id="valTopOffsetY">0px</span></label>
-            <input type="range" id="topTextOffsetY" min="-60" max="60" step="1" value="0">
-          </div>
-        </div>
-        <div class="pos-btn-group">
-          <button class="btn-xs" onclick="resetPos('topTextOffsetX', 'topTextOffsetY')">重設位置</button>
-        </div>
-      </div>
-
-      <!-- 3. 右上角 / 路線名稱 -->
-      <div class="section-card">
-        <div class="section-header">
-          <span>🚆 3. 路線主標題 (Top Right Title)</span>
-          <span class="sub-tag">字體、粗體與斜度</span>
+          <span>🚆 4. 路線主標題 (Top Right Title)</span>
+          <span class="sub-tag">字體與描邊</span>
         </div>
         
         <div class="form-group">
           <label>路線名稱 / 標題文字</label>
-          <input type="text" id="routeTitle" value="九巴 KMB 960" placeholder="例如: 嶼巴 NLB 3M 或 城巴 Citybus 102">
+          <input type="text" id="routeTitle" value="城巴 Cityflyer A29" placeholder="例如: 城巴 Cityflyer A29 或 城巴 43R">
         </div>
 
         <div class="form-group">
           <label>副標題 / 經由 (可選)</label>
-          <input type="text" id="routeSubTitle" value="" placeholder="例如: 經：屯門市中心 或 伯公坳・長沙">
+          <input type="text" id="routeSubTitle" value="將軍澳特快機場快線" placeholder="例如: 紅磡海底隧道特快線">
         </div>
 
         <div class="form-row-3">
@@ -922,54 +934,32 @@
             <select id="routeFont">
               <option value="'Dela Gothic One', sans-serif" selected>Dela Gothic (重磅日系/巴士)</option>
               <option value="'Noto Sans TC', sans-serif">Noto Sans TC (繁體黑體)</option>
-              <option value="'Noto Sans JP', sans-serif">Noto Sans JP (日系黑體)</option>
+              <option value="'Zen Kaku Gothic New', sans-serif">Zen Kaku Gothic (極黑體)</option>
               <option value="'M PLUS Rounded 1c', sans-serif">M PLUS 圓黑體</option>
-              <option value="'RocknRoll One', sans-serif">RocknRoll (活潑手寫)</option>
               <option value="'VT323', monospace">LED 電牌點陣字</option>
             </select>
           </div>
           <div class="form-group">
             <label>主字色</label>
-            <input type="color" id="routeTextColor" value="#ffffff">
+            <input type="color" id="routeTextColor" value="#ffd100">
           </div>
           <div class="form-group">
             <label>外框描邊色</label>
-            <input type="color" id="routeStrokeColor" value="#c8102e">
+            <input type="color" id="routeStrokeColor" value="#b30006">
           </div>
         </div>
 
         <div class="form-row">
-          <div class="form-group">
-            <label>字體粗細 (Weight)</label>
-            <select id="routeWeight">
-              <option value="900" selected>900 (極粗 Extra Black)</option>
-              <option value="800">800 (特粗 Heavy)</option>
-              <option value="700">700 (粗體 Bold)</option>
-              <option value="400">400 (正常 Regular)</option>
-            </select>
-          </div>
           <div class="form-group">
             <label>字體大小 <span class="val-hint" id="valRouteFontSize">92px</span></label>
             <input type="range" id="routeFontSize" min="40" max="150" value="92">
           </div>
-        </div>
-
-        <div class="form-row">
           <div class="form-group">
-            <label>斜體傾斜度 (Slant) <span class="val-hint" id="valRouteSlant">-6°</span></label>
+            <label>斜體傾斜度 <span class="val-hint" id="valRouteSlant">-6°</span></label>
             <input type="range" id="routeSlant" min="-25" max="15" step="1" value="-6">
           </div>
-          <div class="form-group">
-            <label>快速樣式</label>
-            <div class="style-toggles">
-              <button type="button" class="style-btn active" id="btnRouteBold" onclick="toggleWeightBtn('routeWeight', 'btnRouteBold')"><b>B</b> 粗體</button>
-              <button type="button" class="style-btn" id="btnRouteStraight" onclick="setSlant('routeSlant', 0)">正體 0°</button>
-              <button type="button" class="style-btn" id="btnRouteSlant" onclick="setSlant('routeSlant', -8)">斜體 -8°</button>
-            </div>
-          </div>
         </div>
 
-        <!-- 手動位置調整 -->
         <div class="form-row">
           <div class="form-group">
             <label>水平位置 (X 位移) <span class="val-hint" id="valRouteOffsetX">0px</span></label>
@@ -980,96 +970,48 @@
             <input type="range" id="routeOffsetY" min="-300" max="800" step="2" value="0">
           </div>
         </div>
-        <div class="pos-btn-group">
-          <button class="btn-xs" onclick="alignRoute('right')">靠右對齊</button>
-          <button class="btn-xs" onclick="alignRoute('center')">置中對齊</button>
-          <button class="btn-xs" onclick="alignRoute('left')">靠左對齊</button>
-          <button class="btn-xs" onclick="resetPos('routeOffsetX', 'routeOffsetY')">重設位置</button>
-        </div>
       </div>
 
-      <!-- 4. 底部核心起訖站 & 車種 -->
+      <!-- 5. 核心起訖站 & 車種別 -->
       <div class="section-card">
         <div class="section-header">
-          <span>📍 4. 車種別與起訖站 (Main Route)</span>
-          <span class="sub-tag">粗體、斜體與字重控制</span>
+          <span>📍 5. 車種別與起訖站 (Main Route)</span>
+          <span class="sub-tag">自適應縮放</span>
         </div>
         
         <div class="form-row">
           <div class="form-group">
             <label>車種別 / 標籤文字</label>
-            <input type="text" id="serviceType" value="過海特快" placeholder="例如: 過海特快 / 常規路線 / 特快">
+            <input type="text" id="serviceType" value="城巴機場快線" placeholder="例如: 城巴機場快線 / 特快 / 常規路線">
           </div>
           <div class="form-group">
             <label>車種填色</label>
-            <input type="color" id="serviceColor" value="#e50012">
+            <input type="color" id="serviceColor" value="#ffd100">
           </div>
         </div>
 
-        <!-- 車種標籤快速推薦 -->
         <div class="type-tags-container">
-          <div class="type-category-label">🚌 香港巴士類別推薦標籤：</div>
           <div class="type-tag-list">
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('特快', '#e50012')">
-              <span class="tag-color-dot" style="background:#e50012;"></span>特快
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('城巴機場快線', '#ffd100')">
+              <span class="tag-color-dot" style="background:#ffd100;"></span>城巴機場快線
             </button>
             <button type="button" class="type-tag-btn" onclick="setServiceTag('過海特快', '#e50012')">
               <span class="tag-color-dot" style="background:#e50012;"></span>過海特快
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('常規路線', '#0055a5')">
-              <span class="tag-color-dot" style="background:#0055a5;"></span>常規路線
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('大嶼山常規', '#008037')">
-              <span class="tag-color-dot" style="background:#008037;"></span>大嶼山常規
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('過海路線', '#d91a2a')">
-              <span class="tag-color-dot" style="background:#d91a2a;"></span>過海路線
-            </button>
             <button type="button" class="type-tag-btn" onclick="setServiceTag('市區特快', '#ea5b0c')">
               <span class="tag-color-dot" style="background:#ea5b0c;"></span>市區特快
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('機場快線', '#ffaa00')">
-              <span class="tag-color-dot" style="background:#ffaa00;"></span>機場快線
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('過海路線', '#0055a5')">
+              <span class="tag-color-dot" style="background:#0055a5;"></span>過海路線
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('郊區路線', '#2e7d32')">
-              <span class="tag-color-dot" style="background:#2e7d32;"></span>郊區路線
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('港島常規', '#0072ce')">
+              <span class="tag-color-dot" style="background:#0072ce;"></span>港島常規
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setServiceTag('南區特快', '#d91a2a')">
+              <span class="tag-color-dot" style="background:#d91a2a;"></span>南區特快
             </button>
             <button type="button" class="type-tag-btn" onclick="setServiceTag('深宵路線', '#6f42c1')">
               <span class="tag-color-dot" style="background:#6f42c1;"></span>深宵路線
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('流水線', '#009688')">
-              <span class="tag-color-dot" style="background:#009688;"></span>流水線
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('口岸專線', '#00838f')">
-              <span class="tag-color-dot" style="background:#00838f;"></span>口岸專線
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('直達車', '#ff2200')">
-              <span class="tag-color-dot" style="background:#ff2200;"></span>直達車
-            </button>
-          </div>
-
-          <div class="type-category-label" style="margin-top:6px;">🚆 鐵道前面展望類別推薦標籤：</div>
-          <div class="type-tag-list">
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('特別快速', '#ff2200')">
-              <span class="tag-color-dot" style="background:#ff2200;"></span>特別快速
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('新快速', '#0066cc')">
-              <span class="tag-color-dot" style="background:#0066cc;"></span>新快速
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('特急', '#d63384')">
-              <span class="tag-color-dot" style="background:#d63384;"></span>特急
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('快速', '#ff6600')">
-              <span class="tag-color-dot" style="background:#ff6600;"></span>快速
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('普通', '#0077b6')">
-              <span class="tag-color-dot" style="background:#0077b6;"></span>普通
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('急行', '#2e7d32')">
-              <span class="tag-color-dot" style="background:#2e7d32;"></span>急行
-            </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('各駅停車', '#5c6b73')">
-              <span class="tag-color-dot" style="background:#5c6b73;"></span>各駅停車
             </button>
           </div>
         </div>
@@ -1077,7 +1019,7 @@
         <div class="form-row-3" style="margin-top:6px;">
           <div class="form-group">
             <label>起點站 (Origin)</label>
-            <input type="text" id="stationOrigin" value="屯門(建生)">
+            <input type="text" id="stationOrigin" value="機場">
           </div>
           <div class="form-group">
             <label>箭頭符號</label>
@@ -1085,14 +1027,12 @@
               <option value="➔" selected>➔ (粗黑箭頭)</option>
               <option value="→">→ (細箭頭)</option>
               <option value="➡">➡ (實心箭頭)</option>
-              <option value="＝">＝ (雙向/區間)</option>
-              <option value="⇄">⇄ (往返)</option>
-              <option value=" ">無箭頭</option>
+              <option value="＝">＝ (雙向)</option>
             </select>
           </div>
           <div class="form-group">
             <label>訖點站 (Dest)</label>
-            <input type="text" id="stationDest" value="灣仔北">
+            <input type="text" id="stationDest" value="將軍澳 (寶琳)">
           </div>
         </div>
 
@@ -1100,36 +1040,26 @@
           <div class="form-group">
             <label>站名字體</label>
             <select id="stationFont">
+              <option value="'Noto Sans TC', sans-serif" selected>Noto Sans TC (繁體黑體)</option>
               <option value="'Dela Gothic One', sans-serif">Dela Gothic (重磅日系/巴士)</option>
-              <option value="'Zen Kaku Gothic New', sans-serif" selected>Zen Kaku Gothic (極黑體)</option>
-              <option value="'Noto Sans TC', sans-serif">Noto Sans TC (繁體黑體)</option>
+              <option value="'Zen Kaku Gothic New', sans-serif">Zen Kaku Gothic (極黑體)</option>
               <option value="'M PLUS Rounded 1c', sans-serif">M PLUS 圓黑體</option>
               <option value="'VT323', monospace">LED 電牌點陣字</option>
             </select>
           </div>
           <div class="form-group">
-            <label>站名字重 (Weight)</label>
-            <select id="stationWeight">
-              <option value="900" selected>900 (極粗 Extra Black)</option>
-              <option value="800">800 (特粗 Heavy)</option>
-              <option value="700">700 (粗體 Bold)</option>
-              <option value="400">400 (正常 Regular)</option>
-            </select>
+            <label>站名字體大小 <span class="val-hint" id="valStationFontSize">110px</span></label>
+            <input type="range" id="stationFontSize" min="50" max="160" value="110">
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>站名字體大小 <span class="val-hint" id="valStationFontSize">110px</span></label>
-            <input type="range" id="stationFontSize" min="50" max="160" value="110">
-          </div>
-          <div class="form-group">
-            <label>站名傾斜度 (Slant) <span class="val-hint" id="valStationSlant">-6°</span></label>
+            <label>站名傾斜度 <span class="val-hint" id="valStationSlant">-6°</span></label>
             <input type="range" id="stationSlant" min="-25" max="15" step="1" value="-6">
           </div>
         </div>
 
-        <!-- 手動位置調整 -->
         <div class="form-row">
           <div class="form-group">
             <label>水平位置 (X 位移) <span class="val-hint" id="valMainRouteOffsetX">20px</span></label>
@@ -1140,45 +1070,24 @@
             <input type="range" id="mainRouteOffsetY" min="-800" max="300" step="2" value="0">
           </div>
         </div>
-        <div class="pos-btn-group">
-          <button class="btn-xs" onclick="alignMainRoute('left')">靠左下角</button>
-          <button class="btn-xs" onclick="alignMainRoute('center')">置中下</button>
-          <button class="btn-xs" onclick="resetPos('mainRouteOffsetX', 'mainRouteOffsetY')">重設位置</button>
-        </div>
       </div>
 
-      <!-- 5. 底部資訊條 -->
+      <!-- 6. 底部車型與數據條 -->
       <div class="section-card">
         <div class="section-header">
-          <span>ℹ️ 5. 底部數據條 (Bottom Stats Bar)</span>
-          <span class="sub-tag">字體與斜體樣式</span>
+          <span>ℹ️ 6. 底部數據條 (Bottom Stats Bar)</span>
+          <span class="sub-tag">塗裝底色</span>
         </div>
         
         <div class="form-group">
-          <label>車型 / 途經站數 / 總里程 (Stats Info)</label>
-          <input type="text" id="bottomText" value="Volvo B9TL 12M | 途經西區海底隧道">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label>字體粗細 (Weight)</label>
-            <select id="bottomWeight">
-              <option value="900" selected>900 (極粗 Extra Black)</option>
-              <option value="800">800 (特粗 Heavy)</option>
-              <option value="700">700 (粗體 Bold)</option>
-              <option value="400">400 (正常 Regular)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>底部文字傾斜度 <span class="val-hint" id="valBottomSlant">-8°</span></label>
-            <input type="range" id="bottomSlant" min="-25" max="15" step="1" value="-8">
-          </div>
+          <label>車型 / 途經站數 / 行車數據</label>
+          <input type="text" id="bottomText" value="Alexander Dennis Enviro500 12.8M Coach (6840)">
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>底部條底色</label>
-            <input type="color" id="bottomBarColor" value="#c8102e">
+            <input type="color" id="bottomBarColor" value="#d91a2a">
           </div>
           <div class="form-group">
             <label>基準字體大小 <span class="val-hint" id="valBottomFontSize">42px</span></label>
@@ -1186,7 +1095,6 @@
           </div>
         </div>
 
-        <!-- 手動位置調整 -->
         <div class="form-row">
           <div class="form-group">
             <label>文字水平位移 (X) <span class="val-hint" id="valBottomOffsetX">0px</span></label>
@@ -1196,9 +1104,6 @@
             <label>文字垂直位移 (Y) <span class="val-hint" id="valBottomOffsetY">0px</span></label>
             <input type="range" id="bottomOffsetY" min="-50" max="50" step="1" value="0">
           </div>
-        </div>
-        <div class="pos-btn-group">
-          <button class="btn-xs" onclick="resetPos('bottomOffsetX', 'bottomOffsetY')">重設位置</button>
         </div>
       </div>
 
@@ -1211,388 +1116,326 @@
   <script>
     const canvas = document.getElementById('thumbCanvas');
     const ctx = canvas.getContext('2d');
-    const canvasContainer = document.getElementById('canvasContainer');
 
     let bgImage = null;
     let logoImage = null;
-    let currentLayoutMode = 'classic'; // 'classic', 'modern', 'led', 'sidebar'
+    let currentLayoutMode = 'classic';
 
-    // 內建 SVG Logo 向量字典
+    // 內建 SVG Logo 向量字典 (城巴歷代與新巴特製向量)
     const presetLogos = {
-      kmb: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60"><rect width="160" height="60" rx="10" fill="%23c8102e"/><text x="80" y="44" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="38" text-anchor="middle" letter-spacing="2">KMB</text></svg>`,
-      lwb: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60"><rect width="160" height="60" rx="10" fill="%23ea5b0c"/><text x="80" y="44" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="38" text-anchor="middle" letter-spacing="2">LWB</text></svg>`,
-      citybus: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60"><rect width="220" height="60" rx="10" fill="%23ffd100"/><path d="M12 30 L45 12 L45 48 Z" fill="%23d91a2a"/><text x="130" y="42" fill="%230055a5" font-family="Arial,sans-serif" font-weight="900" font-size="28" text-anchor="middle">CITYBUS</text></svg>`,
-      nlb: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60"><rect width="160" height="60" rx="10" fill="%23008037"/><text x="80" y="44" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="36" text-anchor="middle" letter-spacing="2">NLB</text></svg>`,
-      mtr: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 60"><rect width="180" height="60" rx="10" fill="%230055a5"/><circle cx="42" cy="30" r="18" fill="none" stroke="%23ffffff" stroke-width="5"/><path d="M30 30 L54 30 M42 18 L42 42" stroke="%23ffffff" stroke-width="5" stroke-linecap="round"/><text x="118" y="42" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="32" text-anchor="middle">MTR</text></svg>`,
-      jr: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 60"><rect width="160" height="60" rx="10" fill="%23008000"/><text x="80" y="44" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="38" text-anchor="middle" font-style="italic">JR</text></svg>`,
-      kintetsu: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 60"><rect width="180" height="60" rx="10" fill="%23d63384"/><text x="90" y="42" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="30" text-anchor="middle">近鉄電車</text></svg>`
+      cityflyer: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70"><rect width="240" height="70" rx="10" fill="%23d91a2a"/><text x="120" y="38" fill="%23ffd100" font-family="'Brush Script MT', 'Arial', cursive, sans-serif" font-weight="900" font-size="34" text-anchor="middle" font-style="italic">Cityflyer</text><text x="120" y="58" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="16" text-anchor="middle" letter-spacing="3">城巴機場快線</text></svg>`,
+      citybus_pacman: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70"><rect width="240" height="70" rx="10" fill="%23ffd100"/><circle cx="45" cy="35" r="24" fill="%23e21b23"/><polygon points="45,35 69,20 69,50" fill="%23ffd100"/><text x="145" y="46" fill="%23e21b23" font-family="Arial,sans-serif" font-weight="900" font-size="30" text-anchor="middle">Citybus</text></svg>`,
+      citybus_classic: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 65"><rect width="220" height="65" rx="10" fill="%23ffd100"/><path d="M12 32.5 L45 14 L45 51 Z" fill="%23d91a2a"/><text x="130" y="44" fill="%230055a5" font-family="Arial,sans-serif" font-weight="900" font-size="28" text-anchor="middle">CITYBUS</text></svg>`,
+      citybus_40th: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 70"><rect width="250" height="70" rx="10" fill="%23ffd200"/><polygon points="40,15 65,35 40,55 15,35" fill="%23ff6600"/><polygon points="40,23 53,35 40,47 27,35" fill="%23ffd200"/><text x="150" y="42" fill="%2300338d" font-family="Arial,sans-serif" font-weight="900" font-size="24" text-anchor="middle">Citybus 城巴</text><text x="150" y="58" fill="%2300338d" font-family="Arial,sans-serif" font-weight="700" font-size="12" text-anchor="middle" letter-spacing="1">EST. 1979</text></svg>`,
+      citybus_rebrand: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 65"><rect width="220" height="65" rx="10" fill="%230055a5"/><circle cx="42" cy="32.5" r="20" fill="%23e50012"/><text x="42" y="44" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="32" text-anchor="middle">c</text><text x="125" y="42" fill="%23ffd100" font-family="Arial,sans-serif" font-weight="900" font-size="26" text-anchor="middle">城巴</text></svg>`,
+      nwfb: `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 65"><rect width="220" height="65" rx="10" fill="%23ff7300"/><path d="M15 45 Q 40 10 65 45 T 115 45" fill="none" stroke="%23009b3a" stroke-width="8" stroke-linecap="round"/><circle cx="65" cy="35" r="14" fill="%23ffffff"/><text x="65" y="43" fill="%23ff7300" font-family="Arial,sans-serif" font-weight="900" font-size="18" text-anchor="middle">1</text><text x="155" y="44" fill="%23ffffff" font-family="Arial,sans-serif" font-weight="900" font-size="28" text-anchor="middle">新巴</text></svg>`
     };
 
-    // 碰撞邊界
     const hitBoxes = {};
-
-    // 拖曳狀態
     let isDragging = false;
     let dragTarget = null;
     let startMousePos = { x: 0, y: 0 };
     let startElementPos = { x: 0, y: 0 };
 
-    // 預設範本
+    // 8 大城巴塗裝風格專屬設定 (均遵循文字標準: XXX上/下層展望•經XXX•XXX)
     const presets = {
-      kmb: {
-        logo: 'kmb',
-        topBadge: "1080P 60fps",
-        topBadgeColor: "#ffd700",
-        topText: "全程前面展望 • 附報站及行車數據",
-        topTextWeight: "900",
-        topTextItalic: "0",
-        topBarColor: "#c8102e",
-        topTextOffsetX: 0,
-        topTextOffsetY: 0,
-        routeTitle: "九巴 KMB 960",
-        routeSubTitle: "",
-        routeFont: "'Dela Gothic One', sans-serif",
-        routeWeight: "900",
-        routeTextColor: "#ffffff",
-        routeStrokeColor: "#c8102e",
-        routeFontSize: 92,
-        routeSlant: -6,
-        routeOffsetX: 0,
-        routeOffsetY: 0,
-        serviceType: "過海特快",
-        serviceColor: "#e50012",
-        stationOrigin: "屯門(建生)",
-        routeArrow: "➔",
-        stationDest: "灣仔北",
-        stationFont: "'Noto Sans TC', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 110,
-        stationSlant: -6,
-        mainRouteOffsetX: 20,
-        mainRouteOffsetY: 0,
-        bottomText: "Volvo B9TL 12M | 途經西區海底隧道",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#c8102e",
-        bottomFontSize: 42,
-        bottomOffsetX: 0,
-        bottomOffsetY: 0
-      },
-      lwb: {
-        logo: 'lwb',
-        topBadge: "4K 60fps",
-        topBadgeColor: "#ffcc00",
-        topText: "前面展望 停留所名・速度計付き",
-        topTextWeight: "900",
-        topTextItalic: "0",
-        topBarColor: "#ea5b0c",
-        topTextOffsetX: 0,
-        topTextOffsetY: 0,
-        routeTitle: "龍運巴士 A31✈",
-        routeSubTitle: "",
-        routeFont: "'Dela Gothic One', sans-serif",
-        routeWeight: "900",
-        routeTextColor: "#ffffff",
-        routeStrokeColor: "#e65100",
-        routeFontSize: 92,
-        routeSlant: -6,
-        routeOffsetX: 0,
-        routeOffsetY: 0,
-        serviceType: "特快",
-        serviceColor: "#e50012",
-        stationOrigin: "荃灣",
-        routeArrow: "➔",
-        stationDest: "機場",
-        stationFont: "'Zen Kaku Gothic New', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 120,
-        stationSlant: -6,
-        mainRouteOffsetX: 0,
-        mainRouteOffsetY: 0,
-        bottomText: "Enviro500 MMC 12.8M | 21停留所 34.5km",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#ea5b0c",
-        bottomFontSize: 42,
-        bottomOffsetX: 0,
-        bottomOffsetY: 0
-      },
-      citybus_reg: {
-        logo: 'citybus',
+      // 1. Cityflyer 機場快線經典紅黃 (A29)
+      cityflyer: {
+        logo: 'cityflyer',
         topBadge: "1080P 60fps",
         topBadgeColor: "#ffd100",
-        topText: "城巴普通路線前面展望 • 附報站系統",
-        topTextWeight: "900",
-        topTextItalic: "0",
-        topBarColor: "#0055a5",
-        topTextOffsetX: 0,
-        topTextOffsetY: 0,
-        routeTitle: "城巴 Citybus 102",
-        routeSubTitle: "紅磡海底隧道特快線",
-        routeFont: "'Dela Gothic One', sans-serif",
-        routeWeight: "900",
-        routeTextColor: "#ffd100",
-        routeStrokeColor: "#0055a5",
-        routeFontSize: 90,
-        routeSlant: -6,
-        routeOffsetX: 0,
-        routeOffsetY: 0,
-        serviceType: "過海路線",
-        serviceColor: "#0055a5",
-        stationOrigin: "美孚",
-        routeArrow: "➔",
-        stationDest: "筲箕灣",
-        stationFont: "'Noto Sans TC', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 115,
-        stationSlant: -6,
-        mainRouteOffsetX: 10,
-        mainRouteOffsetY: 0,
-        bottomText: "Alexander Dennis Enviro500 MMC 12.8M (64XX)",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#0055a5",
-        bottomFontSize: 40,
-        bottomOffsetX: 0,
-        bottomOffsetY: 0
-      },
-      citybus_flyer: {
-        logo: 'citybus',
-        topBadge: "4K 60fps",
-        topBadgeColor: "#ffd100",
-        topText: "Cityflyer 前面展望 • 報站系統",
+        topText: "Cityflyer 上層展望 • 經黃大仙 • 鑽石山 • 九龍灣 • 觀塘 • 坑口",
         topTextWeight: "900",
         topTextItalic: "0",
         topBarColor: "#d91a2a",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
-        routeTitle: "城巴 Cityflyer A21",
-        routeSubTitle: "",
+        routeTitle: "城巴 Cityflyer A29",
+        routeSubTitle: "將軍澳特快機場快線",
         routeFont: "'Dela Gothic One', sans-serif",
-        routeWeight: "900",
         routeTextColor: "#ffd100",
         routeStrokeColor: "#b30006",
+        routeFontSize: 92,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "城巴機場快線",
+        serviceColor: "#ffd100",
+        stationOrigin: "機場",
+        routeArrow: "➔",
+        stationDest: "將軍澳 (寶琳)",
+        stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationFontSize: 110,
+        stationSlant: -6,
+        mainRouteOffsetX: 20,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 12.8M Coach (6840)",
+        bottomBarColor: "#d91a2a",
+        bottomFontSize: 42,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      // 2. 經典大食鬼復刻 (43R / 9150)
+      pacman: {
+        logo: 'citybus_pacman',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffffff",
+        topText: "城巴43R下層展望 • 經西營盤 • 堅尼地城站 • 西寧街",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#e21b23",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 43R (大食鬼塗裝)",
+        routeSubTitle: "港島西區接駁循環線",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#e21b23",
         routeFontSize: 90,
         routeSlant: -6,
         routeOffsetX: 0,
         routeOffsetY: 0,
-        serviceType: "機場快線",
-        serviceColor: "#ffcc00",
-        stationOrigin: "紅磡站",
-        routeArrow: "➔",
-        stationDest: "機場",
+        serviceType: "港島常規",
+        serviceColor: "#ffd100",
+        stationOrigin: "堅尼地城站",
+        routeArrow: "＝",
+        stationDest: "西寧街 (循環線)",
         stationFont: "'Noto Sans TC', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 110,
+        stationFontSize: 105,
         stationSlant: -6,
-        mainRouteOffsetX: 0,
+        mainRouteOffsetX: 10,
         mainRouteOffsetY: 0,
-        bottomText: "Alexander Dennis Enviro500 12.8M 豪華版",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#d91a2a",
+        bottomText: "Alexander Dennis Enviro500 MMC 12.8M (9150 / WJ 6188)",
+        bottomBarColor: "#ffd100",
         bottomFontSize: 40,
         bottomOffsetX: 0,
         bottomOffsetY: 0
       },
-      nlb_3m: {
-        logo: 'nlb',
+
+      // 3. 經典黃帶紅白藍 / 捷達色 (73 / 9149)
+      classic_stripes: {
+        logo: 'citybus_classic',
         topBadge: "1080P 60fps",
-        topBadgeColor: "#52b788",
-        topText: "嶼巴前面展望 • 經伯公坳・長沙",
+        topBadgeColor: "#ffd200",
+        topText: "城巴73號下層展望 • 經黃竹坑 • 深水灣 • 淺水灣 • 赤柱",
         topTextWeight: "900",
         topTextItalic: "0",
-        topBarColor: "#008037",
+        topBarColor: "#004b97",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
-        routeTitle: "嶼巴 NLB 3M",
-        routeSubTitle: "南大嶼山貫通線",
+        routeTitle: "城巴 Citybus 73",
+        routeSubTitle: "南區經典海岸風景線",
         routeFont: "'Dela Gothic One', sans-serif",
-        routeWeight: "900",
         routeTextColor: "#ffffff",
-        routeStrokeColor: "#008037",
+        routeStrokeColor: "#004b97",
         routeFontSize: 92,
         routeSlant: -6,
         routeOffsetX: 0,
         routeOffsetY: 0,
-        serviceType: "大嶼山常規",
-        serviceColor: "#008037",
-        stationOrigin: "梅窩碼頭",
+        serviceType: "南區特快",
+        serviceColor: "#e31b23",
+        stationOrigin: "數碼港",
         routeArrow: "➔",
-        stationDest: "東涌市中心",
+        stationDest: "赤柱市場",
         stationFont: "'Noto Sans TC', sans-serif",
-        stationWeight: "900",
         stationFontSize: 110,
         stationSlant: -6,
         mainRouteOffsetX: 10,
         mainRouteOffsetY: 0,
-        bottomText: "MAN A95 12M (MDR) | 猛獅雙層巴士",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#008037",
-        bottomFontSize: 42,
+        bottomText: "Alexander Dennis Enviro500 MMC 12.8M (9149 / EM 6616)",
+        bottomBarColor: "#e31b23",
+        bottomFontSize: 40,
         bottomOffsetX: 0,
         bottomOffsetY: 0
       },
-      nlb_11: {
-        logo: 'nlb',
-        topBadge: "1080P 60fps",
-        topBadgeColor: "#74c69d",
-        topText: "大嶼山郊區前面展望 • 水鄉觀光線",
+
+      // 4. 40 週年 1979 復刻藍橙線 (307 / 6495)
+      anniversary_40: {
+        logo: 'citybus_40th',
+        topBadge: "4K 60fps",
+        topBadgeColor: "#ff6600",
+        topText: "城巴307上層展望 • 經大埔中心 • 大老山隧道 • 東區海底隧道 • 中環",
         topTextWeight: "900",
         topTextItalic: "0",
-        topBarColor: "#007a3d",
+        topBarColor: "#00338d",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
-        routeTitle: "嶼巴 NLB 11",
-        routeSubTitle: "經：塘福・石壁水塘",
+        routeTitle: "城巴 307 (40載你同行)",
+        routeSubTitle: "大埔至港島東隧過海特快",
         routeFont: "'Dela Gothic One', sans-serif",
-        routeWeight: "900",
-        routeTextColor: "#ffffff",
-        routeStrokeColor: "#007a3d",
+        routeTextColor: "#ffd200",
+        routeStrokeColor: "#ff6600",
+        routeFontSize: 90,
+        routeSlant: -6,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "過海特快",
+        serviceColor: "#ff6600",
+        stationOrigin: "大埔中心",
+        routeArrow: "➔",
+        stationDest: "中環碼頭",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 110,
+        stationSlant: -6,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M (6495 / VD 980) 40載同行經典復刻塗裝",
+        bottomBarColor: "#ff6600",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      // 5. 1979 創辦元祖米黃棗紅 (20 / 6493)
+      founder_1979: {
+        logo: 'citybus_40th',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#5c1d24",
+        topText: "城巴20號上層展望 • 經啟德沐安街 • 窩打老道 • 富榮花園 • 海達",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#5c1d24",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 20 (1979元祖塗裝)",
+        routeSubTitle: "九龍市區全新動脈",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#f3e5ab",
+        routeStrokeColor: "#4a151b",
+        routeFontSize: 88,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "市區特快",
+        serviceColor: "#5c1d24",
+        stationOrigin: "啟德 (沐安街)",
+        routeArrow: "➔",
+        stationDest: "長沙灣 (海達)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M (6493 / VB 9800) • CITY BUSES EST. 1979",
+        bottomBarColor: "#5c1d24",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      // 6. 當代簡約黃藍色 (606 / 8538)
+      modern_yellow_blue: {
+        logo: 'citybus_classic',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd200",
+        topText: "城巴606上層展望 • 經耀東邨 • 東區海底隧道 • 九龍灣 • 彩雲",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#0072ce",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "城巴 Citybus 606",
+        routeSubTitle: "港島東往九龍東過海線",
+        routeFont: "'Dela Gothic One', sans-serif",
+        routeTextColor: "#ffd200",
+        routeStrokeColor: "#0072ce",
         routeFontSize: 92,
         routeSlant: -6,
         routeOffsetX: 0,
         routeOffsetY: 0,
-        serviceType: "郊區路線",
-        serviceColor: "#007a3d",
-        stationOrigin: "東涌市中心",
+        serviceType: "過海路線",
+        serviceColor: "#0072ce",
+        stationOrigin: "小西灣 (藍灣半島)",
         routeArrow: "➔",
-        stationDest: "大澳",
+        stationDest: "彩雲 (豐盛街)",
         stationFont: "'Noto Sans TC', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 115,
+        stationFontSize: 105,
         stationSlant: -6,
         mainRouteOffsetX: 10,
         mainRouteOffsetY: 0,
-        bottomText: "MAN RR8 雙門單層巴士 (MN)",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#007a3d",
+        bottomText: "Alexander Dennis Enviro500 MMC 12M (8538 / VN 5149)",
+        bottomBarColor: "#0072ce",
         bottomFontSize: 42,
         bottomOffsetX: 0,
         bottomOffsetY: 0
       },
-      mtr: {
-        logo: 'mtr',
+
+      // 7. 新城合併 動感黃藍斜紋 (788 / 8570)
+      new_rebrand: {
+        logo: 'citybus_rebrand',
         topBadge: "4K 60fps",
-        topBadgeColor: "#00b4d8",
-        topText: "港鐵前面展望 • 全綫車站及速度計",
+        topBadgeColor: "#ffd200",
+        topText: "城巴788下層展望 • 經柴灣工廠區 • 東區走廊 • 告士打道 • 中環",
         topTextWeight: "900",
         topTextItalic: "0",
         topBarColor: "#0055a5",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
-        routeTitle: "港鐵 東鐵綫 (過海段)",
-        routeSubTitle: "",
-        routeFont: "'Noto Sans TC', sans-serif",
-        routeWeight: "900",
+        routeTitle: "城巴 Citybus 788",
+        routeSubTitle: "東區走廊全日特快專線",
+        routeFont: "'Dela Gothic One', sans-serif",
         routeTextColor: "#ffffff",
-        routeStrokeColor: "#003b75",
-        routeFontSize: 88,
-        routeSlant: -5,
+        routeStrokeColor: "#0055a5",
+        routeFontSize: 92,
+        routeSlant: -6,
         routeOffsetX: 0,
         routeOffsetY: 0,
-        serviceType: "普通",
-        serviceColor: "#0077b6",
-        stationOrigin: "金鐘",
+        serviceType: "市區特快",
+        serviceColor: "#e50012",
+        stationOrigin: "小西灣 (藍灣半島)",
         routeArrow: "➔",
-        stationDest: "羅湖",
-        stationFont: "'Noto Sans TC', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 118,
-        stationSlant: -5,
-        mainRouteOffsetX: 0,
+        stationDest: "中環 (港澳碼頭)",
+        stationFont: "'Zen Kaku Gothic New', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -6,
+        mainRouteOffsetX: 10,
         mainRouteOffsetY: 0,
-        bottomText: "東鐵綫現代列車 (R-Train 9卡編組) 16站 46km",
-        bottomWeight: "900",
-        bottomSlant: -8,
+        bottomText: "Alexander Dennis Enviro500 MMC 12M (8570 / VM 3845) 新品牌塗裝",
         bottomBarColor: "#0055a5",
         bottomFontSize: 40,
         bottomOffsetX: 0,
         bottomOffsetY: 0
       },
-      shonan: {
-        logo: 'jr',
-        topBadge: "4K 60fps",
-        topBadgeColor: "#ffcc00",
-        topText: "前面展望 駅名標・速度計・マップ付き",
-        topTextWeight: "900",
-        topTextItalic: "0",
-        topBarColor: "#d84800",
-        topTextOffsetX: 0,
-        topTextOffsetY: 0,
-        routeTitle: "湘南新宿ライン",
-        routeSubTitle: "",
-        routeFont: "'Noto Sans JP', sans-serif",
-        routeWeight: "900",
-        routeTextColor: "#ffffff",
-        routeStrokeColor: "#e65c00",
-        routeFontSize: 95,
-        routeSlant: -8,
-        routeOffsetX: 0,
-        routeOffsetY: 0,
-        serviceType: "特別快速",
-        serviceColor: "#ff2200",
-        stationOrigin: "小田原",
-        routeArrow: "➔",
-        stationDest: "高崎",
-        stationFont: "'Zen Kaku Gothic New', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 115,
-        stationSlant: -6,
-        mainRouteOffsetX: 0,
-        mainRouteOffsetY: 0,
-        bottomText: "E233系3000番台&E231系 64駅192.7km",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#d84800",
-        bottomFontSize: 44,
-        bottomOffsetX: 0,
-        bottomOffsetY: 0
-      },
-      sakura: {
-        logo: 'kintetsu',
+
+      // 8. 新巴經典波浪白綠橙 (8 / 6100)
+      nwfb_wave: {
+        logo: 'nwfb',
         topBadge: "1080P 60fps",
-        topBadgeColor: "#ffd700",
-        topText: "前面展望・駅名標・速度計・マップ付き",
+        topBadgeColor: "#009b3a",
+        topText: "新巴8號上層展望 • 經筲箕灣 • 太古城 • 北角 • 銅鑼灣 • 灣仔北",
         topTextWeight: "900",
         topTextItalic: "0",
-        topBarColor: "#d63384",
+        topBarColor: "#ff7300",
         topTextOffsetX: 0,
         topTextOffsetY: 0,
-        routeTitle: "さくらライナー",
-        routeSubTitle: "近鉄南大阪線・吉野線",
-        routeFont: "'Noto Sans JP', sans-serif",
-        routeWeight: "900",
+        routeTitle: "新巴 NWFB 8 (經典波浪)",
+        routeSubTitle: "港島北岸經典流水特快",
+        routeFont: "'Dela Gothic One', sans-serif",
         routeTextColor: "#ffffff",
-        routeStrokeColor: "#e04b7b",
-        routeFontSize: 86,
+        routeStrokeColor: "#009b3a",
+        routeFontSize: 90,
         routeSlant: -6,
         routeOffsetX: 0,
         routeOffsetY: 0,
-        serviceType: "特急",
-        serviceColor: "#ff4081",
-        stationOrigin: "吉野",
+        serviceType: "港島常規",
+        serviceColor: "#009b3a",
+        stationOrigin: "杏花邨",
         routeArrow: "➔",
-        stationDest: "大阪阿部野橋",
-        stationFont: "'Zen Kaku Gothic New', sans-serif",
-        stationWeight: "900",
-        stationFontSize: 108,
+        stationDest: "灣仔北",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 112,
         stationSlant: -6,
-        mainRouteOffsetX: 0,
+        mainRouteOffsetX: 15,
         mainRouteOffsetY: 0,
-        bottomText: "近鉄26000系 09:33➔10:51 43駅 64.9km",
-        bottomWeight: "900",
-        bottomSlant: -8,
-        bottomBarColor: "#d63384",
-        bottomFontSize: 42,
+        bottomText: "Alexander Dennis Enviro500 12M (6100 / UM 722) 新巴經典白綠橙波浪",
+        bottomBarColor: "#009b3a",
+        bottomFontSize: 40,
         bottomOffsetX: 0,
         bottomOffsetY: 0
       }
     };
 
-    // 切換排版風格
     function setLayoutMode(mode) {
       currentLayoutMode = mode;
       document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
@@ -1617,7 +1460,7 @@
         logoImage = img;
         document.getElementById('logoEnabled').value = "1";
         renderCanvas();
-        showToast(`已載入 ${logoKey.toUpperCase()} 公司標誌！`);
+        showToast(`已套用專屬標誌！`);
       };
       img.src = presetLogos[logoKey];
     }
@@ -1634,6 +1477,24 @@
         document.getElementById('logoOffsetY').value = 350;
       }
       renderCanvas();
+    }
+
+    // 快捷替換上層 / 下層展望
+    function injectDeck(deckType) {
+      const topInput = document.getElementById('topText');
+      let val = topInput.value;
+      if (val.includes('上層展望')) {
+        val = val.replace('上層展望', deckType);
+      } else if (val.includes('下層展望')) {
+        val = val.replace('下層展望', deckType);
+      } else if (val.includes('前面展望')) {
+        val = val.replace('前面展望', deckType);
+      } else {
+        val = val.replace(/^(\S+)/, `$1 ${deckType}`);
+      }
+      topInput.value = val;
+      renderCanvas();
+      showToast(`已切換為：${deckType}`);
     }
 
     function applyPreset(name) {
@@ -1656,7 +1517,7 @@
 
       updateHints();
       renderCanvas();
-      showToast(`已套用範本：「${p.routeTitle}」`);
+      showToast(`已套用塗裝風格：「${p.routeTitle}」`);
     }
 
     function setServiceTag(tagText, colorHex) {
@@ -1677,24 +1538,6 @@
       renderCanvas();
     }
 
-    function setSlant(sliderId, deg) {
-      document.getElementById(sliderId).value = deg;
-      renderCanvas();
-    }
-
-    function toggleWeightBtn(selectId, btnId) {
-      const select = document.getElementById(selectId);
-      const btn = document.getElementById(btnId);
-      if (select.value === "900" || select.value === "800") {
-        select.value = "400";
-        btn.classList.remove('active');
-      } else {
-        select.value = "900";
-        btn.classList.add('active');
-      }
-      renderCanvas();
-    }
-
     function showToast(msg) {
       const toast = document.getElementById('toast');
       toast.innerText = msg;
@@ -1705,25 +1548,6 @@
     function resetPos(idX, idY) {
       document.getElementById(idX).value = 0;
       document.getElementById(idY).value = 0;
-      renderCanvas();
-    }
-
-    function resetBgPos() {
-      document.getElementById('imgOffsetX').value = 0;
-      document.getElementById('imgOffsetY').value = 0;
-      renderCanvas();
-    }
-
-    function alignRoute(mode) {
-      if (mode === 'right') document.getElementById('routeOffsetX').value = 0;
-      if (mode === 'center') document.getElementById('routeOffsetX').value = -350;
-      if (mode === 'left') document.getElementById('routeOffsetX').value = -850;
-      renderCanvas();
-    }
-
-    function alignMainRoute(mode) {
-      if (mode === 'left') document.getElementById('mainRouteOffsetX').value = 20;
-      if (mode === 'center') document.getElementById('mainRouteOffsetX').value = 350;
       renderCanvas();
     }
 
@@ -1751,12 +1575,10 @@
       document.getElementById('valMainRouteOffsetY').innerText = document.getElementById('mainRouteOffsetY').value + 'px';
 
       document.getElementById('valBottomFontSize').innerText = document.getElementById('bottomFontSize').value + 'px';
-      document.getElementById('valBottomSlant').innerText = document.getElementById('bottomSlant').value + '°';
       document.getElementById('valBottomOffsetX').innerText = document.getElementById('bottomOffsetX').value + 'px';
       document.getElementById('valBottomOffsetY').innerText = document.getElementById('bottomOffsetY').value + 'px';
     }
 
-    // 輔助繪圖：多重立體描邊文字
     function drawDualStrokedText(text, x, y, options = {}) {
       const {
         fill = '#ffffff',
@@ -1782,7 +1604,6 @@
       ctx.lineJoin = 'round';
       ctx.miterLimit = 2;
 
-      // 外層最厚黑色描邊
       if (outerStrokeWidth > 0) {
         if (shadow) {
           ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
@@ -1797,25 +1618,21 @@
 
       ctx.shadowColor = 'transparent';
 
-      // 中層描邊
       if (innerStrokeWidth > 0) {
         ctx.strokeStyle = innerStroke;
         ctx.lineWidth = innerStrokeWidth;
         ctx.strokeText(text, x, y);
       }
 
-      // 頂層填色
       ctx.fillStyle = fill;
       ctx.fillText(text, x, y);
 
       ctx.restore();
     }
 
-    // 核心繪製邏輯
     function renderCanvas() {
       updateHints();
 
-      // 讀取控制項數值
       const isLogoEnabled = document.getElementById('logoEnabled').value === "1";
       const logoSize = parseInt(document.getElementById('logoSize').value);
       const logoOffsetX = parseFloat(document.getElementById('logoOffsetX').value);
@@ -1834,7 +1651,6 @@
       const routeTitle = document.getElementById('routeTitle').value;
       const routeSubTitle = document.getElementById('routeSubTitle').value;
       const routeFont = document.getElementById('routeFont').value;
-      const routeWeight = document.getElementById('routeWeight').value;
       const routeTextColor = document.getElementById('routeTextColor').value;
       const routeStrokeColor = document.getElementById('routeStrokeColor').value;
       const routeFontSize = parseInt(document.getElementById('routeFontSize').value);
@@ -1848,15 +1664,12 @@
       const routeArrow = document.getElementById('routeArrow').value;
       const stationDest = document.getElementById('stationDest').value;
       const stationFont = document.getElementById('stationFont').value;
-      const stationWeight = document.getElementById('stationWeight').value;
       const stationFontSize = parseInt(document.getElementById('stationFontSize').value);
       const stationSlant = parseInt(document.getElementById('stationSlant').value);
       const mainRouteOffsetX = parseFloat(document.getElementById('mainRouteOffsetX').value);
       const mainRouteOffsetY = parseFloat(document.getElementById('mainRouteOffsetY').value);
 
       const bottomText = document.getElementById('bottomText').value;
-      const bottomWeight = document.getElementById('bottomWeight').value;
-      const bottomSlant = parseInt(document.getElementById('bottomSlant').value);
       const bottomBarColor = document.getElementById('bottomBarColor').value;
       const bottomFontSize = parseInt(document.getElementById('bottomFontSize').value);
       const bottomOffsetX = parseFloat(document.getElementById('bottomOffsetX').value);
@@ -1869,7 +1682,7 @@
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // 1. 繪製背景底圖
+      // 1. 背景底圖
       if (bgImage) {
         ctx.save();
         const w = bgImage.width * imgScale;
@@ -1891,15 +1704,13 @@
         ctx.fillText('📷 請於右側上傳或貼上背景車輛圖片 (支援 Ctrl+V)', canvas.width / 2, canvas.height / 2);
       }
 
-      // 暗角 / 遮罩
       if (vignetteOpacity > 0) {
         ctx.fillStyle = `rgba(0, 0, 0, ${vignetteOpacity})`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
 
-      // 2. 根據 Layout 模式繪製背景裝飾結構
+      // 2. 版型結構
       if (currentLayoutMode === 'classic') {
-        // 經典模式：頂部與底部色塊條
         const topBarHeight = 118;
         ctx.save();
         ctx.fillStyle = topBarColor;
@@ -1920,7 +1731,6 @@
         ctx.fillRect(0, bottomBarY, canvas.width, 3);
         ctx.restore();
       } else if (currentLayoutMode === 'modern') {
-        // 現代模式：上下漸層微陰影
         const topGrad = ctx.createLinearGradient(0, 0, 0, 180);
         topGrad.addColorStop(0, 'rgba(0,0,0,0.85)');
         topGrad.addColorStop(1, 'rgba(0,0,0,0)');
@@ -1933,7 +1743,6 @@
         ctx.fillStyle = botGrad;
         ctx.fillRect(0, canvas.height - 200, canvas.width, 200);
       } else if (currentLayoutMode === 'led') {
-        // LED 電牌矩陣框模式
         const boxX = canvas.width - 920 + routeOffsetX;
         const boxY = 80 + routeOffsetY;
         const boxW = 870;
@@ -1947,7 +1756,6 @@
         ctx.strokeRect(boxX, boxY, boxW, boxH);
         ctx.restore();
       } else if (currentLayoutMode === 'sidebar') {
-        // 側邊站牌欄模式
         const sideW = 420;
         ctx.save();
         ctx.fillStyle = topBarColor;
@@ -1959,7 +1767,7 @@
         ctx.restore();
       }
 
-      // 3. 繪製畫質標籤 Badge
+      // 3. 畫質標籤 Badge
       let badgeEndX = 25;
       if (topBadge) {
         ctx.save();
@@ -1967,7 +1775,7 @@
         const badgeY = 18;
         const badgeH = 80;
 
-        const parts = topBadge.split(/[\\s,]+/).filter(Boolean);
+        const parts = topBadge.split(/[\s,]+/).filter(Boolean);
         let line1 = parts[0] || "";
         let line2 = parts.length >= 2 ? parts.slice(1).join(' ') : "";
 
@@ -2007,7 +1815,7 @@
         ctx.restore();
       }
 
-      // 4. 頂部特徵文字
+      // 4. 頂部特徵文字 (標準格式: XXX上/下層展望•經XXX•XXX)
       if (topText.trim()) {
         const topStartX = topBadge ? (badgeEndX + 22) : 35;
         const topX = topStartX + topTextOffsetX;
@@ -2032,23 +1840,20 @@
           shadow: true
         });
 
-        ctx.font = `${fontPrefix}${topTextWeight} ${effTopFontSize}px "Noto Sans JP", sans-serif`;
-        const renderedTopMetrics = ctx.measureText(topText);
         hitBoxes.topText = {
           x: topX - 10,
           y: topY - effTopFontSize,
-          w: renderedTopMetrics.width + 20,
+          w: topMetrics.width + 20,
           h: effTopFontSize + 25
         };
       }
 
-      // 5. 公司 Logo 繪製 (自訂位置與大小)
+      // 5. Logo 繪製
       if (isLogoEnabled && logoImage) {
         ctx.save();
         const logoW = logoSize;
         const logoH = (logoImage.height / logoImage.width) * logoW;
         
-        // 默認置於右上角偏左或自訂偏移
         const logoX = (canvas.width - logoW - 60) + logoOffsetX;
         const logoY = 145 + logoOffsetY;
 
@@ -2067,12 +1872,12 @@
         delete hitBoxes.logo;
       }
 
-      // 6. 右上角：路線名稱 (字重與自訂斜度)
+      // 6. 右上角：路線名稱
       if (routeTitle.trim()) {
         const titleX = canvas.width - 50 + routeOffsetX;
         const titleY = (routeSubTitle.trim() ? 220 : 250) + routeOffsetY;
 
-        ctx.font = `${routeWeight} ${routeFontSize}px ${routeFont}`;
+        ctx.font = `900 ${routeFontSize}px ${routeFont}`;
         const routeMetrics = ctx.measureText(routeTitle);
         let effRouteFontSize = routeFontSize;
         const maxRouteWidth = 1000;
@@ -2086,45 +1891,42 @@
           innerStrokeWidth: Math.round(effRouteFontSize * 0.17),
           outerStroke: '#ffffff',
           outerStrokeWidth: Math.round(effRouteFontSize * 0.28),
-          font: `${routeWeight} ${effRouteFontSize}px ${routeFont}`,
+          font: `900 ${effRouteFontSize}px ${routeFont}`,
           align: 'right',
           slant: routeSlant,
           shadow: true
         });
 
-        // 副標題
         if (routeSubTitle.trim()) {
           const subFontSize = Math.round(effRouteFontSize * 0.58);
           drawDualStrokedText(routeSubTitle, titleX, titleY + Math.round(effRouteFontSize * 0.72), {
             fill: '#ffffff',
-            innerStroke: '#20c997',
+            innerStroke: '#0055a5',
             innerStrokeWidth: 10,
             outerStroke: '#000000',
             outerStrokeWidth: 18,
-            font: `${routeWeight} ${subFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+            font: `900 ${subFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
             align: 'right',
             slant: routeSlant,
             shadow: true
           });
         }
 
-        ctx.font = `${routeWeight} ${effRouteFontSize}px ${routeFont}`;
-        const effMetrics = ctx.measureText(routeTitle);
         hitBoxes.routeTitle = {
-          x: titleX - effMetrics.width - 30,
+          x: titleX - routeMetrics.width - 30,
           y: titleY - effRouteFontSize,
-          w: effMetrics.width + 50,
+          w: routeMetrics.width + 50,
           h: routeSubTitle.trim() ? effRouteFontSize + 90 : effRouteFontSize + 30
         };
       }
 
-      // 7. 底部區域：車種 + 起訖站 (字重、斜體與全自動等比縮放)
+      // 7. 底部：車種 + 起訖站
       const bottomMainY = canvas.height - 145 + mainRouteOffsetY;
       let currentX = 50 + mainRouteOffsetX;
       const startMainX = currentX;
 
       const testServiceFont = `italic 900 ${stationFontSize + 6}px "Noto Sans JP", "Noto Sans TC", sans-serif`;
-      const testStationFont = `${stationWeight} ${stationFontSize}px ${stationFont}`;
+      const testStationFont = `900 ${stationFontSize}px ${stationFont}`;
       
       ctx.font = testServiceFont;
       const testServiceWidth = serviceType.trim() ? ctx.measureText(serviceType).width + 40 : 0;
@@ -2144,7 +1946,6 @@
       const effStationFontSize = Math.floor(stationFontSize * scaleRatio);
       const effServiceFontSize = Math.floor((stationFontSize + 6) * scaleRatio);
 
-      // 7.1 車種別 (特別快速 / 過海特快)
       if (serviceType.trim()) {
         drawDualStrokedText(serviceType, currentX, bottomMainY, {
           fill: serviceColor,
@@ -2163,33 +1964,30 @@
         currentX += renderedServiceW + Math.round(35 * scaleRatio);
       }
 
-      // 7.2 起點 ➔ 訖點
       drawDualStrokedText(fullRouteText, currentX, bottomMainY, {
         fill: '#ffffff',
         outerStroke: '#000000',
         outerStrokeWidth: Math.round(effStationFontSize * 0.26),
-        font: `${stationWeight} ${effStationFontSize}px ${stationFont}`,
+        font: `900 ${effStationFontSize}px ${stationFont}`,
         align: 'left',
         slant: stationSlant,
         shadow: true
       });
 
-      ctx.font = `${stationWeight} ${effStationFontSize}px ${stationFont}`;
-      const renderedRouteW = ctx.measureText(fullRouteText).width;
       hitBoxes.mainRoute = {
         x: startMainX - 20,
         y: bottomMainY - effStationFontSize - 20,
-        w: (currentX - startMainX) + renderedRouteW + 40,
+        w: (currentX - startMainX) + testStationWidth + 40,
         h: effStationFontSize + 50
       };
 
-      // 8. 底部數據文字 (字重與斜度)
+      // 8. 底部數據文字
       if (bottomText.trim()) {
         const bX = 50 + bottomOffsetX;
         const bY = canvas.height - 30 + bottomOffsetY;
         const maxBottomW = canvas.width - bX - 50;
 
-        ctx.font = `${bottomWeight} ${bottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`;
+        ctx.font = `900 ${bottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`;
         const testBMetrics = ctx.measureText(bottomText);
         let effBottomFontSize = bottomFontSize;
         if (testBMetrics.width > maxBottomW && maxBottomW > 100) {
@@ -2200,27 +1998,24 @@
           fill: '#ffffff',
           outerStroke: '#000000',
           outerStrokeWidth: Math.round(effBottomFontSize * 0.26),
-          font: `${bottomWeight} ${effBottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
+          font: `900 ${effBottomFontSize}px "Noto Sans JP", "Noto Sans TC", sans-serif`,
           align: 'left',
-          slant: bottomSlant,
+          slant: -8,
           shadow: true
         });
 
-        ctx.font = `${bottomWeight} ${effBottomFontSize}px "Noto Sans JP", sans-serif`;
-        const bMetrics = ctx.measureText(bottomText);
         hitBoxes.bottomText = {
           x: bX - 10,
           y: bY - effBottomFontSize,
-          w: bMetrics.width + 20,
+          w: testBMetrics.width + 20,
           h: effBottomFontSize + 20
         };
       }
 
-      // 拖曳中高光虛線選取框
       if (isDragging && dragTarget && hitBoxes[dragTarget]) {
         const b = hitBoxes[dragTarget];
         ctx.save();
-        ctx.strokeStyle = '#00e5ff';
+        ctx.strokeStyle = '#ffd100';
         ctx.lineWidth = 4;
         ctx.setLineDash([12, 8]);
         ctx.strokeRect(b.x, b.y, b.w, b.h);
@@ -2228,12 +2023,10 @@
       }
     }
 
-    // 取得 Canvas 坐標
     function getCanvasCoordinates(e) {
       const rect = canvas.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      
       const scaleX = canvas.width / rect.width;
       const scaleY = canvas.height / rect.height;
 
@@ -2243,7 +2036,6 @@
       };
     }
 
-    // 命中測試
     function getHitTarget(pos) {
       for (const key of ['logo', 'mainRoute', 'routeTitle', 'topText', 'bottomText']) {
         const box = hitBoxes[key];
@@ -2254,7 +2046,6 @@
       return 'bgImage';
     }
 
-    // 拖曳處理
     function handlePointerDown(e) {
       const pos = getCanvasCoordinates(e);
       dragTarget = getHitTarget(pos);
@@ -2348,7 +2139,6 @@
     window.addEventListener('mousemove', handlePointerMove);
     window.addEventListener('mouseup', handlePointerUp);
 
-    // 觸控支援
     canvas.addEventListener('touchstart', (e) => {
       e.preventDefault();
       handlePointerDown(e);
@@ -2359,7 +2149,6 @@
     }, { passive: false });
     window.addEventListener('touchend', handlePointerUp);
 
-    // 輸入控制項即時監聽
     const inputs = document.querySelectorAll('input, select');
     inputs.forEach(i => i.addEventListener('input', renderCanvas));
 
@@ -2375,7 +2164,7 @@
           document.getElementById('imgOffsetX').value = 0;
           document.getElementById('imgOffsetY').value = 0;
           renderCanvas();
-          showToast('📷 背景圖片已載入成功！');
+          showToast('📷 背景巴士圖片載入成功！');
         };
         img.src = e.target.result;
       };
@@ -2387,7 +2176,6 @@
     uploadZone.addEventListener('click', () => imageInput.click());
     imageInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
 
-    // Logo 上傳監聽
     const logoUploadZone = document.getElementById('logoUploadZone');
     const logoInput = document.getElementById('logoInput');
     logoUploadZone.addEventListener('click', () => logoInput.click());
@@ -2433,7 +2221,7 @@
       const stationOrigin = document.getElementById('stationOrigin').value;
       const stationDest = document.getElementById('stationDest').value;
       const routeTitle = document.getElementById('routeTitle').value;
-      const filename = `thumbnail_${routeTitle}_${stationOrigin}_${stationDest}.png`.replace(/[\\/:*?"<>| ]/g, '_');
+      const filename = `thumbnail_${routeTitle}_${stationOrigin}_${stationDest}.png`.replace(/[\/:*?"<>| ]/g, '_');
       
       const link = document.createElement('a');
       link.download = filename;
@@ -2451,18 +2239,17 @@
           showToast('📋 已複製封面圖到剪貼簿！');
         }, 'image/png');
       } catch (err) {
-        alert('請直接點擊「下載 1080P PNG 封面圖」儲存圖片。');
+        showToast('請直接點擊「下載 1080P PNG 封面圖」儲存圖片。');
       }
     });
 
     document.getElementById('resetBtn').addEventListener('click', () => {
-      applyPreset('kmb');
+      applyPreset('cityflyer');
     });
 
     window.addEventListener('DOMContentLoaded', () => {
       document.fonts.ready.then(() => {
-        selectPresetLogo('kmb');
-        renderCanvas();
+        applyPreset('cityflyer');
       });
     });
   </script>
