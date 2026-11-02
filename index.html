@@ -406,6 +406,96 @@
       font-weight: 500;
     }
 
+
+    /* 畫布下方：五大巴士公司塗裝配色與字頭一鍵切換列 */
+    .quick-company-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: rgba(10, 14, 23, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 7px;
+      padding: 6px 8px;
+      margin-bottom: 2px;
+    }
+
+    .quick-company-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 800;
+      color: #e2e8f0;
+    }
+
+    .quick-company-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .quick-theme-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 7px;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: #161d2a;
+      color: #f0f4f8;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .quick-theme-chip:hover {
+      border-color: var(--accent-yellow);
+      background: #232f46;
+      transform: translateY(-1px);
+    }
+
+    .quick-theme-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    /* Section 5 各大巴士公司豬紙顏色標準分頁籤 */
+    .service-company-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 6px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .service-tab-btn {
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      background: #0d121b;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .service-tab-btn:hover {
+      color: #fff;
+      border-color: #4a5568;
+    }
+
+    .service-tab-btn.active {
+      background: rgba(255, 209, 0, 0.16);
+      color: var(--accent-yellow);
+      border-color: var(--accent-yellow);
+    }
+
     /* 右側控制面板 */
     .controls-col {
       background: var(--bg-panel);
@@ -753,11 +843,69 @@
       <!-- ⚡ 畫布正下方：看圖即時改字快捷面板 (ไม่ต้อง往下滾動即可改全圖文字) -->
       <div class="quick-edit-bar">
         <div class="quick-edit-title">
-          <span>⚡ 看圖即時改字區（輸入即同步更新上方封面圖，亦可在畫布上雙擊文字修改）</span>
+          <span>⚡ 看圖即時改字與轉色區（輸入即同步更新封面圖，亦可雙擊畫布文字修改）</span>
           <div style="display:flex; gap:5px;">
             <button type="button" class="btn-xs" onclick="injectDeck('上層展望')">🏙️ 上層展望</button>
             <button type="button" class="btn-xs" onclick="injectDeck('下層展望')">🚍 下層展望</button>
             <button type="button" class="btn-xs" onclick="injectDeck('前面展望')">🎥 前面展望</button>
+          </div>
+        </div>
+
+        <!-- 🚌 五大巴士公司塗裝配色＋公司字頭一鍵切換（保留你已輸入的路線號碼與起訖站！） -->
+        <div class="quick-company-bar">
+          <div class="quick-company-header">
+            <span>🎨 一鍵切換五大巴士公司配色＋字頭（保留目前路線號碼與起訖站）：</span>
+            <span style="font-size:10px; color:#9aa5b8; font-weight:normal;">支援 九巴 • 龍運 • 城巴 • 新巴 • 嶼巴 • 港鐵 • 九鐵</span>
+          </div>
+          <div class="quick-company-chips">
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('ctb_1979')">
+              <span class="quick-theme-dot" style="background:#f3e5ab; border:2px solid #5c1d24;"></span>城巴1979
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('ctb_cityflyer')">
+              <span class="quick-theme-dot" style="background:#ffd100; border:2px solid #d91a2a;"></span>城巴快線
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('ctb_blue')">
+              <span class="quick-theme-dot" style="background:#ffd200; border:2px solid #003876;"></span>城巴黃藍
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('nwfb_wave')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #009b3a;"></span>新巴綠橙
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('kmb_red')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #c8102e;"></span>九巴紅巴
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('kmb_gold')">
+              <span class="quick-theme-dot" style="background:#f5d77f; border:2px solid #4a2e0b;"></span>九巴金巴
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('kmb_ev')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #2e7d32;"></span>九巴電巴
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('kmb_hotdog')">
+              <span class="quick-theme-dot" style="background:#f0e68c; border:2px solid #8b0000;"></span>九巴熱狗
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('kmb_white')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #990000;"></span>九巴白板
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('lwb_orange')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #ea5b0c;"></span>龍運橙巴
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('lwb_night')">
+              <span class="quick-theme-dot" style="background:#ff9900; border:2px solid #111111;"></span>龍運NA線
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('nlb_green')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #008037;"></span>嶼巴翠綠
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('nlb_port')">
+              <span class="quick-theme-dot" style="background:#ffd200; border:2px solid #0055a5;"></span>嶼巴口岸
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('mtr_bus')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #0055a5;"></span>港鐵巴士
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('mtr_wave')">
+              <span class="quick-theme-dot" style="background:#ffd100; border:2px solid #4a154b;"></span>港鐵紫黃
+            </button>
+            <button type="button" class="quick-theme-chip" onclick="applyCompanyThemeOnly('kcr_retro')">
+              <span class="quick-theme-dot" style="background:#ffffff; border:2px solid #c8102e;"></span>九鐵經典
+            </button>
           </div>
         </div>
 
@@ -825,12 +973,12 @@
         </div>
 
         <div class="company-tabs">
-          <button type="button" class="company-tab-btn active" onclick="switchCompanyTab('tab_citybus', this)">🟡 城巴塗裝 (8)</button>
-          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_trunk', this)">⭐ 城巴主幹線 (12)</button>
-          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_kmb', this)">🔴 九巴 KMB (5)</button>
-          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_lwb', this)">🟠 龍運 LWB (4)</button>
-          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_nlb', this)">🟢 嶼巴 NLB (4)</button>
-          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_mtr', this)">🔵 港鐵巴士 (5)</button>
+          <button type="button" class="company-tab-btn active" onclick="switchCompanyTab('tab_citybus', this, 'ctb')">🟡 城巴塗裝 (8)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_trunk', this, 'ctb')">⭐ 城巴主幹線 (12)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_kmb', this, 'kmb')">🔴 九巴 KMB (9)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_lwb', this, 'lwb')">🟠 龍運 LWB (6)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_nlb', this, 'nlb')">🟢 嶼巴 NLB (6)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_mtr', this, 'mtr')">🔵 港鐵 / 九鐵 (6)</button>
         </div>
 
         <!-- 分頁 1：城巴塗裝 -->
@@ -952,90 +1100,126 @@
           </button>
         </div>
 
-        <!-- 分頁 3：九巴 KMB -->
+        <!-- 分頁 3：九巴 KMB (9款歷代塗裝與王牌路線) -->
         <div class="preset-tab-panel" id="tab_kmb">
           <button class="preset-chip" onclick="applyPreset('kmb_960')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#c8102e;"></span><span>九巴960路線 (紅巴)</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #c8102e 60%, #ffffff 60%);"></span><span>城市脈搏紅巴 (960)</span></div>
             <div class="preset-desc">屯門(建生) ➔ 灣仔北</div>
           </button>
+          <button class="preset-chip" onclick="applyPreset('kmb_968')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #c8102e 55%, #007a33 55%);"></span><span>西隧皇牌綠豬紙 (968)</span></div>
+            <div class="preset-desc">元朗(西) ➔ 銅鑼灣(天后)</div>
+          </button>
           <button class="preset-chip" onclick="applyPreset('kmb_1a')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#c5a059;"></span><span>九巴1A路線 (金巴)</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #f5d77f 60%, #4a2e0b 60%);"></span><span>千禧香檳金巴 (1A)</span></div>
             <div class="preset-desc">尖沙咀碼頭 ➔ 中秀茂坪</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('kmb_b1')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#c8102e;"></span><span>九巴B1路線 (口岸)</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffd100 50%, #c8102e 50%);"></span><span>落馬洲口岸線 (B1)</span></div>
             <div class="preset-desc">天水圍(天慈) ➔ 落馬洲站</div>
           </button>
+          <button class="preset-chip" onclick="applyPreset('kmb_b9')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffdd00 50%, #8b0000 50%);"></span><span>香園圍口岸線 (B9)</span></div>
+            <div class="preset-desc">屯門站 ➔ 香園圍口岸</div>
+          </button>
           <button class="preset-chip" onclick="applyPreset('kmb_290a')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#2e7d32;"></span><span>九巴290A路線 (電巴)</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #4caf50 55%, #1b5e20 55%);"></span><span>電光綠純電巴 (290A)</span></div>
             <div class="preset-desc">將軍澳(彩明) ➔ 荃灣西站</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('kmb_hotdog')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #8b0000 50%, #f0e68c 50%);"></span><span>九巴16路線 (熱狗)</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #f0e68c 50%, #8b0000 50%);"></span><span>經典熱狗塗裝 (16)</span></div>
             <div class="preset-desc">藍田(廣田邨) ➔ 旺角(柏景灣)</div>
+          </button>
+          <button class="preset-chip" onclick="applyPreset('kmb_white')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffffff 65%, #c8102e 65%);"></span><span>九巴經典白板 (6C)</span></div>
+            <div class="preset-desc">美孚 ➔ 九龍城碼頭</div>
+          </button>
+          <button class="preset-chip" onclick="applyPreset('kmb_p960')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffd700 45%, #1a1a1a 45%);"></span><span>星級尊線黑金 (P960)</span></div>
+            <div class="preset-desc">屯門(兆康站) ➔ 灣仔北</div>
           </button>
         </div>
 
-        <!-- 分頁 4：龍運 LWB -->
+        <!-- 分頁 4：龍運 LWB (6款歷代塗裝與機場線) -->
         <div class="preset-tab-panel" id="tab_lwb">
           <button class="preset-chip" onclick="applyPreset('lwb_a31')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#ea5b0c;"></span><span>龍運A31路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ea5b0c 60%, #ffffff 60%);"></span><span>陽光橙白塗裝 (A31)</span></div>
             <div class="preset-desc">荃灣(如心廣場) ➔ 機場</div>
           </button>
+          <button class="preset-chip" onclick="applyPreset('lwb_a41')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ff8800 50%, #b33c00 50%);"></span><span>初代飛龍橙金 (A41)</span></div>
+            <div class="preset-desc">沙田(碩門邨) ➔ 機場</div>
+          </button>
           <button class="preset-chip" onclick="applyPreset('lwb_e36')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#ea5b0c;"></span><span>龍運E36路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffd100 50%, #ea5b0c 50%);"></span><span>北大嶼山對外線 (E36)</span></div>
             <div class="preset-desc">元朗(八鄉路) ➔ 機場(西岸路)</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('lwb_s1')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#ff7700;"></span><span>龍運S1路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #00a3e0 50%, #ea5b0c 50%);"></span><span>機場穿梭巴士 (S1)</span></div>
             <div class="preset-desc">東涌站 ➔ 機場博覽館</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('lwb_na33')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#111111; border:1px solid #ff7700;"></span><span>龍運NA33路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#111111; border:1px solid #ff7700;"></span><span>深宵特快黑橙 (NA33)</span></div>
             <div class="preset-desc">國泰城 ➔ 屯門(富泰)</div>
+          </button>
+          <button class="preset-chip" onclick="applyPreset('lwb_r33')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #e6007e 50%, #4a154b 50%);"></span><span>迪士尼專線 (R33)</span></div>
+            <div class="preset-desc">屯門站 ➔ 迪士尼樂園</div>
           </button>
         </div>
 
-        <!-- 分頁 5：嶼巴 NLB -->
+        <!-- 分頁 5：嶼巴 NLB (6款塗裝與大嶼山路線) -->
         <div class="preset-tab-panel" id="tab_nlb">
           <button class="preset-chip" onclick="applyPreset('nlb_11')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#008037;"></span><span>嶼巴11路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #008037 60%, #ffffff 60%);"></span><span>嶼南綠白塗裝 (11)</span></div>
             <div class="preset-desc">東涌站 ➔ 大澳</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('nlb_3m')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#008037;"></span><span>嶼巴3M路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#008037;"></span><span>東涌道過山線 (3M)</span></div>
             <div class="preset-desc">梅窩碼頭 ➔ 東涌站</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('nlb_23')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#008037;"></span><span>嶼巴23路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffd100 50%, #008037 50%);"></span><span>昂坪寶蓮寺線 (23)</span></div>
             <div class="preset-desc">東涌達東路 ➔ 昂坪</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('nlb_b6')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>嶼巴B6路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #0055a5 60%, #008037 60%);"></span><span>大橋口岸藍綠 (B6)</span></div>
             <div class="preset-desc">滿東邨 ➔ 港珠澳大橋口岸</div>
+          </button>
+          <button class="preset-chip" onclick="applyPreset('nlb_b2p')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffd200 50%, #003876 50%);"></span><span>深圳灣口岸線 (B2P)</span></div>
+            <div class="preset-desc">天慈邨 ➔ 深圳灣口岸</div>
+          </button>
+          <button class="preset-chip" onclick="applyPreset('nlb_1')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #76ff03 50%, #004d25 50%);"></span><span>梅窩大澳幹線 (1)</span></div>
+            <div class="preset-desc">梅窩碼頭 ➔ 大澳</div>
           </button>
         </div>
 
-        <!-- 分頁 6：港鐵巴士 MTR -->
+        <!-- 分頁 6：港鐵巴士 MTR / 九鐵 KCR (6款塗裝與接駁線) -->
         <div class="preset-tab-panel" id="tab_mtr">
           <button class="preset-chip" onclick="applyPreset('mtr_k52')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K52路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffffff 45%, #001f4d 45%, #001f4d 75%, #e60012 75%);"></span><span>港鐵新塗裝 (K52)</span></div>
             <div class="preset-desc">屯門站 ➔ 龍鼓灘</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('mtr_k65')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K65路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>流浮山接駁線 (K65)</span></div>
             <div class="preset-desc">元朗站 ➔ 流浮山</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('mtr_k76')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K76路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>天水圍接駁線 (K76)</span></div>
             <div class="preset-desc">天恆 ➔ 天水圍站</div>
           </button>
           <button class="preset-chip" onclick="applyPreset('mtr_k12')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K12路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #66ccff 50%, #002244 50%);"></span><span>大埔東鐵接駁 (K12)</span></div>
             <div class="preset-desc">大埔墟站 ➔ 八號花園</div>
           </button>
+          <button class="preset-chip" onclick="applyPreset('mtr_k73')">
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #ffd100 50%, #4a154b 50%);"></span><span>港鐵黃紫波浪 (K73)</span></div>
+            <div class="preset-desc">天恆 ➔ 元朗(西)</div>
+          </button>
           <button class="preset-chip" onclick="applyPreset('kcr_retro_506')">
-            <div class="preset-chip-header"><span class="preset-bar" style="background:#003366;"></span><span>九鐵506路線</span></div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #003366 55%, #c8102e 55%);"></span><span>九鐵經典塗裝 (506)</span></div>
             <div class="preset-desc">屯門碼頭 ➔ 兆麟</div>
           </button>
         </div>
@@ -1138,7 +1322,7 @@
       <!-- 2. 公司 Logo 設置 -->
       <div class="section-card">
         <div class="section-header">
-          <span>🏢 2. 公司 Logo 標誌 (Citybus / NWFB)</span>
+          <span>🏢 2. 各大巴士公司 Logo 標誌 (九巴・龍運・城巴・嶼巴・港鐵・新巴)</span>
           <span class="sub-tag">可拖曳</span>
         </div>
         
@@ -1157,9 +1341,15 @@
         </div>
 
         <div class="form-group">
-          <label>城巴 / 新巴各款經典 Logo (點擊快速套用)</label>
+          <label>全港各大專營巴士公司 Logo (點擊快速開啟並套用)</label>
           <div class="logo-chips">
-            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('cityflyer')">✈️ Cityflyer 機場快線</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('kmb_red')">🔴 九巴 KMB (紅底白字)</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('kmb_gold')">🪙 九巴 KMB (尊尚黑金)</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('lwb_orange')">🟠 龍運巴士 LWB</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('nlb_green')">🟢 嶼巴 NLB</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('mtr_bus')">🔵 港鐵巴士 MTR</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('kcr_retro')">🚆 九鐵巴士 KCR</button>
+            <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('cityflyer')">✈️ 城巴 Cityflyer</button>
             <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus_pacman')">🟡 城巴大食鬼</button>
             <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus_classic')">🔵 城巴經典黃藍紅白</button>
             <button type="button" class="logo-chip-btn" onclick="selectPresetLogo('citybus_40th')">🔶 城巴 1979 復刻</button>
@@ -1266,6 +1456,54 @@
           </div>
         </div>
 
+        <div class="type-tags-container" style="margin-top:2px;">
+          <div class="type-category-label" style="font-size:11px; color:#ffd100; font-weight:800;">🎨 各大巴士公司標題字色＋外框描邊快速套用（不改動文字）：</div>
+          <div class="type-tag-list">
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#f3e5ab', '#5c1d24', '城巴1979忌廉棗紅')">
+              <span class="tag-color-dot" style="background:#f3e5ab; border:2px solid #5c1d24;"></span>城巴忌廉棗紅
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffd100', '#b30006', '城巴黃字紅框')">
+              <span class="tag-color-dot" style="background:#ffd100; border:2px solid #b30006;"></span>城巴黃字紅框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffd200', '#003876', '城巴黃字藍框')">
+              <span class="tag-color-dot" style="background:#ffd200; border:2px solid #003876;"></span>城巴黃字藍框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffffff', '#009b3a', '新巴白字綠框')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #009b3a;"></span>新巴白字綠框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffffff', '#c8102e', '九巴白字紅框')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #c8102e;"></span>九巴白字紅框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#f5d77f', '#4a2e0b', '九巴香檳金字')">
+              <span class="tag-color-dot" style="background:#f5d77f; border:2px solid #4a2e0b;"></span>九巴香檳金字
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffffff', '#1b5e20', '九巴電巴綠框')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #1b5e20;"></span>九巴電巴綠框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#f0e68c', '#8b0000', '九巴熱狗米紅')">
+              <span class="tag-color-dot" style="background:#f0e68c; border:2px solid #8b0000;"></span>九巴熱狗米紅
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffffff', '#c2410c', '龍運白字橙框')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #c2410c;"></span>龍運白字橙框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ff9900', '#111111', '龍運深宵橙黑')">
+              <span class="tag-color-dot" style="background:#ff9900; border:2px solid #111111;"></span>龍運深宵橙黑
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffffff', '#008037', '嶼巴白字綠框')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #008037;"></span>嶼巴白字綠框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffd200', '#0055a5', '嶼巴口岸黃藍')">
+              <span class="tag-color-dot" style="background:#ffd200; border:2px solid #0055a5;"></span>嶼巴口岸黃藍
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffffff', '#0055a5', '港鐵白字藍框')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #0055a5;"></span>港鐵白字藍框
+            </button>
+            <button type="button" class="type-tag-btn" onclick="setTitleColors('#ffffff', '#c8102e', '九鐵白字紅框')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #003366;"></span>九鐵懷舊紅藍
+            </button>
+          </div>
+        </div>
+
         <div class="form-row">
           <div class="form-group">
             <label>字體大小 <span class="val-hint" id="valRouteFontSize">92px</span></label>
@@ -1307,44 +1545,139 @@
           </div>
         </div>
 
-        <div class="type-tags-container">
-          <div class="type-category-label" style="font-size:11px; color:#ffd100; font-weight:800;">🏷️ 城巴官方路線編號顏色標準（點擊套用配色）：</div>
-          <div class="type-tag-list">
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('紅隧/東隧過海', '#d91a2a', '#ffffff')">
-              <span class="tag-color-dot" style="background:#d91a2a; border:1px solid #fff;"></span>紅底白字 (紅/東隧過海)
+                <div class="type-tags-container">
+          <div class="type-category-label" style="font-size:11px; color:#ffd100; font-weight:800;">🏷️ 全港五大巴士公司官方路線豬紙 / 電牌 / 塗裝顏色標準（點擊套用配色）：</div>
+          
+          <!-- 五大巴士公司分類切換按鈕 -->
+          <div class="service-company-tabs">
+            <button type="button" class="service-tab-btn active" id="srvTab_all" onclick="filterServiceTags('all')">🌐 全部公司</button>
+            <button type="button" class="service-tab-btn" id="srvTab_kmb" onclick="filterServiceTags('kmb')">🔴 九巴 KMB</button>
+            <button type="button" class="service-tab-btn" id="srvTab_lwb" onclick="filterServiceTags('lwb')">🟠 龍運 LWB</button>
+            <button type="button" class="service-tab-btn" id="srvTab_ctb" onclick="filterServiceTags('ctb')">🟡 城巴 / 新巴</button>
+            <button type="button" class="service-tab-btn" id="srvTab_nlb" onclick="filterServiceTags('nlb')">🟢 嶼巴 NLB</button>
+            <button type="button" class="service-tab-btn" id="srvTab_mtr" onclick="filterServiceTags('mtr')">🔵 港鐵 / 九鐵</button>
+          </div>
+
+          <div class="type-tag-list" id="serviceTagList">
+            <!-- 🔴 九巴 KMB 官方豬紙與車隊配色標準 -->
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('九巴常規路線', '#c8102e', '#ffd100', '#ffffff', '#c8102e')">
+              <span class="tag-color-dot" style="background:#c8102e; border:1px solid #fff;"></span>🔴 九巴紅底白字 (城市脈搏常規)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('西隧過海線', '#008037', '#ffffff')">
-              <span class="tag-color-dot" style="background:#008037; border:1px solid #fff;"></span>綠底白字 (西隧/B13/E11)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('西隧過海特快', '#007a33', '#ffd100', '#ffffff', '#007a33')">
+              <span class="tag-color-dot" style="background:#007a33; border:1px solid #fff;"></span>🟢 九巴西隧綠底 (960/968西隧豬紙)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('日間市區/特快', '#003876', '#ffffff')">
-              <span class="tag-color-dot" style="background:#003876; border:1px solid #fff;"></span>深藍底白字 (普通/特快線)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('紅隧/東隧過海', '#e60012', '#ffffff', '#ffd100', '#b30006')">
+              <span class="tag-color-dot" style="background:#e60012; border:1px solid #ffd100;"></span>🔴 九巴過海紅底 (101/601紅東隧)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('城巴普通線', '#ffd100', '#000000')">
-              <span class="tag-color-dot" style="background:#ffd100; border:1px solid #000;"></span>黃底黑字 (經典普通線)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('九巴特快路線', '#0055a5', '#ffd100', '#ffffff', '#0055a5')">
+              <span class="tag-color-dot" style="background:#0055a5; border:1px solid #fff;"></span>🔵 九巴特快藍底 (X線/T277特快)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('城巴機場快線', '#9e0b0f', '#ffd100')">
-              <span class="tag-color-dot" style="background:#9e0b0f; border:1px solid #ffd100;"></span>深紅底字 (Cityflyer)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('千禧香檳金巴', '#c5a059', '#ffd100', '#f5d77f', '#4a2e0b')">
+              <span class="tag-color-dot" style="background:#c5a059; border:1px solid #4a2e0b;"></span>🪙 九巴香檳金巴 (3ASV/ATENU金巴)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('口岸專線', '#d91a2a', '#ffcc00')">
-              <span class="tag-color-dot" style="background:#d91a2a; border:1px solid #ffcc00;"></span>紅底黃字 (口岸線 B3/B7)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('口岸接駁專線', '#c8102e', '#ffd100', '#ffd100', '#8b0000')">
+              <span class="tag-color-dot" style="background:#ffd100; border:2px solid #c8102e;"></span>🟡 九巴口岸專線 (B1/B9落馬洲香園圍)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('山頂探索號', '#00a3e0', '#ffffff')">
-              <span class="tag-color-dot" style="background:#00a3e0; border:1px solid #fff;"></span>淺藍底白字 (山頂探索號)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('新能源純電巴', '#2e7d32', '#ffd100', '#ffffff', '#1b5e20')">
+              <span class="tag-color-dot" style="background:#2e7d32; border:1px solid #76ff03;"></span>🟢 九巴電光翠綠 (E500EV/BYD電巴)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('迪士尼樂園線', '#72c7e7', '#002d62')">
-              <span class="tag-color-dot" style="background:#72c7e7; border:1px solid #002d62;"></span>淺藍深藍字 (迪士尼線 R8)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('傳奇熱狗巴士', '#8b0000', '#f0e68c', '#f0e68c', '#8b0000')">
+              <span class="tag-color-dot" style="background:#f0e68c; border:2px solid #8b0000;"></span>🔥 九巴經典熱狗 (非空調忌廉棗紅)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('通宵巴士線', '#111111', '#ffcc00')">
-              <span class="tag-color-dot" style="background:#111111; border:1px solid #ffcc00;"></span>黑底黃字 (通宵 N線)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('經典白板冷氣', '#990000', '#ffffff', '#ffffff', '#990000')">
+              <span class="tag-color-dot" style="background:#ffffff; border:2px solid #c8102e;"></span>🤍 九巴白板冷氣 (90年代白底紅線)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('觀光城巴 H1', '#00a651', '#ffffff')">
-              <span class="tag-color-dot" style="background:#00a651;"></span>H1 翠綠 (觀光城巴)
+            <button type="button" class="type-tag-btn" data-company="kmb" onclick="setServiceTag('星級尊線 P線', '#c5a059', '#ffd700', '#ffd700', '#1a1a1a')">
+              <span class="tag-color-dot" style="background:#1a1a1a; border:1px solid #ffd700;"></span>🖤 九巴星級尊線 (P960/P968黑金)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('觀光城巴 H2', '#e6007e', '#ffffff')">
-              <span class="tag-color-dot" style="background:#e6007e;"></span>H2 桃紅 (夜景之旅)
+
+            <!-- 🟠 龍運 LWB 官方路線與塗裝標準 -->
+            <button type="button" class="type-tag-btn" data-company="lwb" onclick="setServiceTag('龍運機場快線', '#ea5b0c', '#ffd100', '#ffffff', '#c2410c')">
+              <span class="tag-color-dot" style="background:#ea5b0c; border:1px solid #fff;"></span>🟠 龍運陽光橙底 (A線機場快線)
             </button>
-            <button type="button" class="type-tag-btn" onclick="setServiceTag('觀光城巴 H2K', '#662d91', '#ffffff')">
-              <span class="tag-color-dot" style="background:#662d91;"></span>H2K 紫色 (香港懷舊)
+            <button type="button" class="type-tag-btn" data-company="lwb" onclick="setServiceTag('北大嶼山對外線', '#ea5b0c', '#ffd100', '#ffd100', '#b33c00')">
+              <span class="tag-color-dot" style="background:#ffd100; border:2px solid #ea5b0c;"></span>🟡 龍運黃字橙框 (E線東涌後勤區)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="lwb" onclick="setServiceTag('機場穿梭巴士', '#00a3e0', '#ffd100', '#ffffff', '#004b97')">
+              <span class="tag-color-dot" style="background:#00a3e0; border:1px solid #fff;"></span>🔵 龍運穿梭天藍 (S1/S64機場穿梭)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="lwb" onclick="setServiceTag('深宵機場特快', '#ff7700', '#ffd100', '#ff9900', '#111111')">
+              <span class="tag-color-dot" style="background:#111111; border:1px solid #ff7700;"></span>🖤 龍運深宵黑橙 (NA線/N線通宵)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="lwb" onclick="setServiceTag('迪士尼樂園專線', '#e6007e', '#ffd100', '#ffffff', '#662d91')">
+              <span class="tag-color-dot" style="background:#e6007e; border:1px solid #fff;"></span>🟣 龍運迪士尼線 (R33/R42夢幻紫紅)
+            </button>
+
+            <!-- 🟡 城巴 / 新巴 CTB & NWFB 官方豬紙顏色標準 -->
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('皇崗專線', '#5c1d24', '#ffd100', '#f3e5ab', '#5c1d24')">
+              <span class="tag-color-dot" style="background:#5c1d24; border:1px solid #f3e5ab;"></span>🟤 城巴1979復刻 (B14忌廉配棗紅)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('紅隧/東隧過海', '#d91a2a', '#ffffff', '#ffffff', '#9e0b0f')">
+              <span class="tag-color-dot" style="background:#d91a2a; border:1px solid #fff;"></span>🔴 城巴紅底白字 (紅/東隧過海)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('西隧過海線', '#008037', '#ffffff', '#ffffff', '#004d25')">
+              <span class="tag-color-dot" style="background:#008037; border:1px solid #fff;"></span>🟢 城巴綠底白字 (930/962/969西隧)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('日間市區/特快', '#003876', '#ffffff', '#ffd200', '#003876')">
+              <span class="tag-color-dot" style="background:#003876; border:1px solid #fff;"></span>🔵 城巴深藍底字 (主幹線/特快線)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('城巴普通線', '#ffd100', '#000000', '#ffd100', '#003876')">
+              <span class="tag-color-dot" style="background:#ffd100; border:1px solid #000;"></span>🟡 城巴黃底黑字 (經典普通線)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('城巴機場快線', '#9e0b0f', '#ffd100', '#ffd100', '#9e0b0f')">
+              <span class="tag-color-dot" style="background:#9e0b0f; border:1px solid #ffd100;"></span>✈️ 城巴深紅金字 (Cityflyer A線)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('口岸專線', '#d91a2a', '#ffcc00', '#ffd100', '#9e0b0f')">
+              <span class="tag-color-dot" style="background:#d91a2a; border:1px solid #ffcc00;"></span>🟠 城巴紅底黃字 (口岸線 B3X/B7/B8)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('山頂探索號', '#00a3e0', '#ffffff', '#ffffff', '#003876')">
+              <span class="tag-color-dot" style="background:#00a3e0; border:1px solid #fff;"></span>🩵 城巴淺藍白字 (山頂探索號 15)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('迪士尼樂園線', '#72c7e7', '#002d62', '#72c7e7', '#002d62')">
+              <span class="tag-color-dot" style="background:#72c7e7; border:1px solid #002d62;"></span>🏰 城巴淺藍深藍 (迪士尼線 R8)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('通宵巴士線', '#111111', '#ffcc00', '#ffcc00', '#111111')">
+              <span class="tag-color-dot" style="background:#111111; border:1px solid #ffcc00;"></span>🌙 城巴黑底黃字 (通宵 N線)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('觀光城巴 H1/H2', '#00a651', '#ffffff', '#ffffff', '#006837')">
+              <span class="tag-color-dot" style="background:#00a651;"></span>🟢 觀光城巴翠綠 (H1/H2開篷巴士)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="ctb" onclick="setServiceTag('新巴經典路線', '#009b3a', '#ff7300', '#ffffff', '#009b3a')">
+              <span class="tag-color-dot" style="background:#009b3a; border:1px solid #ff7300;"></span>🟠 新巴波浪綠橙 (新巴經典路線)
+            </button>
+
+            <!-- 🟢 嶼巴 NLB 官方路線與塗裝標準 -->
+            <button type="button" class="type-tag-btn" data-company="nlb" onclick="setServiceTag('大嶼山郊遊線', '#008037', '#ffd100', '#ffffff', '#004d25')">
+              <span class="tag-color-dot" style="background:#008037; border:1px solid #fff;"></span>🟢 嶼巴翠綠白字 (1/3M/11嶼南線)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="nlb" onclick="setServiceTag('昂坪寶蓮寺線', '#008037', '#ffd100', '#ffd100', '#004d25')">
+              <span class="tag-color-dot" style="background:#ffd100; border:2px solid #008037;"></span>🟡 嶼巴昂坪金綠 (21/23天壇大佛)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="nlb" onclick="setServiceTag('大橋口岸專線', '#0055a5', '#ffd100', '#ffd200', '#003876')">
+              <span class="tag-color-dot" style="background:#0055a5; border:1px solid #ffd200;"></span>🔵 嶼巴口岸藍黃 (B4/B6港珠澳大橋)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="nlb" onclick="setServiceTag('深圳灣口岸線', '#003876', '#ffcc00', '#ffcc00', '#002244')">
+              <span class="tag-color-dot" style="background:#003876; border:1px solid #ffcc00;"></span>🔵 嶼巴深圳灣線 (B2/B2P/B2X)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="nlb" onclick="setServiceTag('東涌區內線', '#2e7d32', '#ffffff', '#ffffff', '#006837')">
+              <span class="tag-color-dot" style="background:#2e7d32; border:1px solid #fff;"></span>🟢 嶼巴東涌區內 (37/38/39M區內線)
+            </button>
+
+            <!-- 🔵 港鐵巴士 MTR / 九鐵巴士 KCR 標準 -->
+            <button type="button" class="type-tag-btn" data-company="mtr" onclick="setServiceTag('屯馬/輕鐵接駁', '#0055a5', '#ffd100', '#ffffff', '#001f4d')">
+              <span class="tag-color-dot" style="background:#0055a5; border:1px solid #e60012;"></span>🔵 港鐵新塗裝藍白紅 (K52/K76接駁)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="mtr" onclick="setServiceTag('輕鐵接駁專線', '#0055a5', '#ffd100', '#ffd100', '#003366')">
+              <span class="tag-color-dot" style="background:#ffd100; border:2px solid #0055a5;"></span>🟡 港鐵黃字藍框 (K65/K75輕鐵接駁)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="mtr" onclick="setServiceTag('東鐵接駁巴士', '#003366', '#66ccff', '#66ccff', '#001f4d')">
+              <span class="tag-color-dot" style="background:#66ccff; border:2px solid #003366;"></span>🩵 港鐵東鐵接駁 (K12/K17/K18大埔)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="mtr" onclick="setServiceTag('新界西波浪塗裝', '#4a154b', '#ffd100', '#ffd100', '#4a154b')">
+              <span class="tag-color-dot" style="background:#4a154b; border:1px solid #ffd100;"></span>🟣 港鐵紫黃波浪 (經典新界西塗裝)
+            </button>
+            <button type="button" class="type-tag-btn" data-company="mtr" onclick="setServiceTag('九鐵接駁巴士', '#c8102e', '#ffd100', '#ffffff', '#c8102e')">
+              <span class="tag-color-dot" style="background:#003366; border:1px solid #c8102e;"></span>🚆 九鐵經典藍紅 (KCR 506懷舊塗裝)
             </button>
           </div>
         </div>
@@ -2210,6 +2543,330 @@
       },
 
       // === 九巴 KMB 經典與旗艦路線 ===
+      kmb_968: {
+        logo: 'kmb_red',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "九巴968線上層展望•經大欖隧道•西區海底隧道•中環•銅鑼灣",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#007a33",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "九巴968路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#007a33",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "西隧過海特快",
+        serviceColor: "#007a33",
+        stationOrigin: "元朗(西)",
+        routeArrow: "➔",
+        stationDest: "銅鑼灣(天后)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M (V6X) • 玻璃樓梯紅巴 2.0",
+        bottomBarColor: "#c8102e",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      kmb_b9: {
+        logo: 'kmb_red',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "九巴B9線上層展望•經屯門公路•元朗站•新田公路•香園圍公路",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#c8102e",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "九巴B9路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#8b0000",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "香園圍專線",
+        serviceColor: "#8b0000",
+        stationOrigin: "屯門站",
+        routeArrow: "➔",
+        stationDest: "香園圍口岸",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M (E6X) • 蓮塘香園圍口岸特快",
+        bottomBarColor: "#8b0000",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      kmb_white: {
+        logo: 'kmb_red',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "九巴6C線下層展望•經深水埗•旺角•加士居道•土瓜灣•九龍城",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#990000",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "九巴6C路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#990000",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "經典白板線",
+        serviceColor: "#990000",
+        stationOrigin: "美孚",
+        routeArrow: "➔",
+        stationDest: "九龍城碼頭",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Volvo Olympian 12M (3AV) • 九巴經典白板紅線塗裝",
+        bottomBarColor: "#990000",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      kmb_p960: {
+        logo: 'kmb_gold',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd700",
+        topText: "九巴P960線上層展望•經屯門公路•西區海底隧道•中環•銅鑼灣",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#1a1a1a",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "九巴P960路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffd700",
+        routeStrokeColor: "#1a1a1a",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "新型長途巴士",
+        serviceColor: "#c5a059",
+        stationOrigin: "屯門(兆康站)",
+        routeArrow: "➔",
+        stationDest: "灣仔北",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M (P960) • KMB 星級尊線豪華塗裝",
+        bottomBarColor: "#1a1a1a",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      lwb_a41: {
+        logo: 'lwb_orange',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "龍運A41線上層展望•經沙田市中心•城門隧道•青馬大橋•一號客運大樓",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#b33c00",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "龍運A41路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#5a1800",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "機場豪華快線",
+        serviceColor: "#b33c00",
+        stationOrigin: "沙田(碩門邨)",
+        routeArrow: "➔",
+        stationDest: "機場(地面運輸中心)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 104,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 12.8M (UE6X) • 龍運機場豪華客車",
+        bottomBarColor: "#b33c00",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      lwb_r33: {
+        logo: 'lwb_orange',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "龍運R33線上層展望•經屯門市中心•豐景園•青馬大橋•迪欣湖",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#4a154b",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "龍運R33路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffffff",
+        routeStrokeColor: "#e6007e",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "迪士尼專線",
+        serviceColor: "#e6007e",
+        stationOrigin: "屯門站",
+        routeArrow: "➔",
+        stationDest: "迪士尼樂園",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Alexander Dennis Enviro500 MMC • 迪士尼旅遊專線",
+        bottomBarColor: "#4a154b",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      nlb_b2p: {
+        logo: 'nlb_green',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "嶼巴B2P線上層展望•經天水圍市中心•天瑞•屏廈路•港深西部公路",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#003876",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "嶼巴B2P路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffd200",
+        routeStrokeColor: "#003876",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "深圳灣專線",
+        serviceColor: "#003876",
+        stationOrigin: "天慈邨",
+        routeArrow: "➔",
+        stationDest: "深圳灣口岸",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "MAN A95 12M (MDR) • 深圳灣口岸雙層特快",
+        bottomBarColor: "#003876",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      nlb_1: {
+        logo: 'nlb_green',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "嶼巴1號線下層展望•經貝澳•長沙•塘福•水口•石壁•羗山道",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#004d25",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "嶼巴1號路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#76ff03",
+        routeStrokeColor: "#003311",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "嶼南幹線",
+        serviceColor: "#008037",
+        stationOrigin: "梅窩碼頭",
+        routeArrow: "➔",
+        stationDest: "大澳",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro400 10.4M / MAN RR8 • 大嶼山第一條專營路線",
+        bottomBarColor: "#004d25",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
+      mtr_k73: {
+        logo: 'mtr_bus',
+        topBadge: "1080P 60fps",
+        topBadgeColor: "#ffd100",
+        topText: "港鐵K73線上層展望•經天富•天晴•天慈•朗屏邨•元朗廣場",
+        topTextWeight: "900",
+        topTextItalic: "0",
+        topBarColor: "#4a154b",
+        topTextOffsetX: 0,
+        topTextOffsetY: 0,
+        routeTitle: "港鐵K73路線",
+        routeSubTitle: "",
+        routeFont: "'Noto Sans TC', sans-serif",
+        routeTextColor: "#ffd100",
+        routeStrokeColor: "#4a154b",
+        routeFontSize: 90,
+        routeSlant: -5,
+        routeOffsetX: 0,
+        routeOffsetY: 0,
+        serviceType: "新界西接駁",
+        serviceColor: "#4a154b",
+        stationOrigin: "天恆",
+        routeArrow: "➔",
+        stationDest: "元朗(西)",
+        stationFont: "'Noto Sans TC', sans-serif",
+        stationFontSize: 108,
+        stationSlant: -5,
+        mainRouteOffsetX: 10,
+        mainRouteOffsetY: 0,
+        bottomText: "Enviro500 MMC 11.3M (5XX) • 港鐵黃紫白波浪塗裝",
+        bottomBarColor: "#4a154b",
+        bottomFontSize: 40,
+        bottomOffsetX: 0,
+        bottomOffsetY: 0
+      },
+
       kmb_960: {
         logo: 'kmb_red',
         topBadge: "1080P 60fps",
@@ -2890,13 +3547,197 @@
       }
     }
 
-    // 切換巴士公司範本分頁籤
-    function switchCompanyTab(tabId, btnEl) {
+    // 切換巴士公司範本分頁籤（同時同步第 5 區的巴士公司豬紙顏色標籤）
+    function switchCompanyTab(tabId, btnEl, companyCode) {
       document.querySelectorAll('.company-tab-btn').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.preset-tab-panel').forEach(p => p.classList.remove('active'));
       if (btnEl) btnEl.classList.add('active');
       const panel = document.getElementById(tabId);
       if (panel) panel.classList.add('active');
+      if (companyCode) {
+        filterServiceTags(companyCode);
+      }
+    }
+
+    // 篩選第 5 區各大巴士公司豬紙顏色標籤
+    function filterServiceTags(companyCode) {
+      document.querySelectorAll('.service-tab-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('srvTab_' + companyCode);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.querySelectorAll('#serviceTagList .type-tag-btn').forEach(btn => {
+        const comp = btn.getAttribute('data-company');
+        if (companyCode === 'all' || !comp || comp === companyCode) {
+          btn.style.display = 'inline-flex';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+    }
+
+    // 第 4 區：快速套用各大巴士公司標題主字色與外框描邊色（保留現有文字）
+    function setTitleColors(textColor, strokeColor, labelName) {
+      document.getElementById('routeTextColor').value = textColor;
+      document.getElementById('routeStrokeColor').value = strokeColor;
+      renderCanvas();
+      showToast(`已套用標題配色：「${labelName}」`);
+    }
+
+    // 畫布正下方：一鍵切換五大巴士公司塗裝配色＋公司字頭（保留用戶已輸入的路線號碼與站名！）
+    const companyThemes = {
+      ctb_1979: {
+        prefix: '城巴', companyGroup: 'ctb', label: '城巴 1979 創辦米黃棗紅',
+        routeTextColor: '#f3e5ab', routeStrokeColor: '#5c1d24',
+        serviceColor: '#5c1d24', topBarColor: '#5c1d24', bottomBarColor: '#5c1d24', topBadgeColor: '#ffd100',
+        logo: 'citybus_40th', sampleBottom: 'Enviro500 MMC 12.8M (6493 / VB 9800) • CITY BUSES EST. 1979'
+      },
+      ctb_cityflyer: {
+        prefix: '城巴', companyGroup: 'ctb', label: '城巴 Cityflyer 機場快線紅金',
+        routeTextColor: '#ffd100', routeStrokeColor: '#9e0b0f',
+        serviceColor: '#9e0b0f', topBarColor: '#d91a2a', bottomBarColor: '#9e0b0f', topBadgeColor: '#ffd100',
+        logo: 'cityflyer', sampleBottom: 'Alexander Dennis Enviro500 MMC 12.8M • Cityflyer 城巴機場快線'
+      },
+      ctb_blue: {
+        prefix: '城巴', companyGroup: 'ctb', label: '城巴標準黃藍塗裝',
+        routeTextColor: '#ffd200', routeStrokeColor: '#003876',
+        serviceColor: '#003876', topBarColor: '#003876', bottomBarColor: '#003876', topBadgeColor: '#ffd200',
+        logo: 'citybus_rebrand', sampleBottom: 'Alexander Dennis Enviro500 MMC 12.8M • Citybus 城巴'
+      },
+      nwfb_wave: {
+        prefix: '新巴', companyGroup: 'ctb', label: '新巴經典白綠橙波浪',
+        routeTextColor: '#ffffff', routeStrokeColor: '#009b3a',
+        serviceColor: '#ff7300', topBarColor: '#009b3a', bottomBarColor: '#ff7300', topBadgeColor: '#ffd100',
+        logo: 'nwfb', sampleBottom: 'Alexander Dennis Enviro500 MMC • NWFB 新世界第一巴士'
+      },
+      kmb_red: {
+        prefix: '九巴', companyGroup: 'kmb', label: '九巴城市脈搏紅巴 2.0',
+        routeTextColor: '#ffffff', routeStrokeColor: '#c8102e',
+        serviceColor: '#c8102e', topBarColor: '#c8102e', bottomBarColor: '#c8102e', topBadgeColor: '#ffd100',
+        logo: 'kmb_red', sampleBottom: 'Alexander Dennis Enviro500 MMC 12.8M • KMB 城市脈搏紅巴'
+      },
+      kmb_gold: {
+        prefix: '九巴', companyGroup: 'kmb', label: '九巴千禧香檳金巴',
+        routeTextColor: '#f5d77f', routeStrokeColor: '#4a2e0b',
+        serviceColor: '#c5a059', topBarColor: '#4a2e0b', bottomBarColor: '#c5a059', topBadgeColor: '#ffd100',
+        logo: 'kmb_gold', sampleBottom: 'Volvo Super Olympian / Enviro500 • KMB 千禧香檳金巴'
+      },
+      kmb_ev: {
+        prefix: '九巴', companyGroup: 'kmb', label: '九巴新能源電光綠純電巴',
+        routeTextColor: '#ffffff', routeStrokeColor: '#1b5e20',
+        serviceColor: '#2e7d32', topBarColor: '#1b5e20', bottomBarColor: '#2e7d32', topBadgeColor: '#76ff03',
+        logo: 'kmb_red', sampleBottom: 'Alexander Dennis Enviro500EV / BYD B12D • 九巴綠能純電巴'
+      },
+      kmb_hotdog: {
+        prefix: '九巴', companyGroup: 'kmb', label: '九巴 1933 經典非空調熱狗',
+        routeTextColor: '#f0e68c', routeStrokeColor: '#8b0000',
+        serviceColor: '#8b0000', topBarColor: '#8b0000', bottomBarColor: '#8b0000', topBadgeColor: '#f0e68c',
+        logo: 'kmb_red', sampleBottom: 'Dennis Dragon / Leyland Olympian • 九巴經典非空調熱狗塗裝'
+      },
+      kmb_white: {
+        prefix: '九巴', companyGroup: 'kmb', label: '九巴經典白板冷氣巴',
+        routeTextColor: '#ffffff', routeStrokeColor: '#990000',
+        serviceColor: '#990000', topBarColor: '#990000', bottomBarColor: '#990000', topBadgeColor: '#ffd100',
+        logo: 'kmb_red', sampleBottom: 'Volvo Olympian / Dennis Dragon • 九巴 90 年代經典白板塗裝'
+      },
+      lwb_orange: {
+        prefix: '龍運', companyGroup: 'lwb', label: '龍運巴士陽光橙白塗裝',
+        routeTextColor: '#ffffff', routeStrokeColor: '#c2410c',
+        serviceColor: '#ea5b0c', topBarColor: '#ea5b0c', bottomBarColor: '#ea5b0c', topBadgeColor: '#ffd100',
+        logo: 'lwb_orange', sampleBottom: 'Alexander Dennis Enviro500 MMC 12.8M • LWB 龍運機場豪華客車'
+      },
+      lwb_night: {
+        prefix: '龍運', companyGroup: 'lwb', label: '龍運深宵特快黑橙塗裝',
+        routeTextColor: '#ff9900', routeStrokeColor: '#111111',
+        serviceColor: '#ff7700', topBarColor: '#111111', bottomBarColor: '#111111', topBadgeColor: '#ff9900',
+        logo: 'lwb_orange', sampleBottom: 'Alexander Dennis Enviro500 MMC 12.8M • LWB 深宵機場特快'
+      },
+      nlb_green: {
+        prefix: '嶼巴', companyGroup: 'nlb', label: '新大嶼山巴士嶼南翠綠',
+        routeTextColor: '#ffffff', routeStrokeColor: '#008037',
+        serviceColor: '#008037', topBarColor: '#008037', bottomBarColor: '#008037', topBadgeColor: '#ffd100',
+        logo: 'nlb_green', sampleBottom: 'MAN A95 12M / MAN RR8 • NLB 新大嶼山巴士'
+      },
+      nlb_port: {
+        prefix: '嶼巴', companyGroup: 'nlb', label: '嶼巴口岸專線藍黃配色',
+        routeTextColor: '#ffd200', routeStrokeColor: '#0055a5',
+        serviceColor: '#008037', topBarColor: '#0055a5', bottomBarColor: '#0055a5', topBadgeColor: '#ffd200',
+        logo: 'nlb_green', sampleBottom: 'MAN A95 12M (MDR) • 嶼巴口岸特快專線'
+      },
+      mtr_bus: {
+        prefix: '港鐵', companyGroup: 'mtr', label: '港鐵巴士新塗裝藍白紅',
+        routeTextColor: '#ffffff', routeStrokeColor: '#0055a5',
+        serviceColor: '#0055a5', topBarColor: '#0055a5', bottomBarColor: '#0055a5', topBadgeColor: '#ffd100',
+        logo: 'mtr_bus', sampleBottom: 'Alexander Dennis Enviro500 MMC (5XX) • MTR Bus 港鐵接駁巴士'
+      },
+      mtr_wave: {
+        prefix: '港鐵', companyGroup: 'mtr', label: '港鐵巴士經典黃紫白波浪',
+        routeTextColor: '#ffd100', routeStrokeColor: '#4a154b',
+        serviceColor: '#4a154b', topBarColor: '#4a154b', bottomBarColor: '#4a154b', topBadgeColor: '#ffd100',
+        logo: 'mtr_bus', sampleBottom: 'Alexander Dennis Enviro500 • 港鐵新界西黃紫白波浪塗裝'
+      },
+      kcr_retro: {
+        prefix: '九鐵', companyGroup: 'mtr', label: '九鐵巴士經典藍白紅塗裝',
+        routeTextColor: '#ffffff', routeStrokeColor: '#c8102e',
+        serviceColor: '#c8102e', topBarColor: '#003366', bottomBarColor: '#c8102e', topBadgeColor: '#ffd100',
+        logo: 'kcr_retro', sampleBottom: 'Volvo Olympian 11M (2XX) • KCR 九廣鐵路接駁巴士'
+      }
+    };
+
+    function applyCompanyThemeOnly(themeKey) {
+      const t = companyThemes[themeKey];
+      if (!t) return;
+
+      // 1. 套用該公司與塗裝的代表配色
+      document.getElementById('routeTextColor').value = t.routeTextColor;
+      document.getElementById('routeStrokeColor').value = t.routeStrokeColor;
+      document.getElementById('serviceColor').value = t.serviceColor;
+      document.getElementById('topBarColor').value = t.topBarColor;
+      document.getElementById('bottomBarColor').value = t.bottomBarColor;
+      document.getElementById('topBadgeColor').value = t.topBadgeColor;
+
+      // 2. 智慧替換「① 頂部文字」與「② 右上角路線標題」的公司字頭，保留用戶已輸入的路線號碼與途經站！
+      const companyRegex = /^(城巴|新巴|九巴|龍運|嶼巴|港鐵巴士|港鐵|九鐵巴士|九鐵|Cityflyer\s*)/i;
+      const topEl = document.getElementById('topText');
+      if (topEl && topEl.value) {
+        if (companyRegex.test(topEl.value)) {
+          topEl.value = topEl.value.replace(companyRegex, t.prefix);
+        } else {
+          topEl.value = t.prefix + topEl.value;
+        }
+      }
+
+      const routeEl = document.getElementById('routeTitle');
+      if (routeEl && routeEl.value) {
+        if (companyRegex.test(routeEl.value)) {
+          routeEl.value = routeEl.value.replace(companyRegex, t.prefix);
+        } else {
+          routeEl.value = t.prefix + routeEl.value;
+        }
+      }
+
+      // 3. 若底部文字仍是預設其他公司字樣，同步更新為該公司車隊描述
+      const bottomEl = document.getElementById('bottomText');
+      if (bottomEl && t.sampleBottom) {
+        bottomEl.value = t.sampleBottom;
+      }
+
+      // 4. 預載入對應公司 Logo
+      if (t.logo && presetLogos[t.logo]) {
+        const img = new Image();
+        img.onload = function() {
+          logoImage = img;
+          renderCanvas();
+        };
+        img.src = presetLogos[t.logo];
+      }
+
+      // 5. 同步篩選第 5 區豬紙顏色標籤
+      if (t.companyGroup) {
+        filterServiceTags(t.companyGroup);
+      }
+
+      renderCanvas();
+      showToast(`已切換為「${t.label}」（保留目前路線與起訖站）`);
     }
 
     function setLayoutMode(mode) {
@@ -2992,7 +3833,7 @@
       showToast(`已套用塗裝風格：「${p.routeTitle}」`);
     }
 
-    function setServiceTag(tagText, bgColorHex, textColorHex) {
+    function setServiceTag(tagText, bgColorHex, textColorHex, titleTextHex, titleStrokeHex) {
       document.getElementById('serviceType').value = tagText;
       if (bgColorHex) {
         document.getElementById('serviceColor').value = bgColorHex;
@@ -3001,6 +3842,12 @@
       }
       if (textColorHex) {
         document.getElementById('topBadgeColor').value = textColorHex;
+      }
+      if (titleTextHex) {
+        document.getElementById('routeTextColor').value = titleTextHex;
+      }
+      if (titleStrokeHex) {
+        document.getElementById('routeStrokeColor').value = titleStrokeHex;
       }
       renderCanvas();
       showToast(`已套用官方路線標準配色：「${tagText}」`);
