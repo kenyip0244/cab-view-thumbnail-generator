@@ -74,11 +74,11 @@
     }
 
     .main-layout {
-      max-width: 1620px;
+      max-width: 1680px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1fr 560px;
-      gap: 24px;
+      grid-template-columns: 1fr 540px;
+      gap: 20px;
       align-items: start;
     }
 
@@ -88,12 +88,126 @@
       }
     }
 
+    /* 左側固定預覽區：永遠保持在視窗內，方便邊看圖邊改字 */
     .preview-col {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
       position: sticky;
-      top: 16px;
+      top: 12px;
+      z-index: 20;
+    }
+
+    /* 畫布正下方：看圖即時改字快捷面板 */
+    .quick-edit-bar {
+      background: var(--bg-panel);
+      border: 1.5px solid #ffd100;
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quick-edit-title {
+      font-size: 12.5px;
+      font-weight: 900;
+      color: #ffd100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quick-edit-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 8px;
+    }
+
+    .quick-edit-route-row {
+      display: grid;
+      grid-template-columns: 1.1fr 1.2fr 68px 1.2fr 2fr;
+      gap: 8px;
+      align-items: end;
+    }
+
+    @media (max-width: 900px) {
+      .quick-edit-grid, .quick-edit-route-row {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* 分頁籤切換範本庫，大幅縮減高度 */
+    .company-tabs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .company-tab-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .company-tab-btn:hover {
+      color: var(--text-main);
+      border-color: #ffd100;
+    }
+
+    .company-tab-btn.active {
+      background: #ffd100;
+      color: #0c1c2e;
+      border-color: #ffd100;
+    }
+
+    .preset-tab-panel {
+      display: none;
+    }
+
+    .preset-tab-panel.active {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+      gap: 8px;
+      max-height: 210px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    /* 畫布雙擊直接改字浮動框 */
+    .canvas-inline-editor {
+      position: absolute;
+      display: none;
+      z-index: 50;
+      background: rgba(15, 18, 28, 0.96);
+      border: 2px solid #ffd100;
+      border-radius: 8px;
+      padding: 8px 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      min-width: 280px;
+      backdrop-filter: blur(8px);
+    }
+
+    .canvas-inline-editor label {
+      color: #ffd100;
+      font-size: 11px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .canvas-inline-editor input {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 6px 8px;
     }
 
     .canvas-container {
@@ -122,18 +236,23 @@
 
     .canvas-hint {
       position: absolute;
-      top: 12px;
+      bottom: 10px;
       right: 12px;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(6px);
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
       color: #ffd700;
-      border: 1px solid rgba(255, 215, 0, 0.4);
-      padding: 5px 12px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      padding: 3px 10px;
       border-radius: 20px;
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 700;
       pointer-events: none;
       z-index: 10;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    .canvas-container:hover .canvas-hint {
+      opacity: 0.2;
     }
 
     .action-row {
@@ -619,11 +738,67 @@
 
   <div class="main-layout">
     
-    <!-- 左側：畫布即時預覽與匯出 -->
+    <!-- 左側：畫布即時預覽與「看圖即時改字」面板（永遠固定在畫面上方） -->
     <div class="preview-col">
       <div class="canvas-container" id="canvasContainer">
         <canvas id="thumbCanvas" width="1920" height="1080"></canvas>
-        <div class="canvas-hint">🖱️ 支援在畫布上直接拖曳文字、Logo 與背景圖片</div>
+        <div class="canvas-hint">🖱️ 可直接拖曳元素 • 雙擊畫布文字可即時改字</div>
+        <!-- 畫布雙擊浮動改字框 -->
+        <div class="canvas-inline-editor" id="inlineEditor">
+          <label id="inlineEditorLabel">修改文字</label>
+          <input type="text" id="inlineEditorInput">
+        </div>
+      </div>
+
+      <!-- ⚡ 畫布正下方：看圖即時改字快捷面板 (ไม่ต้อง往下滾動即可改全圖文字) -->
+      <div class="quick-edit-bar">
+        <div class="quick-edit-title">
+          <span>⚡ 看圖即時改字區（輸入即同步更新上方封面圖，亦可在畫布上雙擊文字修改）</span>
+          <div style="display:flex; gap:5px;">
+            <button type="button" class="btn-xs" onclick="injectDeck('上層展望')">🏙️ 上層展望</button>
+            <button type="button" class="btn-xs" onclick="injectDeck('下層展望')">🚍 下層展望</button>
+            <button type="button" class="btn-xs" onclick="injectDeck('前面展望')">🎥 前面展望</button>
+          </div>
+        </div>
+
+        <div class="quick-edit-grid">
+          <div class="form-group">
+            <label>① 頂部文字 (`XXX線上/下層展望•經XXX`)</label>
+            <input type="text" id="quickTopText" value="城巴B14線下層展望•經大欖隧道•中九龍繞道•啟德體育園" oninput="syncQuickText('topText', this.value)">
+          </div>
+          <div class="form-group">
+            <label>② 右上角路線標題 (`XXX路線`)</label>
+            <input type="text" id="quickRouteTitle" value="城巴B14路線" oninput="syncQuickText('routeTitle', this.value)">
+          </div>
+        </div>
+
+        <div class="quick-edit-route-row">
+          <div class="form-group">
+            <label>③ 左下車種標籤</label>
+            <input type="text" id="quickServiceType" value="皇崗專線" oninput="syncQuickText('serviceType', this.value)">
+          </div>
+          <div class="form-group">
+            <label>④ 起點站 (Origin)</label>
+            <input type="text" id="quickStationOrigin" value="皇崗口岸" oninput="syncQuickText('stationOrigin', this.value)">
+          </div>
+          <div class="form-group">
+            <label>方向</label>
+            <select id="quickRouteArrow" onchange="syncQuickText('routeArrow', this.value)">
+              <option value="➔" selected>➔</option>
+              <option value="→">→</option>
+              <option value="➡">➡</option>
+              <option value="＝">＝</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>⑤ 訖點站 (Dest)</label>
+            <input type="text" id="quickStationDest" value="啟德世運道" oninput="syncQuickText('stationDest', this.value)">
+          </div>
+          <div class="form-group">
+            <label>⑥ 底部車型 / 車牌描述</label>
+            <input type="text" id="quickBottomText" value="Enviro500 MMC 12.8M (6493 / VB 9800) • CITY BUSES EST. 1979" oninput="syncQuickText('bottomText', this.value)">
+          </div>
+        </div>
       </div>
 
       <div class="action-row">
@@ -635,371 +810,237 @@
           <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path></svg>
           複製圖片到剪貼簿
         </button>
-        <button class="btn btn-secondary" id="resetBtn">重設</button>
+        <button class="btn btn-secondary" id="resetBtn">重設範本</button>
       </div>
+    </div>
 
-      <!-- 排版與城巴塗裝風格選擇 -->
+    <!-- 右側：自訂控制面板（滾動右側時，左側封面圖永遠固定不動！） -->
+    <div class="controls-col">
+
+      <!-- 0. 巴士公司塗裝與路線範本庫（分頁籤設計，一鍵套用） -->
       <div class="presets-container">
         <div class="presets-title">
-          <span>🎨 城巴歷代各款塗裝顏色風格 (點擊一鍵套用)</span>
-          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">8 大主題色系</span>
+          <span>🎨 一鍵套用巴士塗裝與路線範本</span>
+          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">點擊分類切換</span>
         </div>
 
-        <div class="preset-grid">
-          <!-- 1. Cityflyer 經典紅黃 -->
-          <button class="preset-chip" onclick="applyPreset('cityflyer')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd100 50%, #d91a2a 50%);"></span>
-              <span>1. Cityflyer 機場快線</span>
-            </div>
-            <div class="preset-desc">A29 / S52 經典紅黃流線色 (上/下層展望)</div>
-          </button>
+        <div class="company-tabs">
+          <button type="button" class="company-tab-btn active" onclick="switchCompanyTab('tab_citybus', this)">🟡 城巴塗裝 (8)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_trunk', this)">⭐ 城巴主幹線 (12)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_kmb', this)">🔴 九巴 KMB (5)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_lwb', this)">🟠 龍運 LWB (4)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_nlb', this)">🟢 嶼巴 NLB (4)</button>
+          <button type="button" class="company-tab-btn" onclick="switchCompanyTab('tab_mtr', this)">🔵 港鐵巴士 (5)</button>
+        </div>
 
-          <!-- 2. 經典大食鬼 -->
-          <button class="preset-chip" onclick="applyPreset('pacman')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd100 50%, #e21b23 50%);"></span>
-              <span>2. 經典「大食鬼」塗裝</span>
-            </div>
-            <div class="preset-desc">43R / 9150 復刻大食鬼紅黃條紋</div>
-          </button>
-
-          <!-- 3. 黃帶紅白藍（捷達色） -->
-          <button class="preset-chip" onclick="applyPreset('classic_stripes')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 40%, #e31b23 40%, #e31b23 60%, #004b97 60%);"></span>
-              <span>3. 經典黃帶紅白藍</span>
-            </div>
-            <div class="preset-desc">73 / 9149 / 6448 捷達標準紅帶藍裙邊</div>
-          </button>
-
-          <!-- 4. 40 週年 1979 復刻藍橙線 -->
-          <button class="preset-chip" onclick="applyPreset('anniversary_40')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 45%, #ff6600 45%, #ff6600 65%, #00338d 65%);"></span>
-              <span>4. 40載你同行 1979復刻</span>
-            </div>
-            <div class="preset-desc">307 / 6495 經典黃身橙藍雙橫條</div>
-          </button>
-
-          <!-- 5. 1979 創辦元祖米黃棗紅 -->
+        <!-- 分頁 1：城巴塗裝 -->
+        <div class="preset-tab-panel active" id="tab_citybus">
           <button class="preset-chip" onclick="applyPreset('founder_1979')">
             <div class="preset-chip-header">
               <span class="preset-bar" style="background: linear-gradient(135deg, #f3e5ab 60%, #5c1d24 60%);"></span>
-              <span>5. 1979 創辦米黃棗紅 (B14)</span>
+              <span>1979 創辦米黃棗紅 (B14)</span>
             </div>
             <div class="preset-desc">B14 / 6493 皇崗口岸➔啟德世運道</div>
           </button>
 
-          <!-- 6. 當代簡約黃藍色 -->
+          <button class="preset-chip" onclick="applyPreset('cityflyer')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd100 50%, #d91a2a 50%);"></span>
+              <span>Cityflyer 機場快線 (A29)</span>
+            </div>
+            <div class="preset-desc">A29 / 6840 機場➔將軍澳(寶琳)</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('pacman')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd100 50%, #e21b23 50%);"></span>
+              <span>經典「大食鬼」塗裝 (43R)</span>
+            </div>
+            <div class="preset-desc">43R / 9150 堅尼地城站➔西寧街</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('classic_stripes')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 40%, #e31b23 40%, #e31b23 60%, #004b97 60%);"></span>
+              <span>經典黃帶紅白藍 (73)</span>
+            </div>
+            <div class="preset-desc">73 / 9149 數碼港➔赤柱市場</div>
+          </button>
+
+          <button class="preset-chip" onclick="applyPreset('anniversary_40')">
+            <div class="preset-chip-header">
+              <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 45%, #ff6600 45%, #ff6600 65%, #00338d 65%);"></span>
+              <span>40載你同行 1979復刻 (307)</span>
+            </div>
+            <div class="preset-desc">307 / 6495 大埔中心➔中環碼頭</div>
+          </button>
+
           <button class="preset-chip" onclick="applyPreset('modern_yellow_blue')">
             <div class="preset-chip-header">
               <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 65%, #0072ce 65%);"></span>
-              <span>6. 當代簡約黃藍</span>
+              <span>當代簡約黃藍 (606)</span>
             </div>
-            <div class="preset-desc">606 / 8538 無紅條純黃亮藍底</div>
+            <div class="preset-desc">606 / 8538 小西灣➔彩雲</div>
           </button>
 
-          <!-- 7. 新城合併 動感黃藍斜紋 -->
           <button class="preset-chip" onclick="applyPreset('new_rebrand')">
             <div class="preset-chip-header">
               <span class="preset-bar" style="background: linear-gradient(135deg, #ffd200 45%, #e50012 45%, #e50012 55%, #0055a5 55%);"></span>
-              <span>7. 新品牌動感黃藍斜紋</span>
+              <span>新品牌動感黃藍 (788)</span>
             </div>
-            <div class="preset-desc">788 / 8570 新城合併全新小寫 c 品牌色</div>
+            <div class="preset-desc">788 / 8570 小西灣➔中環</div>
           </button>
 
-          <!-- 8. 新巴經典波浪白綠橙 -->
           <button class="preset-chip" onclick="applyPreset('nwfb_wave')">
             <div class="preset-chip-header">
               <span class="preset-bar" style="background: linear-gradient(135deg, #ffffff 40%, #009b3a 40%, #009b3a 55%, #ff7300 55%);"></span>
-              <span>8. 新巴經典波浪白綠橙</span>
+              <span>新巴經典波浪白綠橙 (8)</span>
             </div>
-            <div class="preset-desc">8 / 6100 新巴遺產波浪經典色</div>
+            <div class="preset-desc">8 / 6100 杏花邨➔灣仔北</div>
           </button>
         </div>
 
-                <div class="presets-title" style="margin-top:8px;">
-          <span>⭐ 城巴官方「主幹線」快速範本 (Trunk Lines)</span>
-          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">港島 • 九龍 • 新界</span>
-        </div>
-
-        <div class="preset-grid">
-          <!-- 港島主幹線 -->
+        <!-- 分頁 2：城巴主幹線 -->
+        <div class="preset-tab-panel" id="tab_trunk">
           <button class="preset-chip" onclick="applyPreset('trunk_2a')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>2A 英皇道線</span>
-            </div>
-            <div class="preset-desc">耀東邨 ➔ 會展站 (King's Road Line)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>2A 英皇道線</span></div>
+            <div class="preset-desc">耀東邨 ➔ 會展站</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_4')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>4 薄扶林線</span>
-            </div>
-            <div class="preset-desc">黃竹坑 ➔ 中環交易廣場 (Pok Fu Lam Line)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>4 薄扶林線</span></div>
+            <div class="preset-desc">黃竹坑 ➔ 中環(交易廣場)</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_38')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>38 南區線</span>
-            </div>
-            <div class="preset-desc">置富花園 ➔ 北角碼頭 (Southern Line)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>38 南區線</span></div>
+            <div class="preset-desc">置富花園 ➔ 北角碼頭</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_82')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>82 東區線</span>
-            </div>
-            <div class="preset-desc">小西灣藍灣半島 ➔ 北角碼頭 (Eastern Line)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>82 東區線</span></div>
+            <div class="preset-desc">小西灣(藍灣半島) ➔ 北角碼頭</div>
           </button>
-
-          <!-- 九龍市區主幹線 -->
           <button class="preset-chip" onclick="applyPreset('trunk_20')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>20 窩打老道線</span>
-            </div>
-            <div class="preset-desc">啟德沐安街 ➔ 長沙灣海達 (Waterloo Rd)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>20 窩打老道線</span></div>
+            <div class="preset-desc">啟德(沐安街) ➔ 長沙灣(海達)</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_20a')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>20A 彌敦道線</span>
-            </div>
-            <div class="preset-desc">高鐵西九龍站 ➔ 啟德郵輪碼頭 (Nathan Rd)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>20A 彌敦道線</span></div>
+            <div class="preset-desc">高鐵西九龍站 ➔ 啟德郵輪碼頭</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_701')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>701 西九龍線</span>
-            </div>
-            <div class="preset-desc">海麗邨 ↺ 旺角循環線 (West Kowloon)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>701 西九龍線</span></div>
+            <div class="preset-desc">海麗邨 ➔ 旺角</div>
           </button>
-
-          <!-- 新界主幹線 -->
           <button class="preset-chip" onclick="applyPreset('trunk_50')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>50 屯門線</span>
-            </div>
-            <div class="preset-desc">屯門菁田和田 ➔ 尖沙咀九龍站 (Tuen Mun)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>50 屯門線</span></div>
+            <div class="preset-desc">屯門(菁田及和田) ➔ 尖沙咀</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_56')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>56 新界北環線</span>
-            </div>
-            <div class="preset-desc">屯門和田菁田 ➔ 上水天平邨 (Northern Link)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>56 新界北環線</span></div>
+            <div class="preset-desc">屯門(和田及菁田) ➔ 上水</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_79x')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>79X 皇后山線</span>
-            </div>
-            <div class="preset-desc">粉嶺皇后山 ➔ 長沙灣甘泉街 (Queen's Hill)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>79X 皇后山線</span></div>
+            <div class="preset-desc">粉嶺皇后山 ➔ 長沙灣</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_793')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>793 九龍東西線</span>
-            </div>
-            <div class="preset-desc">將軍澳工業邨 ➔ 蘇屋 (Kowloon East West)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>793 九龍東西線</span></div>
+            <div class="preset-desc">將軍澳工業邨 ➔ 蘇屋</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('trunk_798')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003876;"></span>
-              <span>798 將沙線</span>
-            </div>
-            <div class="preset-desc">調景嶺站 ➔ 火炭駿洋邨 (Tseung Sha Line)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003876;"></span><span>798 將沙線</span></div>
+            <div class="preset-desc">調景嶺站 ➔ 火炭(駿洋邨)</div>
           </button>
         </div>
 
-        
-        <!-- ==================== 九巴 KMB 專區 ==================== -->
-        <div class="presets-title" style="margin-top:14px; color:#ff4d4d;">
-          <span>🔴 九巴 KMB 經典塗裝與黃金路線 (Heartbeat of the City)</span>
-          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">紅巴 • 金巴 • 熱狗 • 白板</span>
-        </div>
-        <div class="preset-grid">
+        <!-- 分頁 3：九巴 KMB -->
+        <div class="preset-tab-panel" id="tab_kmb">
           <button class="preset-chip" onclick="applyPreset('kmb_960')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#c8102e;"></span>
-              <span>九巴 960 (紅巴2.0)</span>
-            </div>
-            <div class="preset-desc">過海特快 屯門建生 ➔ 灣仔北 (西隧主力)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#c8102e;"></span><span>九巴960路線 (紅巴)</span></div>
+            <div class="preset-desc">屯門(建生) ➔ 灣仔北</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('kmb_1a')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#c5a059;"></span>
-              <span>九巴 1A (千禧金巴)</span>
-            </div>
-            <div class="preset-desc">彌敦道流水 尖沙咀碼頭 ➔ 中秀茂坪</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#c5a059;"></span><span>九巴1A路線 (金巴)</span></div>
+            <div class="preset-desc">尖沙咀碼頭 ➔ 中秀茂坪</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('kmb_b1')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#c8102e;"></span>
-              <span>九巴 B1 (口岸特快)</span>
-            </div>
-            <div class="preset-desc">天慈 ➔ 落馬洲站 (福田口岸接駁專線)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#c8102e;"></span><span>九巴B1路線 (口岸)</span></div>
+            <div class="preset-desc">天水圍(天慈) ➔ 落馬洲站</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('kmb_290a')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#2e7d32;"></span>
-              <span>九巴 290A (綠能電巴)</span>
-            </div>
-            <div class="preset-desc">將軍澳彩明 ➔ 荃灣西站 (將荃直達大動脈)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#2e7d32;"></span><span>九巴290A路線 (電巴)</span></div>
+            <div class="preset-desc">將軍澳(彩明) ➔ 荃灣西站</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('kmb_hotdog')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:linear-gradient(135deg, #8b0000 50%, #f0e68c 50%);"></span>
-              <span>九巴 16 (傳奇熱狗)</span>
-            </div>
-            <div class="preset-desc">藍田廣田邨 ➔ 旺角柏景灣 (非空調回憶)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:linear-gradient(135deg, #8b0000 50%, #f0e68c 50%);"></span><span>九巴16路線 (熱狗)</span></div>
+            <div class="preset-desc">藍田(廣田邨) ➔ 旺角(柏景灣)</div>
           </button>
         </div>
 
-        <!-- ==================== 龍運巴士 LWB 專區 ==================== -->
-        <div class="presets-title" style="margin-top:14px; color:#ff9933;">
-          <span>🟠 龍運巴士 LWB 機場與大嶼山專線 (Flyer & Shuttle)</span>
-          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">A線客車 • E線對外 • S線穿梭</span>
-        </div>
-        <div class="preset-grid">
+        <!-- 分頁 4：龍運 LWB -->
+        <div class="preset-tab-panel" id="tab_lwb">
           <button class="preset-chip" onclick="applyPreset('lwb_a31')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#ea5b0c;"></span>
-              <span>龍運 A31✈ (豪華客車)</span>
-            </div>
-            <div class="preset-desc">特快 荃灣如心廣場 ➔ 機場地面運輸中心</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#ea5b0c;"></span><span>龍運A31路線</span></div>
+            <div class="preset-desc">荃灣(如心廣場) ➔ 機場</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('lwb_e36')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#ea5b0c;"></span>
-              <span>龍運 E36 (大欖對外)</span>
-            </div>
-            <div class="preset-desc">元朗八鄉路 ➔ 機場博覽館 (大欖隧道特快)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#ea5b0c;"></span><span>龍運E36路線</span></div>
+            <div class="preset-desc">元朗(八鄉路) ➔ 機場(西岸路)</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('lwb_s1')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#ff7700;"></span>
-              <span>龍運 S1 (機場穿梭)</span>
-            </div>
-            <div class="preset-desc">東涌站 ↺ 機場客運大樓 (亞洲博覽館循環)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#ff7700;"></span><span>龍運S1路線</span></div>
+            <div class="preset-desc">東涌站 ➔ 機場博覽館</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('lwb_na33')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#111111; border:1px solid #ff7700;"></span>
-              <span>龍運 NA33 (深宵特快)</span>
-            </div>
-            <div class="preset-desc">國泰城 ➔ 屯門富泰 (經港珠澳大橋口岸)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#111111; border:1px solid #ff7700;"></span><span>龍運NA33路線</span></div>
+            <div class="preset-desc">國泰城 ➔ 屯門(富泰)</div>
           </button>
         </div>
 
-        <!-- ==================== 新大嶼山巴士 NLB 專區 ==================== -->
-        <div class="presets-title" style="margin-top:14px; color:#33cc66;">
-          <span>🟢 新大嶼山巴士 NLB 郊野觀光與口岸專線</span>
-          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">大澳水鄉 • 昂坪大佛 • 港珠澳大橋</span>
-        </div>
-        <div class="preset-grid">
+        <!-- 分頁 5：嶼巴 NLB -->
+        <div class="preset-tab-panel" id="tab_nlb">
           <button class="preset-chip" onclick="applyPreset('nlb_11')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#008037;"></span>
-              <span>嶼巴 11 (水鄉觀光)</span>
-            </div>
-            <div class="preset-desc">東涌市中心 ➔ 大澳 (經長沙•石壁水塘)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#008037;"></span><span>嶼巴11路線</span></div>
+            <div class="preset-desc">東涌站 ➔ 大澳</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('nlb_3m')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#008037;"></span>
-              <span>嶼巴 3M (大嶼山動脈)</span>
-            </div>
-            <div class="preset-desc">梅窩碼頭 ➔ 東涌市中心 (經伯公坳•長沙)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#008037;"></span><span>嶼巴3M路線</span></div>
+            <div class="preset-desc">梅窩碼頭 ➔ 東涌站</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('nlb_23')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#008037;"></span>
-              <span>嶼巴 23 (天壇大佛)</span>
-            </div>
-            <div class="preset-desc">東涌達東路 ➔ 昂坪寶蓮寺 (高山美景)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#008037;"></span><span>嶼巴23路線</span></div>
+            <div class="preset-desc">東涌達東路 ➔ 昂坪</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('nlb_b6')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#0055a5;"></span>
-              <span>嶼巴 B6 (港珠澳口岸)</span>
-            </div>
-            <div class="preset-desc">滿東邨 ➔ 港珠澳大橋香港口岸 (口岸特快)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>嶼巴B6路線</span></div>
+            <div class="preset-desc">滿東邨 ➔ 港珠澳大橋口岸</div>
           </button>
         </div>
 
-        <!-- ==================== 港鐵巴士 MTR Bus 專區 ==================== -->
-        <div class="presets-title" style="margin-top:14px; color:#3399ff;">
-          <span>🔵 港鐵巴士 MTR Bus / 九鐵 KCR 接駁專線</span>
-          <span style="font-size:11px; color:#9aa5b8; font-weight:normal;">西鐵/屯馬綫接駁 • 輕鐵轉乘 • 大埔接駁</span>
-        </div>
-        <div class="preset-grid">
+        <!-- 分頁 6：港鐵巴士 MTR -->
+        <div class="preset-tab-panel" id="tab_mtr">
           <button class="preset-chip" onclick="applyPreset('mtr_k52')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#0055a5;"></span>
-              <span>港鐵 K52 (屯門沿海)</span>
-            </div>
-            <div class="preset-desc">屯門站 ➔ 龍鼓灘 (經三聖•青山灣海濱)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K52路線</span></div>
+            <div class="preset-desc">屯門站 ➔ 龍鼓灘</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('mtr_k65')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#0055a5;"></span>
-              <span>港鐵 K65 (流浮山線)</span>
-            </div>
-            <div class="preset-desc">元朗東 ➔ 流浮山 (古色屏山•海鮮市場)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K65路線</span></div>
+            <div class="preset-desc">元朗站 ➔ 流浮山</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('mtr_k76')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#0055a5;"></span>
-              <span>港鐵 K76 (天水圍特快)</span>
-            </div>
-            <div class="preset-desc">天水圍天恆邨 ➔ 天水圍站 (轉乘屯馬綫)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K76路線</span></div>
+            <div class="preset-desc">天恆 ➔ 天水圍站</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('mtr_k12')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#0055a5;"></span>
-              <span>港鐵 K12 (東鐵接駁)</span>
-            </div>
-            <div class="preset-desc">大埔墟站 ↺ 八號花園 (大埔新市鎮接駁)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#0055a5;"></span><span>港鐵K12路線</span></div>
+            <div class="preset-desc">大埔墟站 ➔ 八號花園</div>
           </button>
-
           <button class="preset-chip" onclick="applyPreset('kcr_retro_506')">
-            <div class="preset-chip-header">
-              <span class="preset-bar" style="background:#003366;"></span>
-              <span>九鐵 506 (經典紅灰)</span>
-            </div>
-            <div class="preset-desc">屯門碼頭 ➔ 兆麟 (九廣鐵路接駁巴士塗裝)</div>
+            <div class="preset-chip-header"><span class="preset-bar" style="background:#003366;"></span><span>九鐵506路線</span></div>
+            <div class="preset-desc">屯門碼頭 ➔ 兆麟</div>
           </button>
         </div>
 
-
-        <div class="presets-title" style="margin-top:6px;">📐 選擇封面排版風格 (Layout Styles)</div>
+        <div class="presets-title" style="margin-top:4px;">📐 選擇封面排版風格 (Layout Styles)</div>
         <div class="layout-switcher">
           <button class="layout-btn" id="btnLayoutClassic" onclick="setLayoutMode('classic')">
             <span>🔲 經典雙橫條</span>
@@ -1007,7 +1048,7 @@
           </button>
           <button class="layout-btn active" id="btnLayoutModern" onclick="setLayoutMode('modern')">
             <span>✨ 現代全幅沉浸</span>
-            <span style="font-size:10px; color:var(--text-muted);">漸層微暗角</span>
+            <span style="font-size:10px; color:var(--text-muted);">無遮擋微暗角</span>
           </button>
           <button class="layout-btn" id="btnLayoutLed" onclick="setLayoutMode('led')">
             <span>📟 巴士電牌 LED</span>
@@ -1019,10 +1060,6 @@
           </button>
         </div>
       </div>
-    </div>
-
-    <!-- 右側：自訂控制面板 -->
-    <div class="controls-col">
       
       <!-- 1. 頂部資訊條設置（標準格式：XXX上/下層展望•經XXX•XXX） -->
       <div class="section-card">
@@ -2825,6 +2862,43 @@
       }
     };
 
+        // 同步畫布下方「看圖即時改字區」與右側詳細控制面板
+    function syncQuickText(targetId, val) {
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.value = val;
+        renderCanvas();
+      }
+    }
+
+    function syncAllToQuickBar() {
+      const mapping = {
+        topText: 'quickTopText',
+        routeTitle: 'quickRouteTitle',
+        serviceType: 'quickServiceType',
+        stationOrigin: 'quickStationOrigin',
+        routeArrow: 'quickRouteArrow',
+        stationDest: 'quickStationDest',
+        bottomText: 'quickBottomText'
+      };
+      for (const [srcId, quickId] of Object.entries(mapping)) {
+        const srcEl = document.getElementById(srcId);
+        const quickEl = document.getElementById(quickId);
+        if (srcEl && quickEl && document.activeElement !== quickEl) {
+          quickEl.value = srcEl.value;
+        }
+      }
+    }
+
+    // 切換巴士公司範本分頁籤
+    function switchCompanyTab(tabId, btnEl) {
+      document.querySelectorAll('.company-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.preset-tab-panel').forEach(p => p.classList.remove('active'));
+      if (btnEl) btnEl.classList.add('active');
+      const panel = document.getElementById(tabId);
+      if (panel) panel.classList.add('active');
+    }
+
     function setLayoutMode(mode) {
       currentLayoutMode = mode;
       document.querySelectorAll('.layout-btn').forEach(btn => btn.classList.remove('active'));
@@ -2955,6 +3029,7 @@
     }
 
     function updateHints() {
+      syncAllToQuickBar();
       document.getElementById('valScale').innerText = document.getElementById('imgScale').value + 'x';
       document.getElementById('valOffsetY').innerText = document.getElementById('imgOffsetY').value + 'px';
       document.getElementById('valOffsetX').innerText = document.getElementById('imgOffsetX').value + 'px';
@@ -3000,6 +3075,8 @@
       ctx.textAlign = align;
       ctx.textBaseline = 'alphabetic';
 
+      // 先平移原點至 (x, y) 再做斜體傾斜，避免因 Y 座標過大導致底部文字向左偏移被裁切！
+      ctx.translate(x, y);
       if (slant !== 0) {
         ctx.transform(1, 0, Math.tan((slant * Math.PI) / 180), 1, 0, 0);
       }
@@ -3016,7 +3093,7 @@
         }
         ctx.strokeStyle = outerStroke;
         ctx.lineWidth = outerStrokeWidth;
-        ctx.strokeText(text, x, y);
+        ctx.strokeText(text, 0, 0);
       }
 
       ctx.shadowColor = 'transparent';
@@ -3024,11 +3101,11 @@
       if (innerStrokeWidth > 0) {
         ctx.strokeStyle = innerStroke;
         ctx.lineWidth = innerStrokeWidth;
-        ctx.strokeText(text, x, y);
+        ctx.strokeText(text, 0, 0);
       }
 
       ctx.fillStyle = fill;
-      ctx.fillText(text, x, y);
+      ctx.fillText(text, 0, 0);
 
       ctx.restore();
     }
@@ -3537,6 +3614,60 @@
         canvas.style.cursor = 'crosshair';
       }
     }
+
+        // 雙擊畫布上的文字直接彈出浮動輸入框改字
+    const inlineEditor = document.getElementById('inlineEditor');
+    const inlineEditorLabel = document.getElementById('inlineEditorLabel');
+    const inlineEditorInput = document.getElementById('inlineEditorInput');
+    let currentInlineFieldId = null;
+
+    canvas.addEventListener('dblclick', (e) => {
+      const pos = getCanvasCoordinates(e);
+      const hit = getHitTarget(pos);
+      const fieldMap = {
+        topText: { id: 'topText', label: '✏️ 修改頂部文字 (按 Enter 完成)' },
+        routeTitle: { id: 'routeTitle', label: '✏️ 修改右上角路線標題 (按 Enter 完成)' },
+        mainRoute: { id: 'stationDest', label: '✏️ 修改訖點站名 (按 Enter 完成)' },
+        bottomText: { id: 'bottomText', label: '✏️ 修改底部車型數據 (按 Enter 完成)' }
+      };
+      if (hit && fieldMap[hit]) {
+        const info = fieldMap[hit];
+        currentInlineFieldId = info.id;
+        const srcEl = document.getElementById(info.id);
+        inlineEditorLabel.innerText = info.label;
+        inlineEditorInput.value = srcEl.value;
+
+        const rect = canvas.getBoundingClientRect();
+        const relX = Math.min(rect.width - 300, Math.max(12, e.clientX - rect.left - 100));
+        const relY = Math.min(rect.height - 80, Math.max(12, e.clientY - rect.top - 30));
+        inlineEditor.style.left = relX + 'px';
+        inlineEditor.style.top = relY + 'px';
+        inlineEditor.style.display = 'block';
+        inlineEditorInput.focus();
+        inlineEditorInput.select();
+      }
+    });
+
+    inlineEditorInput.addEventListener('input', () => {
+      if (currentInlineFieldId) {
+        document.getElementById(currentInlineFieldId).value = inlineEditorInput.value;
+        renderCanvas();
+      }
+    });
+
+    inlineEditorInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === 'Escape') {
+        inlineEditor.style.display = 'none';
+        currentInlineFieldId = null;
+      }
+    });
+
+    window.addEventListener('mousedown', (e) => {
+      if (inlineEditor.style.display === 'block' && !inlineEditor.contains(e.target)) {
+        inlineEditor.style.display = 'none';
+        currentInlineFieldId = null;
+      }
+    });
 
     canvas.addEventListener('mousedown', handlePointerDown);
     window.addEventListener('mousemove', handlePointerMove);
